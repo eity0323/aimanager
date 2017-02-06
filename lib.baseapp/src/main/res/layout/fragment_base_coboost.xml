@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <!--加载布局-->
+    <FrameLayout
+        android:id="@+id/fragment_boost_loading_layout"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_gravity="center"
+        android:layout_weight="1"/>
+
+    <!--网络布局-->
+    <FrameLayout
+        android:id="@+id/fragment_boost_network_layout"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_gravity="center"
+        android:layout_weight="1"/>
+
+    <!--内容布局-->
+    <FrameLayout
+        android:id="@+id/fragment_boost_content_layout"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <!--空数据布局-->
+    <FrameLayout
+        android:id="@+id/fragment_boost_empty_layout"
+        android:layout_width="match_parent"
+        android:visibility="gone"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+</LinearLayout>

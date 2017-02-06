@@ -1,0 +1,71 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+
+    <!--common text style-->
+    <style name="DarkText16Appearance" parent="@android:style/TextAppearance">
+        <item name="android:textSize">@dimen/font_siez_16</item>
+        <item name="android:textColor">@color/text_gray_dark</item>
+    </style>
+    <style name="DarkText14Appearance" parent="@android:style/TextAppearance">
+        <item name="android:textSize">@dimen/font_siez_14</item>
+        <item name="android:textColor">@color/text_gray_dark</item>
+    </style>
+    <style name="BlackText16Appearance" parent="@android:style/TextAppearance">
+        <item name="android:textSize">@dimen/font_siez_16</item>
+        <item name="android:textColor">@android:color/black</item>
+    </style>
+    <style name="WhiteText16Appearance" parent="@android:style/TextAppearance">
+        <item name="android:textSize">@dimen/font_siez_16</item>
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+    <style name="GrayCommonText14Appearance" parent="@android:style/TextAppearance">
+        <item name="android:textSize">@dimen/font_siez_14</item>
+        <item name="android:textColor">@color/text_gray_light</item>
+    </style>
+    <style name="DarkCommonHint14Appearance" parent="@android:style/TextAppearance">
+        <item name="android:textSize">@dimen/font_siez_14</item>
+        <item name="android:textColorHint">@color/text_gray_light</item>
+        <item name="android:textColor">@color/text_gray_dark</item>
+    </style>
+
+    <!--page style-->
+    <style name="BaseActivityTheme" parent="@style/Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowBackground">@color/app_bg_color</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="colorPrimary">@android:color/white</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:textColor">@color/text_gray_dark</item>
+    </style>
+
+    <style name="BasePanelTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowIsTranslucent">true</item>
+    </style>
+
+    <style name="BasePopupAnimation" parent="@android:style/Animation">
+        <item name="android:windowEnterAnimation">@anim/push_bottom_in</item>
+        <item name="android:windowExitAnimation">@anim/push_bottom_out</item>
+    </style>
+
+    <!--component style-->
+    <style name="order_subtitle_style">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/text_gray</item>
+        <item name="android:textSize">15sp</item>
+    </style>
+</resources>

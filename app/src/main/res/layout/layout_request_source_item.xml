@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!--设置网络请求方式 or 切换网络环境 item-->
+    <TextView
+        android:id="@+id/demo_aty_pop_item_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="10dp"
+        android:paddingTop="10dp"
+        android:textSize="14sp"
+        android:textColor="@android:color/holo_red_light"
+        android:gravity="center"/>
+</LinearLayout>

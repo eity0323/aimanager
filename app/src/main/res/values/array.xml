@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="setting_reqeust_source">
+        <item>仅缓存</item>
+        <item>仅网络</item>
+        <item>优先缓存</item>
+        <item>先缓存再网络</item>
+    </string-array>
+
+    <string-array name="setting_environment_source">
+        <item>开发环境</item>
+        <item>测试环境</item>
+        <item>正式环境</item>
+    </string-array>
+</resources>

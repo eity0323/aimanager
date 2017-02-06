@@ -1,0 +1,57 @@
+project.ext {
+    applicationId = "com.sien.aimanager"
+//    compileSdkVersion 24
+//    buildToolsVersion "24.0.0"
+//
+//    defaultConfig {
+//        applicationId "com.sien.aimanager"
+//        minSdkVersion 14
+//        targetSdkVersion 24
+//        versionCode 1
+//        versionName "1.0"
+//    }
+    compileSdkVersion = 23
+    buildToolsVersion = "23.0.2"
+
+    minSdkVersion = 15
+    targetSdkVersion = 23
+
+    versionCode = 1
+    versionName = "1.0.0"
+
+    abortOnLintError = false
+    checkLintRelease = false
+    useAbisVersion = false
+
+    javaVersion = JavaVersion.VERSION_1_7
+
+    //library
+    libAppcompatV7 = 'com.android.support:appcompat-v7:24.1.1'//23.4.0 | 24.1.1
+    libSupportV4 = 'com.android.support:support-v4:24.1.1'//23.4.0 | 24.1.1
+    libRecyclerView = 'com.android.support:recyclerview-v7:23.3.0'//23.3.0 | 24.1.1
+    libCardView =  'com.android.support:cardview-v7:24.1.1'//23.3.0 | 24.1.1
+    libDesign = 'com.android.support:design:24.1.1' //23.4.0| 24.1.1
+
+    libMultidex = "com.android.support:multidex:1.0.1"
+    libEventBus = 'de.greenrobot:eventbus:3.0.0-beta1'
+    libFastJson = 'com.alibaba:fastjson:1.2.16'
+
+    //progress（boostRecyclerView使用）
+    libProgress = 'com.vlonjatg.android:progress-activity:1.1.1';
+
+    //database
+    libGreenDao = 'org.greenrobot:greendao:3.2.0';
+
+    //image
+    libImageLoader = 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
+
+    //retrofit
+    libRetrofit = 'com.squareup.retrofit2:retrofit:2.1.0';
+    libOkhttp = 'com.squareup.okhttp3:okhttp:3.4.1'; //'com.squareup.okhttp:okhttp:2.4.0'
+    libGson = 'com.squareup.retrofit2:converter-gson:2.0.1';//'com.squareup.retrofit:converter-gson:2.0.0-beta1'
+    libOkhttpInterceptor = 'com.squareup.okhttp3:logging-interceptor:3.1.2';
+    libOkhttp3Cookie = 'com.github.franmontiel:PersistentCookieJar:v1.0.0';
+
+    //permission
+    libEasyPermission =  'pub.devrel:easypermissions:0.1.9'
+}

@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:toggle="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/app_bg_color"
+    android:paddingTop="@dimen/activity_vertical_margin">
+
+    <!--名称-->
+    <EditText
+        android:id="@+id/aimtype_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:maxLength="10"
+        android:gravity="top|left"
+        android:padding="15dp"
+        android:background="@android:color/white"
+        style="@style/DarkCommonHint14Appearance"
+        android:hint="@string/new_aimtype_title_hint"/>
+
+    <!--描述-->
+    <EditText
+        android:id="@+id/aimtype_desc"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="15dp"
+        android:gravity="top|left"
+        android:lines="5"
+        android:maxLength="200"
+        android:layout_marginTop="10dp"
+        style="@style/DarkCommonHint14Appearance"
+        android:background="@android:color/white"
+        android:hint="@string/new_aimtype_desc_hint"/>
+
+    <!--自动创建-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:padding="15dp"
+        android:background="@android:color/white"
+        android:orientation="horizontal">
+        <TextView
+            style="@style/DarkText14Appearance"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/new_aimtype_recyclerable" />
+
+        <android.support.v7.widget.SwitchCompat
+            android:id="@+id/aimtype_recyclerable"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            toggle:buttonTint="@color/indigo"
+            android:layout_gravity="right|center_vertical"
+            />
+    </LinearLayout>
+
+    <!--周期-->
+    <LinearLayout
+        android:id="@+id/layout_period"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:padding="15dp"
+        android:background="@android:color/white"
+        android:orientation="horizontal"
+        android:divider="@color/gray_line">
+
+        <TextView
+            style="@style/DarkText14Appearance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/new_aimtype_period" />
+
+        <TextView
+            android:id="@+id/aimtype_period"
+            style="@style/DarkText14Appearance"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_marginLeft="10dp"
+            android:gravity="center_vertical"
+            android:textSize="15sp"
+            android:paddingLeft="5dp"
+            android:textColorHint="@color/disable_hint"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/icon_right_arrow" />
+    </LinearLayout>
+
+    <!--优先级-->
+    <LinearLayout
+        android:id="@+id/layout_priorty"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:padding="15dp"
+        android:background="@android:color/white"
+        android:orientation="horizontal"
+        android:divider="@color/gray_line">
+
+        <TextView
+            style="@style/DarkText14Appearance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/new_aimtype_priorty" />
+
+        <TextView
+            android:id="@+id/aimtype_priorty"
+            style="@style/DarkText14Appearance"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_marginLeft="10dp"
+            android:gravity="center_vertical"
+            android:textSize="15sp"
+            android:paddingLeft="5dp"
+            android:textColorHint="@color/disable_hint"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/icon_right_arrow" />
+    </LinearLayout>
+
+    <!--封面图片-->
+    <LinearLayout
+        android:id="@+id/layout_cover"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:padding="15dp"
+        android:gravity="center_vertical"
+        android:background="@android:color/white"
+        android:orientation="horizontal"
+        android:divider="@color/gray_line">
+
+        <TextView
+            style="@style/DarkText14Appearance"
+            android:layout_width="wrap_content"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="@string/new_aimtype_cover" />
+
+        <ImageView
+            android:id="@+id/aimtype_cover"
+            android:layout_width="@dimen/item_height_48"
+            android:layout_height="@dimen/item_height_48"
+            android:layout_marginRight="10dp"
+            android:gravity="right|center_vertical"
+            android:background="@color/loading_placeholder"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/icon_right_arrow" />
+    </LinearLayout>
+</LinearLayout>

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/welcome_fragment"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    android:orientation="vertical">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="420dp"
+        android:background="@color/loading_placeholder"
+        android:scaleType="centerCrop"
+        android:src="@mipmap/img_guide3" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_guide_text1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:text="@string/guide_page3_text1"
+            android:textColor="@color/text_gray"
+            android:textSize="22sp" />
+
+        <TextView
+            android:id="@+id/tv_guide_text2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/guide_page3_text2"
+            android:textColor="@color/text_gray"
+            android:textSize="14sp" />
+
+        <Button
+            android:id="@+id/btn_guide_start"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginLeft="45dp"
+            android:layout_marginRight="45dp"
+            android:layout_marginTop="25dp"
+            android:background="@drawable/selector_btn_red"
+            android:text="@string/guide_start"
+            android:textColor="@color/red_pink" />
+    </LinearLayout>
+</LinearLayout>

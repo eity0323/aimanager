@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="placeholder_color_gray">#ECEDEE</color>
+    <color name="selectableItemBackground">#ECECEC</color>
+
+    <color name="actionbar_textcolor_disable">#C7C7C7</color>
+    <color name="actionbar_textcolor_normal">#333333</color>
+    <color name="red_pink">#E53045</color>
+</resources>

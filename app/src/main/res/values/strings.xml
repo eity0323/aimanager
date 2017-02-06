@@ -1,0 +1,57 @@
+<resources>
+    <string name="app_name">AIManager</string>
+    <string name="setting">设置</string>
+
+    <!--关于-->
+    <string name="about_version">目标管理 V1.0 beta</string>
+    <string name="about_website">www.doubeepk.com</string>
+    <string name="about_telephone">0769-81261668</string>
+    <string name="about_server_tel">0755-82268979</string>
+    <string name="about_email">service@shoelives.com</string>
+    <string name="about_wrcode">关注微信：目标管理</string>
+    <string name="about_copyright">Copyright © 2017 Aimanager.  All Rights Reserved</string>
+    <string name="about_slogan">目标管理，每天进步一点点</string>
+    <string name="about_title">关于</string>
+
+    <!--设置-->
+    <string name="setting_clear_cache">清除缓存</string>
+    <string name="setting_default_request">设置默认数据请求方式</string>
+    <string name="setting_current_request">设置数据请求方式(%1$s)</string>
+    <string name="setting_change_environment">切换网络环境</string>
+    <string name="setting_current_environment">切换网络环境(%1$s)</string>
+    <string name="setting_new_version">软件升级 (V%1$s)</string>
+    <string name="setting_switch_log">开启日志打印</string>
+
+    <!--引导页-->
+    <string name="guide_page1_text1">新年新期望</string>
+    <string name="guide_page1_text2">每个女人都能拥有独一无二的鞋子</string>
+    <string name="guide_page2_text1">艺术源于生活</string>
+    <string name="guide_page2_text2">量身定做，个性与艺术的完美结合</string>
+    <string name="guide_page3_text1">鞋生活</string>
+    <string name="guide_page3_text2">个性与定制，让行走更自由</string>
+    <string name="guide_start">立即体验</string>
+    <string name="guide_skip">跳过</string>
+
+    <!--版本升级-->
+    <string name="more_update_version">版本更新</string>
+    <string name="more_update_version_downloading">下载中...</string>
+    <string name="more_update_version_hasnew">检测到有新版本,请升级至最新版本</string>
+    <string name="common_exit_app">退出应用</string>
+    <string name="common_update_must">立即更新</string>
+    <string name="common_cancel">取消</string>
+    <string name="common_update">立即更新</string>
+    <string name="common_update_next">下次再说</string>
+
+    <!--主页-->
+    <string name="main_generate">新建</string>
+
+    <!--新建分类页-->
+    <string name="new_aimtype_title_hint">请输入分类名称(10字以内)</string>
+    <string name="new_aimtype_desc_hint">请输入分类描述(200字以内)</string>
+    <string name="new_aimtype_recyclerable">自动创建</string>
+    <string name="new_aimtype_period">执行周期</string>
+    <string name="new_aimtype_priorty">优先级</string>
+    <string name="new_aimtype_cover">Icon图标</string>
+
+    <string name="submit">提交</string>
+</resources>

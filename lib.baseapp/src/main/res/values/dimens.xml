@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="toast_margin_bottom">197.0dip</dimen>
+    <dimen name="toast_margin_top">50dp</dimen>
+    <dimen name="dividerHeight">1px</dimen>
+</resources>

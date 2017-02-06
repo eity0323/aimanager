@@ -1,0 +1,37 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/transparent"
+    android:clipToPadding="true"
+    android:fitsSystemWindows="false">
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/pager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/dim_foreground_disabled_material_dark" />
+
+
+    <LinearLayout
+        android:id="@+id/circles"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|center_horizontal"
+        android:layout_marginBottom="48dp"
+        android:orientation="horizontal">
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/skipBtn"
+        android:layout_width="47dp"
+        android:layout_height="24dp"
+        android:layout_gravity="top|right"
+        android:layout_marginRight="14dp"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/selector_btn_white"
+        android:text="@string/guide_skip"
+        android:textColor="@android:color/white"
+        android:textSize="12dp" />
+</FrameLayout>
