@@ -9,6 +9,8 @@ import com.sien.lib.baseapp.BaseApplication;
  * 
  */
 public class AppConfig {
+	public final static int REQUEST_CODE_SELECTCOVER = 207;//选择封面图片
+
 	/**
 	 * 程序应用版本升级信息
 	 */

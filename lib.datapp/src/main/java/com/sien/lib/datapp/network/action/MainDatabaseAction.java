@@ -235,7 +235,7 @@ public class MainDatabaseAction {
             EventPostUtil.post(new DatappEvent.deleteAimItemEvent(DatappEvent.STATUS_FAIL_OHTERERROR, aimItemId));
             return;
         }
-        if (aimItemId != null) {
+        if (aimItemId == null) {
             CPLogUtil.logDebug("deleteAimItemById aimItemId can not be null");
             EventPostUtil.post(new DatappEvent.deleteAimItemEvent(DatappEvent.STATUS_FAIL_OHTERERROR, aimItemId));
             return;
@@ -268,7 +268,7 @@ public class MainDatabaseAction {
             EventPostUtil.post(new DatappEvent.deleteAimItemEvent(DatappEvent.STATUS_FAIL_OHTERERROR, aimItemTypeId));
             return;
         }
-        if (aimItemTypeId != null) {
+        if (aimItemTypeId == null) {
             CPLogUtil.logDebug("deleteAimItemsByTypeId aimItemId can not be null");
             EventPostUtil.post(new DatappEvent.deleteAimItemEvent(DatappEvent.STATUS_FAIL_OHTERERROR, aimItemTypeId));
             return;
@@ -303,7 +303,7 @@ public class MainDatabaseAction {
             EventPostUtil.post(new DatappEvent.deleteAimTypeEvent(DatappEvent.STATUS_FAIL_OHTERERROR, aimTypeId));
             return;
         }
-        if (aimTypeId != null) {
+        if (aimTypeId == null) {
             CPLogUtil.logDebug("deleteAimTypeById aimTypeId can not be null");
             EventPostUtil.post(new DatappEvent.deleteAimTypeEvent(DatappEvent.STATUS_FAIL_OHTERERROR, aimTypeId));
             return;

@@ -20,6 +20,7 @@ public abstract class CPBaseRecyclerAdapter<T> extends RecyclerView.Adapter<CPRe
     protected boolean isScrolling;
     protected Context cxt;
     protected OnItemClickListener listener;
+    protected OnItemLongClickListener longClickListener;
     protected ArrayList<T> realDatas;
 
     protected int itemHeight;
@@ -62,6 +63,10 @@ public abstract class CPBaseRecyclerAdapter<T> extends RecyclerView.Adapter<CPRe
         void onItemClick(View view, Object data, int position);
     }
 
+    public interface OnItemLongClickListener{
+        void onItemLongClick(View view,Object data,int position);
+    }
+
     /**
      * Recycler适配器填充方法p
      *
@@ -84,6 +89,7 @@ public abstract class CPBaseRecyclerAdapter<T> extends RecyclerView.Adapter<CPRe
     public void onBindViewHolder(CPRecyclerHolder holder, int position) {
         convert(holder, realDatas.get(position), position, isScrolling);
         holder.itemView.setOnClickListener(getOnClickListener(position));
+        holder.itemView.setOnLongClickListener(getOnLongClickListener(position));
     }
 
 
@@ -99,6 +105,14 @@ public abstract class CPBaseRecyclerAdapter<T> extends RecyclerView.Adapter<CPRe
 
     public void removeItemClickListener(){
         listener = null;
+    }
+
+    public void remoeItemLongClickListener() {
+        longClickListener = null;
+    }
+
+    public void setOnItemLongClickListener(OnItemLongClickListener longClickListener) {
+        this.longClickListener = longClickListener;
     }
 
     public void releaseMemory(){
@@ -122,6 +136,18 @@ public abstract class CPBaseRecyclerAdapter<T> extends RecyclerView.Adapter<CPRe
                 if (listener != null && v != null) {
                     listener.onItemClick(v, realDatas.get(position), position);
                 }
+            }
+        };
+    }
+
+    public View.OnLongClickListener getOnLongClickListener(final int position){
+        return new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                if (longClickListener != null && v != null) {
+                    longClickListener.onItemLongClick(v, realDatas.get(position), position);
+                }
+                return false;
             }
         };
     }

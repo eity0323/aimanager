@@ -53,6 +53,10 @@
             android:screenOrientation="portrait"
             android:theme="@style/BaseActivityTheme" />
 
+        <activity android:name=".activity.SelectCoverAvtivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/BaseActivityTheme" />
+
 
         <!--监听网络状态变化-->
         <receiver android:name=".receiver.ConnectionChangeReceiver" android:label="NetworkConnection">

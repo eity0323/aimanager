@@ -68,4 +68,11 @@ public class NewAimTypePresenter extends BusBaseBoostPresenter {
     public ICPBaseBoostViewModel createViewModel() {
         return impl;
     }
+
+    @Override
+    public void releaseMemory() {
+        super.releaseMemory();
+
+        impl = null;
+    }
 }

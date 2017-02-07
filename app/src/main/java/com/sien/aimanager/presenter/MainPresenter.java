@@ -27,7 +27,7 @@ import de.greenrobot.event.Subscribe;
  */
 public class MainPresenter extends BusBaseBoostPresenter {
     private final int MSG_UPDATE_VERSIONCHECK = 1;//版本校验
-    private final int MSG_UPDATE_AIMTYPE = 2;//目标类型
+    private final int MSG_UPDATE_AIMTYPE = 2;//查询目标类型
 
     private IMainViewModel impl;
 
@@ -51,6 +51,10 @@ public class MainPresenter extends BusBaseBoostPresenter {
 
     public void requestAimTypeDatas(){
         MainDatabaseAction.requestAimTypeDatas(mcontext);
+    }
+
+    public void deleteAimType(Long aimTypeId){
+        MainDatabaseAction.deleteAimTypeById(mcontext,aimTypeId);
     }
 
     public VersionCheckVO getVersionCheckVO() {
@@ -84,6 +88,16 @@ public class MainPresenter extends BusBaseBoostPresenter {
                 msg.what = MSG_UPDATE_AIMTYPE;
                 msg.obj = event.getResult();
                 updateMessageHander.sendMessage(msg);
+            }
+        }
+    }
+
+    @Subscribe
+    public void deleteAimTypeEventReceiver(DatappEvent.deleteAimTypeEvent event){
+        if (event != null){
+            if (event.checkStatus()){
+                //删除成功，刷新数据
+                requestAimTypeDatas();
             }
         }
     }
@@ -133,5 +147,11 @@ public class MainPresenter extends BusBaseBoostPresenter {
         super.releaseMemory();
 
         versionCheckVO = null;
+        impl = null;
+
+        if (datasource != null){
+            datasource.clear();
+        }
+        datasource = null;
     }
 }

@@ -44,6 +44,7 @@
 
     <!--主页-->
     <string name="main_generate">新建</string>
+    <string name="exit_tips">再按一次返回键退出</string>
 
     <!--新建分类页-->
     <string name="new_aimtype_title_hint">请输入分类名称(10字以内)</string>
@@ -52,6 +53,8 @@
     <string name="new_aimtype_period">执行周期</string>
     <string name="new_aimtype_priorty">优先级</string>
     <string name="new_aimtype_cover">Icon图标</string>
+    <string name="period_one_day">1天</string>
+    <string name="priority_five_level">5级</string>
 
     <string name="submit">提交</string>
 </resources>

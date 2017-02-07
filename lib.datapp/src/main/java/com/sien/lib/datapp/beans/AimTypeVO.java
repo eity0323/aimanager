@@ -8,7 +8,7 @@ import org.greenrobot.greendao.annotation.*;
  * Entity mapped to table "AIM_TYPE_VO".
  */
 @Entity
-public class AimTypeVO {
+public class AimTypeVO extends CPBaseVO{
 
     @Id(autoincrement = true)
     private Long id;

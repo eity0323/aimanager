@@ -81,10 +81,9 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:layout_marginLeft="10dp"
-            android:gravity="center_vertical"
-            android:textSize="15sp"
-            android:paddingLeft="5dp"
+            android:layout_marginRight="10dp"
+            android:gravity="center_vertical|right"
+            android:text="@string/period_one_day"
             android:textColorHint="@color/disable_hint"/>
 
         <ImageView
@@ -116,10 +115,9 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:layout_width="0dp"
-            android:layout_marginLeft="10dp"
-            android:gravity="center_vertical"
-            android:textSize="15sp"
-            android:paddingLeft="5dp"
+            android:layout_marginRight="10dp"
+            android:gravity="center_vertical|right"
+            android:text="@string/priority_five_level"
             android:textColorHint="@color/disable_hint"/>
 
         <ImageView

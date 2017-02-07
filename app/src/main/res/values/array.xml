@@ -12,4 +12,21 @@
         <item>测试环境</item>
         <item>正式环境</item>
     </string-array>
+
+    <string-array name="aimtype_period_source">
+        <item>1天</item>
+        <item>1周</item>
+        <item>1月</item>
+        <item>1季</item>
+        <item>半年</item>
+        <item>1年</item>
+    </string-array>
+
+    <string-array name="aimtype_priorty_source">
+        <item>5级</item>
+        <item>4级</item>
+        <item>3级</item>
+        <item>2级</item>
+        <item>1级</item>
+    </string-array>
 </resources>

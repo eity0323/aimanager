@@ -1,7 +1,11 @@
 package com.sien.aimanager.activity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
@@ -17,7 +21,10 @@ import com.sien.aimanager.model.IMainViewModel;
 import com.sien.aimanager.presenter.MainPresenter;
 import com.sien.lib.baseapp.BaseApplication;
 import com.sien.lib.baseapp.activity.CPBaseBoostActivity;
+import com.sien.lib.baseapp.adapter.CPBaseRecyclerAdapter;
+import com.sien.lib.baseapp.utils.RepeatClickUtil;
 import com.sien.lib.baseapp.widgets.recyclerview.CPDividerItemDecoration;
+import com.sien.lib.datapp.beans.AimTypeVO;
 import com.sien.lib.datapp.cache.CacheDataStorage;
 import com.sien.lib.datapp.network.base.RequestFreshStatus;
 
@@ -27,6 +34,8 @@ public class MainActivity extends CPBaseBoostActivity implements IMainViewModel{
     private MainPresenter presenter;
     private RecyclerView recyclerView;
     private MainAdapter adapter;
+
+    private SwipeRefreshLayout refreshLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +73,15 @@ public class MainActivity extends CPBaseBoostActivity implements IMainViewModel{
         recyclerView.addItemDecoration(itemDecoration);
 
         findView(R.id.newAimType).setOnClickListener(clickListener);
+
+        refreshLayout = findView(R.id.aimTypeRefresh);
+        refreshLayout.setColorSchemeColors(ContextCompat.getColor(this,R.color.indigo));
+        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                presenter.requestAimTypeDatas();
+            }
+        });
     }
 
     @Override
@@ -108,11 +126,63 @@ public class MainActivity extends CPBaseBoostActivity implements IMainViewModel{
         return super.onOptionsItemSelected(item);
     }
 
+    /*操作面板*/
+    private void showOperatePanel(final AimTypeVO aimTypeVO){
+        String[] titles = {"修改","删除"};
+        AlertDialog.Builder builder = new AlertDialog.Builder(this).setItems(titles, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int itemPosition) {
+                if (itemPosition == 0) {
+                    go2ModifyAimTypeActivity(aimTypeVO);
+                } else if (itemPosition == 1) {
+                    doDeleteAimType(aimTypeVO);
+                }
+            }
+        });
+        builder.create().show();
+    }
+
+    private void go2AimItemActivity(AimTypeVO aimTypeVO){
+
+    }
+
+    /*跳转至修改目标类型*/
+    private void go2ModifyAimTypeActivity(AimTypeVO aimTypeVO){
+        Intent intent = new Intent(this,NewAimTypeActivity.class);
+        intent.putExtra("ds",aimTypeVO);
+        startActivity(intent);
+    }
+
+    /*删除目标类型*/
+    private void doDeleteAimType(AimTypeVO aimTypeVO){
+        if (aimTypeVO.getCustomed().equals(false)){
+            showToast("系统目标类型，不能删除");
+            return;
+        }
+
+        presenter.deleteAimType(aimTypeVO.getId());
+    }
+
     /*展示变更列表数据*/
     private void displayChangedAdapter(){
         if (adapter == null){
             adapter = new MainAdapter(recyclerView,presenter.getDatasource());
+            adapter.setOnItemLongClickListener(new CPBaseRecyclerAdapter.OnItemLongClickListener() {
+                @Override
+                public void onItemLongClick(View view, Object data, int position) {
+                    showOperatePanel((AimTypeVO)data);
+                }
+            });
+            adapter.setOnItemClickListener(new CPBaseRecyclerAdapter.OnItemClickListener() {
+                @Override
+                public void onItemClick(View view, Object data, int position) {
+                    go2AimItemActivity((AimTypeVO)data);
+                }
+            });
             recyclerView.setAdapter(adapter);
+        }else {
+            adapter.refresh(presenter.getDatasource());
+            adapter.notifyDataSetChanged();
         }
     }
 
@@ -129,6 +199,15 @@ public class MainActivity extends CPBaseBoostActivity implements IMainViewModel{
     /*跳转至新建目标分类页*/
     private void go2NewAimTypeActivity(){
         startActivity(new Intent(this,NewAimTypeActivity.class));
+    }
+
+    @Override
+    public void onBackPressed() {
+        if(RepeatClickUtil.isRepeatClick(2000)){
+            super.onBackPressed();
+        }else {
+            showToast(R.string.exit_tips);
+        }
     }
 
     @Override
@@ -171,6 +250,10 @@ public class MainActivity extends CPBaseBoostActivity implements IMainViewModel{
 
         if (status != RequestFreshStatus.REFRESH_ERROR){
             displayChangedAdapter();
+        }
+
+        if (refreshLayout != null){
+            refreshLayout.setRefreshing(false);
         }
     }
 

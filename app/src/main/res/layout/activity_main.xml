@@ -10,23 +10,28 @@
         android:id="@+id/newAimType"
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:gravity="center"
         android:layout_alignParentBottom="true"
-        android:background="@drawable/selector_button">
+        android:background="@drawable/selector_button"
+        android:gravity="center">
 
         <TextView
+            style="@style/WhiteText16Appearance"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            style="@style/WhiteText16Appearance"
-            android:drawablePadding="10dp"
             android:drawableLeft="@mipmap/icon_add"
+            android:drawablePadding="10dp"
             android:text="@string/main_generate" />
     </LinearLayout>
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/aimTypeList"
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/aimTypeRefresh"
+        android:layout_above="@id/newAimType"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@id/newAimType" />
+        android:layout_height="match_parent">
 
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/aimTypeList"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+    </android.support.v4.widget.SwipeRefreshLayout>
 </RelativeLayout>
