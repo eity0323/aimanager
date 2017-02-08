@@ -6,76 +6,79 @@
     android:fitsSystemWindows="true"
     android:orientation="vertical">
 
-    <include layout="@layout/layout_normal_toolbar" />
-
-    <LinearLayout
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/settingList"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/app_bg_color"
-        android:gravity="right"
-        android:orientation="vertical"
-        android:paddingBottom="20dp"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:paddingTop="20dp">
+        android:layout_height="match_parent"></android.support.v7.widget.RecyclerView>
 
-        <Button
-            android:id="@+id/clear_cache_btn"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="right"
-            android:background="@drawable/selector_button"
-            android:paddingBottom="10dp"
-            android:paddingTop="10dp"
-            android:text="@string/setting_clear_cache"
-            android:textColor="@android:color/white" />
+    <!--<LinearLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:background="@color/app_bg_color"-->
+        <!--android:gravity="right"-->
+        <!--android:orientation="vertical"-->
+        <!--android:paddingBottom="20dp"-->
+        <!--android:paddingLeft="10dp"-->
+        <!--android:paddingRight="10dp"-->
+        <!--android:paddingTop="20dp">-->
 
-        <Button
-            android:id="@+id/set_default_request_btn"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="right"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/selector_button"
-            android:paddingBottom="10dp"
-            android:paddingTop="10dp"
-            android:text="@string/setting_default_request"
-            android:textColor="@android:color/white" />
+        <!--<Button-->
+            <!--android:id="@+id/clear_cache_btn"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_gravity="right"-->
+            <!--android:background="@drawable/selector_button"-->
+            <!--android:paddingBottom="10dp"-->
+            <!--android:paddingTop="10dp"-->
+            <!--android:text="@string/setting_clear_cache"-->
+            <!--android:textColor="@android:color/white" />-->
 
-        <Button
-            android:id="@+id/set_new_version_btn"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="right"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/selector_button"
-            android:paddingBottom="10dp"
-            android:paddingTop="10dp"
-            android:text="@string/setting_new_version"
-            android:textColor="@android:color/white" />
+        <!--<Button-->
+            <!--android:id="@+id/set_default_request_btn"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_gravity="right"-->
+            <!--android:layout_marginTop="10dp"-->
+            <!--android:background="@drawable/selector_button"-->
+            <!--android:paddingBottom="10dp"-->
+            <!--android:paddingTop="10dp"-->
+            <!--android:text="@string/setting_default_request"-->
+            <!--android:textColor="@android:color/white" />-->
 
-        <Button
-            android:id="@+id/change_environment_btn"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="right"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/selector_button"
-            android:paddingBottom="10dp"
-            android:paddingTop="10dp"
-            android:text="@string/setting_change_environment"
-            android:textColor="@android:color/white" />
+        <!--<Button-->
+            <!--android:id="@+id/set_new_version_btn"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_gravity="right"-->
+            <!--android:layout_marginTop="10dp"-->
+            <!--android:background="@drawable/selector_button"-->
+            <!--android:paddingBottom="10dp"-->
+            <!--android:paddingTop="10dp"-->
+            <!--android:text="@string/setting_new_version"-->
+            <!--android:textColor="@android:color/white" />-->
 
-        <Button
-            android:id="@+id/switch_log_btn"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="right"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/selector_button"
-            android:paddingBottom="10dp"
-            android:paddingTop="10dp"
-            android:text="@string/setting_switch_log"
-            android:textColor="@android:color/white" />
-    </LinearLayout>
+        <!--<Button-->
+            <!--android:id="@+id/change_environment_btn"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_gravity="right"-->
+            <!--android:layout_marginTop="10dp"-->
+            <!--android:background="@drawable/selector_button"-->
+            <!--android:paddingBottom="10dp"-->
+            <!--android:paddingTop="10dp"-->
+            <!--android:text="@string/setting_change_environment"-->
+            <!--android:textColor="@android:color/white" />-->
+
+        <!--<Button-->
+            <!--android:id="@+id/switch_log_btn"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_gravity="right"-->
+            <!--android:layout_marginTop="10dp"-->
+            <!--android:background="@drawable/selector_button"-->
+            <!--android:paddingBottom="10dp"-->
+            <!--android:paddingTop="10dp"-->
+            <!--android:text="@string/setting_switch_log"-->
+            <!--android:textColor="@android:color/white" />-->
+    <!--</LinearLayout>-->
 </LinearLayout>

@@ -13,8 +13,7 @@ import java.io.File;
  */
 public class CPConfiguration {
     //public
-    public static final String REQUEST_MODEL_KEY = "request_model_key";//数据请求方式
-    public static final String ENVIRONMENT_KEY = "environment_key";//网络环境
+    public static boolean USING_PASSWORD = false;//是否开启密码
 
     //private
     /**

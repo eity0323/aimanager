@@ -58,6 +58,16 @@ public class BasePresenter {
 
     }
 
+    /*将数据传回UI线程*/
+    protected void postMessage2UI(Object data,int what){
+        if (updateMessageHander != null) {
+            Message msg = new Message();
+            msg.what = what;
+            msg.obj = data;
+            updateMessageHander.sendMessage(msg);
+        }
+    }
+
     /** 用于当前页面处于激活状态时，及时更新界面 */
     protected static class InnerHandler extends Handler {
         private final WeakReference<BasePresenter> helper;

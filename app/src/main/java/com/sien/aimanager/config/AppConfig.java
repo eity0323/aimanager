@@ -9,7 +9,9 @@ import com.sien.lib.baseapp.BaseApplication;
  * 
  */
 public class AppConfig {
-	public final static int REQUEST_CODE_SELECTCOVER = 207;//选择封面图片
+	public final static int REQUEST_CODE_SELECTCOVER = 2071;//选择封面图片
+	public final static int REQUEST_CODE_ENVIRONMENT= 2081;//切换网络环境
+	public final static int REQUEST_CODE_DATE_SOURCE = 2082;//切换数据来源
 
 	/**
 	 * 程序应用版本升级信息

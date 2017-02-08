@@ -9,6 +9,22 @@ import org.greenrobot.greendao.annotation.*;
  */
 @Entity
 public class AimItemVO {
+    public static final int STATUS_UNDO = 0;//未做状态
+    public static final int STATUS_DONE = 1;//完成状态
+
+    public static final int PERIOD_DAY = 1;//1天
+    public static final int PERIOD_WEEK = 7;//1周
+    public static final int PERIOD_MONTH = 30;//1月
+    public static final int PERIOD_SEASON = 90;//1季
+    public static final int PERIOD_HALF_YEAR = 180;//半年
+    public static final int PERIOD_YEAR = 365;//1年
+    public static final int PERIOD_HALF_MONTH = 15;//半月
+
+    public static final int PRIORITY_ONE = 1;//1级
+    public static final int PRIORITY_TWO = 1;//2级
+    public static final int PRIORITY_THREE = 1;//3级
+    public static final int PRIORITY_FOUR = 1;//4级
+    public static final int PRIORITY_FIVE = 1;//5级
 
     @Id(autoincrement = true)
     private Long id;

@@ -71,24 +71,14 @@ public class MainPresenter extends BusBaseBoostPresenter {
     @Subscribe
     public void RequestVersionCheckEventReceiver(DatappEvent.RequestVersionCheckEvent event){
         if (event != null){
-            if (updateMessageHander != null) {
-                Message msg = new Message();
-                msg.what = MSG_UPDATE_VERSIONCHECK;
-                msg.obj = event.getResult();
-                updateMessageHander.sendMessage(msg);
-            }
+            postMessage2UI(event.getResult(),MSG_UPDATE_VERSIONCHECK);
         }
     }
 
     @Subscribe
     public void AimTypeEventReceiver(DatappEvent.AimTypeEvent event){
         if (event != null){
-            if (updateMessageHander != null) {
-                Message msg = new Message();
-                msg.what = MSG_UPDATE_AIMTYPE;
-                msg.obj = event.getResult();
-                updateMessageHander.sendMessage(msg);
-            }
+            postMessage2UI(event.getResult(),MSG_UPDATE_AIMTYPE);
         }
     }
 

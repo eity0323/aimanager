@@ -5,25 +5,27 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.Button;
 
 import com.sien.aimanager.R;
+import com.sien.aimanager.adapter.SettingAdapter;
 import com.sien.aimanager.config.AppConfig;
 import com.sien.aimanager.control.UpdateManager;
 import com.sien.aimanager.model.IMenuSettingViewModel;
 import com.sien.aimanager.presenter.MenuSettingPresenter;
 import com.sien.lib.baseapp.BaseApplication;
-import com.sien.lib.baseapp.activity.CPBaseActivity;
-import com.sien.lib.datapp.utils.CPStringUtil;
-import com.sien.lib.baseapp.utils.RepeatClickUtil;
-import com.sien.lib.datapp.cache.BaseRepository;
+import com.sien.lib.baseapp.activity.CPBaseBoostActivity;
+import com.sien.lib.baseapp.adapter.CPBaseRecyclerAdapter;
+import com.sien.lib.baseapp.widgets.recyclerview.CPDividerItemDecoration;
 import com.sien.lib.datapp.config.DatappConfig;
 import com.sien.lib.datapp.control.CPSharedPreferenceManager;
 import com.sien.lib.datapp.control.DataCleanManager;
 import com.sien.lib.datapp.utils.CPDeviceUtil;
 import com.sien.lib.datapp.utils.CPFileUtils;
 import com.sien.lib.datapp.utils.CPNetworkUtil;
+import com.sien.lib.datapp.utils.CPStringUtil;
 
 /**
  * Name: MenuSettingActivity
@@ -32,43 +34,32 @@ import com.sien.lib.datapp.utils.CPNetworkUtil;
  * Comment: //应用设置页
  * Date: 2016-07-25 17:13
  */
-public class MenuSettingActivity extends CPBaseActivity implements IMenuSettingViewModel {
-    private final int ENVIRONMENT_REQUEST_CODE = 2233;
-    private final int SOURCE_REQUEST_CODE = 3344;
-    private Button versionBtn,envBtn,cacheBtn,requestBtn,switchLogBtn;
+public class MenuSettingActivity extends CPBaseBoostActivity implements IMenuSettingViewModel {
+
     private MenuSettingPresenter presenter;
+
+    private RecyclerView recyclerView;
+    private SettingAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_app_setting);
 
-        cacheBtn = findView(R.id.clear_cache_btn);
-        cacheBtn.setOnClickListener(clickListener);
-
-        envBtn = findView(R.id.change_environment_btn);
-        requestBtn = findView(R.id.set_default_request_btn);
-        requestBtn.setOnClickListener(clickListener);
-
-        envBtn.setOnClickListener(clickListener);
-
-        switchLogBtn = findView(R.id.switch_log_btn);
-        switchLogBtn.setOnClickListener(clickListener);
-
-        versionBtn = findView(R.id.set_new_version_btn);
-        String res = String.format(getString(R.string.setting_new_version), CPDeviceUtil.getVersionName(this));
-        versionBtn.setText(res);
-        versionBtn.setOnClickListener(clickListener);
-
-        displayCacheSizeText();
-        displayEnvironmentText();
-        displayRequestSourceText();
-        displayLogText();
     }
 
     @Override
     public void initViews() {
-        getSupportActionBar().setTitle("配置");
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setTitle("配置");
+        }
+
+        recyclerView = findView(R.id.settingList);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false);
+        recyclerView.setLayoutManager(layoutManager);
+
+        CPDividerItemDecoration itemDecoration = new CPDividerItemDecoration(this,CPDividerItemDecoration.VERTICAL_LIST);
+        recyclerView.addItemDecoration(itemDecoration);
     }
 
     @Override
@@ -76,96 +67,56 @@ public class MenuSettingActivity extends CPBaseActivity implements IMenuSettingV
         super.initial();
 
         presenter = getPresenter();
-    }
 
-    private void displayRequestSourceText(){
-        String temp = "缓存优先";
-        if (DatappConfig.DEFAULT_REQUEST_MODEL == BaseRepository.REQUEST_ONLEY_CACHE){
-            temp = "仅缓存";
-        }else if (DatappConfig.DEFAULT_REQUEST_MODEL == BaseRepository.REQUEST_ONLEY_NETWORK){
-            temp = "仅网络";
-        }else if (DatappConfig.DEFAULT_REQUEST_MODEL == BaseRepository.REQUEST_BOTH) {
-            temp = "先缓存再网络";
-        }
-
-        String res = String.format(getString(R.string.setting_current_request),temp);
-        requestBtn.setText(res);
-    }
-
-    private void displayCacheSizeText(){
-        try {
-            String cacheSize = CPFileUtils.getTotalCacheSize(this);
-
-            cacheBtn.setText(getString(R.string.setting_clear_cache) + "(" + cacheSize + ")");
-        }catch (Exception ex){
-            ex.printStackTrace();
-        }
-    }
-
-    private void displayLogText(){
-        String res = getString(R.string.setting_switch_log);
-        if (DatappConfig.IS_DEV){
-            res += "(开)";
-        }else {
-            res += "(关)";
-        }
-        switchLogBtn.setText(res);
-    }
-
-    /*显示网络环境版本*/
-    private void displayEnvironmentText(){
-        String temp = "开发环境";
-        if (DatappConfig.enviromentType == DatappConfig.ENV_DEVELOP){
-            temp = "测试环境";
-        }else if (DatappConfig.enviromentType == DatappConfig.ENV_OFFICAL){
-            temp = "正式环境";
-        }
-
-        String res = String.format(getString(R.string.setting_current_environment),temp);
-        envBtn.setText(res);
-    }
-
-    private View.OnClickListener clickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            int vid = v.getId();
-
-            if (vid == R.id.set_new_version_btn){
-                if (!RepeatClickUtil.isRepeatClick()) {
-                    checkAndPrepareUpgrade();
-                }
-            }else if (vid == R.id.set_default_request_btn){
-                if (!RepeatClickUtil.isRepeatClick()) {
-                    setDefaultRequestSource();
-                }
-            }else if (vid == R.id.clear_cache_btn){
-                if (!RepeatClickUtil.isRepeatClick()) {
+        adapter = new SettingAdapter(recyclerView,presenter.getDatasource());
+        adapter.setOnItemClickListener(new CPBaseRecyclerAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, Object data, int position) {
+                if (position == 0){
                     cleanCacheConfirmPanel();
-                }
-            }else if (vid == R.id.change_environment_btn){
-                if (!RepeatClickUtil.isRepeatClick()) {
+                }else if (position == 1){
+                    setDefaultRequestSource();
+                }else if (position == 2){
+                    checkAndPrepareUpgrade();
+                }else if (position == 3){
                     changeEnvironment();
-                }
-            }else if (vid == R.id.switch_log_btn){
-                if (!RepeatClickUtil.isRepeatClick()){
+                }else if (position == 4){
                     switchLog();
+                }else if (position == 5){
+                    //密码
+                }else if (position == 6){
+                    go2AboutActivity();
                 }
             }
-        }
-    };
+        });
+        recyclerView.setAdapter(adapter);
+
+        showContentLayout();
+    }
+
+    private void go2AboutActivity(){
+        startActivity(new Intent(this,AboutActivity.class));
+    }
 
     /*切换打印日志*/
     private void switchLog(){
         DatappConfig.IS_DEV = !DatappConfig.IS_DEV;
 
-        displayLogText();
+        presenter.changeLogStatus();
+        refreshAdapterDisplay();
+    }
+
+    /*刷新显示*/
+    private void refreshAdapterDisplay(){
+        adapter.refresh(presenter.getDatasource());
+        adapter.notifyDataSetChanged();
     }
 
     /*切换网络环境*/
     private void changeEnvironment(){
         Intent intent = new Intent(this,RequestSourceActivity.class);
         intent.putExtra("entryModel",2);
-        startActivityForResult(intent,ENVIRONMENT_REQUEST_CODE);
+        startActivityForResult(intent,AppConfig.REQUEST_CODE_ENVIRONMENT);
     }
 
     /*检查并准备更新*/
@@ -250,12 +201,13 @@ public class MenuSettingActivity extends CPBaseActivity implements IMenuSettingV
         //删除本地缓存文件夹 /mnt/sdcard/Android/data/[app package]/cache
         DataCleanManager.deleteFielOrDirectoryByPath(CPFileUtils.getAppCacheRootFilePath(getApplicationContext()));
 
-        displayCacheSizeText();
+        presenter.changeCacheData();
+        refreshAdapterDisplay();
     }
 
     /*设置默认请求方式*/
     private void setDefaultRequestSource(){
-        startActivityForResult(new Intent(this,RequestSourceActivity.class),SOURCE_REQUEST_CODE);
+        startActivityForResult(new Intent(this,RequestSourceActivity.class),AppConfig.REQUEST_CODE_DATE_SOURCE);
     }
 
     /*校验并发送升级事件*/
@@ -279,11 +231,13 @@ public class MenuSettingActivity extends CPBaseActivity implements IMenuSettingV
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == ENVIRONMENT_REQUEST_CODE && resultCode == ENVIRONMENT_REQUEST_CODE){
-            displayEnvironmentText();
-            displayCacheSizeText();
-        }else if (requestCode == SOURCE_REQUEST_CODE && resultCode == SOURCE_REQUEST_CODE){
-            displayRequestSourceText();
+        if (requestCode == AppConfig.REQUEST_CODE_ENVIRONMENT && resultCode == AppConfig.REQUEST_CODE_ENVIRONMENT){
+            presenter.changeNetworkEnv();
+            presenter.changeCacheData();
+            refreshAdapterDisplay();
+        }else if (requestCode == AppConfig.REQUEST_CODE_DATE_SOURCE && resultCode == AppConfig.REQUEST_CODE_DATE_SOURCE){
+            presenter.changeRequestSource();
+            refreshAdapterDisplay();
         }
     }
 

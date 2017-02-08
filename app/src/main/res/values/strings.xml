@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">AIManager</string>
     <string name="setting">设置</string>
+    <string name="synchronous">同步</string>
 
     <!--关于-->
     <string name="about_version">目标管理 V1.0 beta</string>
@@ -15,12 +16,11 @@
 
     <!--设置-->
     <string name="setting_clear_cache">清除缓存</string>
-    <string name="setting_default_request">设置默认数据请求方式</string>
-    <string name="setting_current_request">设置数据请求方式(%1$s)</string>
+    <string name="setting_default_request">数据请求方式</string>
     <string name="setting_change_environment">切换网络环境</string>
-    <string name="setting_current_environment">切换网络环境(%1$s)</string>
-    <string name="setting_new_version">软件升级 (V%1$s)</string>
-    <string name="setting_switch_log">开启日志打印</string>
+    <string name="setting_new_version">软件版本</string>
+    <string name="setting_switch_log">日志打印</string>
+    <string name="setting_using_psd">启动密码</string>
 
     <!--引导页-->
     <string name="guide_page1_text1">新年新期望</string>
@@ -57,4 +57,12 @@
     <string name="priority_five_level">5级</string>
 
     <string name="submit">提交</string>
+
+    <!--分类管理-->
+    <string name="new_aimitem_title">添加目标项</string>
+    <string name="new_aimitem_title_hint">请输入目标项名称(10字以内)</string>
+    <string name="modify">编辑</string>
+    <string name="confirm">确定</string>
+    <string name="cancel">取消</string>
+
 </resources>

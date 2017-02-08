@@ -31,8 +31,8 @@ public class NewAimTypePresenter extends BusBaseBoostPresenter {
         impl = (INewAimTypeViewModel) context;
     }
 
-    public void insertAimTypeRecord(AimTypeVO aimTypeVO){
-        MainDatabaseAction.insertAimType(mcontext,aimTypeVO);
+    public void insertOrReplaceAimTypeRecord(AimTypeVO aimTypeVO){
+        MainDatabaseAction.insertOrReplaceAimType(mcontext,aimTypeVO);
     }
 
     public void searchAimTypeRecord(){

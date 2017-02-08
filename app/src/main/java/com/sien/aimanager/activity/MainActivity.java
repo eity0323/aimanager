@@ -14,7 +14,7 @@ import android.view.View;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.sien.aimanager.R;
-import com.sien.aimanager.adapter.MainAdapter;
+import com.sien.aimanager.adapter.AimTypeAdapter;
 import com.sien.aimanager.config.AppConfig;
 import com.sien.aimanager.control.UpdateManager;
 import com.sien.aimanager.model.IMainViewModel;
@@ -33,7 +33,7 @@ public class MainActivity extends CPBaseBoostActivity implements IMainViewModel{
 
     private MainPresenter presenter;
     private RecyclerView recyclerView;
-    private MainAdapter adapter;
+    private AimTypeAdapter adapter;
 
     private SwipeRefreshLayout refreshLayout;
 
@@ -61,7 +61,7 @@ public class MainActivity extends CPBaseBoostActivity implements IMainViewModel{
         super.initViews();
 
         if (getSupportActionBar() != null) {
-            getSupportActionBar().setTitle("AIManager");
+            getSupportActionBar().setTitle("目标分类");
             getSupportActionBar().setDisplayHomeAsUpEnabled(false);//将应用程序图标设置为可点击的按钮,并且在图标上添加向左的箭头
         }
 
@@ -121,13 +121,17 @@ public class MainActivity extends CPBaseBoostActivity implements IMainViewModel{
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.setting){
-            startActivity(new Intent(this,AboutActivity.class));
+            startActivity(new Intent(this,MenuSettingActivity.class));
         }
         return super.onOptionsItemSelected(item);
     }
 
     /*操作面板*/
     private void showOperatePanel(final AimTypeVO aimTypeVO){
+        if (aimTypeVO.getCustomed() != null && !aimTypeVO.getCustomed().booleanValue()){
+            showToast("系统目标类型，不能进行操作");
+            return;
+        }
         String[] titles = {"修改","删除"};
         AlertDialog.Builder builder = new AlertDialog.Builder(this).setItems(titles, new DialogInterface.OnClickListener() {
             @Override
@@ -142,8 +146,11 @@ public class MainActivity extends CPBaseBoostActivity implements IMainViewModel{
         builder.create().show();
     }
 
+    /*跳转至目标类型管理页*/
     private void go2AimItemActivity(AimTypeVO aimTypeVO){
-
+        Intent intent = new Intent(this,AimTypeActivity.class);
+        intent.putExtra("ds",aimTypeVO);
+        startActivity(intent);
     }
 
     /*跳转至修改目标类型*/
@@ -155,18 +162,13 @@ public class MainActivity extends CPBaseBoostActivity implements IMainViewModel{
 
     /*删除目标类型*/
     private void doDeleteAimType(AimTypeVO aimTypeVO){
-        if (aimTypeVO.getCustomed().equals(false)){
-            showToast("系统目标类型，不能删除");
-            return;
-        }
-
         presenter.deleteAimType(aimTypeVO.getId());
     }
 
     /*展示变更列表数据*/
     private void displayChangedAdapter(){
         if (adapter == null){
-            adapter = new MainAdapter(recyclerView,presenter.getDatasource());
+            adapter = new AimTypeAdapter(recyclerView,presenter.getDatasource());
             adapter.setOnItemLongClickListener(new CPBaseRecyclerAdapter.OnItemLongClickListener() {
                 @Override
                 public void onItemLongClick(View view, Object data, int position) {

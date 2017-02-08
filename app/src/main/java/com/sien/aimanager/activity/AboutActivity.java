@@ -6,12 +6,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageView;
 
-import com.sien.aimanager.control.ShakeListener;
 import com.sien.aimanager.R;
+import com.sien.aimanager.control.ShakeListener;
 import com.sien.lib.baseapp.activity.CPBaseActivity;
 import com.sien.lib.baseapp.presenters.BasePresenter;
 import com.sien.lib.baseapp.utils.RepeatClickUtil;
@@ -41,25 +40,25 @@ public class AboutActivity extends CPBaseActivity {
     protected void onResume() {
         super.onResume();
 
-        mShakeListener.setOnShakeListener(onShakeListener);
-        mShakeListener.register();
+//        mShakeListener.setOnShakeListener(onShakeListener);
+//        mShakeListener.register();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        mShakeListener.unregister();
+//        mShakeListener.unregister();
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        mShakeListener.unregister();
+//        mShakeListener.unregister();
     }
 
     @Override
     protected void onDestroy() {
-        mShakeListener.unregister();
+//        mShakeListener.unregister();
         super.onDestroy();
 
     }

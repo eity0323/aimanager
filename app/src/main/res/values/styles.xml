@@ -14,10 +14,6 @@
         <item name="android:textSize">@dimen/font_siez_16</item>
         <item name="android:textColor">@color/text_gray_dark</item>
     </style>
-    <style name="DarkText14Appearance" parent="@android:style/TextAppearance">
-        <item name="android:textSize">@dimen/font_siez_14</item>
-        <item name="android:textColor">@color/text_gray_dark</item>
-    </style>
     <style name="BlackText16Appearance" parent="@android:style/TextAppearance">
         <item name="android:textSize">@dimen/font_siez_16</item>
         <item name="android:textColor">@android:color/black</item>
@@ -25,6 +21,14 @@
     <style name="WhiteText16Appearance" parent="@android:style/TextAppearance">
         <item name="android:textSize">@dimen/font_siez_16</item>
         <item name="android:textColor">@android:color/white</item>
+    </style>
+    <style name="GrayCommonText16Appearance" parent="@android:style/TextAppearance">
+        <item name="android:textSize">@dimen/font_siez_16</item>
+        <item name="android:textColor">@color/text_gray_light</item>
+    </style>
+    <style name="DarkText14Appearance" parent="@android:style/TextAppearance">
+        <item name="android:textSize">@dimen/font_siez_14</item>
+        <item name="android:textColor">@color/text_gray_dark</item>
     </style>
     <style name="GrayCommonText14Appearance" parent="@android:style/TextAppearance">
         <item name="android:textSize">@dimen/font_siez_14</item>

@@ -9,9 +9,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.sien.aimanager.R;
-import com.sien.lib.baseapp.BaseApplication;
+import com.sien.aimanager.config.AppConfig;
 import com.sien.lib.baseapp.activity.CPBaseActivity;
-import com.sien.lib.baseapp.config.CPConfiguration;
 import com.sien.lib.baseapp.presenters.BasePresenter;
 import com.sien.lib.datapp.cache.BaseRepository;
 import com.sien.lib.datapp.cache.CacheDataStorage;
@@ -51,7 +50,12 @@ public class RequestSourceActivity extends CPBaseActivity {
             @Override
             public void onClick(View v) {
 
-                setResult(2233);
+                if (entryType == 2){
+                    setResult(AppConfig.REQUEST_CODE_ENVIRONMENT);
+                }else {
+                    setResult(AppConfig.REQUEST_CODE_DATE_SOURCE);
+                }
+
                 finish();
             }
         });
@@ -84,6 +88,8 @@ public class RequestSourceActivity extends CPBaseActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if (position < ds.size()) {
                     if (entryType == 2){
+                        cleanAppData();
+
                         //网络环境
                         if (position == 0) {
                             //开发环境
@@ -96,26 +102,37 @@ public class RequestSourceActivity extends CPBaseActivity {
                             DatappConfig.setOfficalEnvironment();
                         }
 
-                        cleanAppData();
+                        CPSharedPreferenceManager.getInstance(RequestSourceActivity.this).saveData(DatappConfig.ENVIRONMENT_KEY, String.valueOf(DatappConfig.enviromentType));
+
                     }else {
                         //数据请求方式
                         if (position == 0) {
                             DatappConfig.DEFAULT_REQUEST_MODEL = BaseRepository.REQUEST_ONLEY_CACHE;
-                            BaseApplication.setSharePerfence(CPConfiguration.REQUEST_MODEL_KEY, String.valueOf(BaseRepository.REQUEST_ONLEY_CACHE));
+                            CPSharedPreferenceManager.getInstance(RequestSourceActivity.this).saveData(DatappConfig.REQUEST_MODEL_KEY, String.valueOf(BaseRepository.REQUEST_ONLEY_CACHE));
                         } else if (position == 1) {
                             DatappConfig.DEFAULT_REQUEST_MODEL = BaseRepository.REQUEST_ONLEY_NETWORK;
-                            BaseApplication.setSharePerfence(CPConfiguration.REQUEST_MODEL_KEY, String.valueOf(BaseRepository.REQUEST_ONLEY_NETWORK));
+                            CPSharedPreferenceManager.getInstance(RequestSourceActivity.this).saveData(DatappConfig.REQUEST_MODEL_KEY, String.valueOf(BaseRepository.REQUEST_ONLEY_NETWORK));
                         } else if (position == 3) {
                             DatappConfig.DEFAULT_REQUEST_MODEL = BaseRepository.REQUEST_BOTH;
-                            BaseApplication.setSharePerfence(CPConfiguration.REQUEST_MODEL_KEY, String.valueOf(BaseRepository.REQUEST_BOTH));
+                            CPSharedPreferenceManager.getInstance(RequestSourceActivity.this).saveData(DatappConfig.REQUEST_MODEL_KEY, String.valueOf(BaseRepository.REQUEST_BOTH));
                         } else {
                             DatappConfig.DEFAULT_REQUEST_MODEL = BaseRepository.REQUEST_AUTO;
-                            BaseApplication.setSharePerfence(CPConfiguration.REQUEST_MODEL_KEY, String.valueOf(BaseRepository.REQUEST_AUTO));
+                            CPSharedPreferenceManager.getInstance(RequestSourceActivity.this).saveData(DatappConfig.REQUEST_MODEL_KEY, String.valueOf(BaseRepository.REQUEST_AUTO));
                         }
                     }
                 }
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (entryType == 2){
+            setResult(AppConfig.REQUEST_CODE_ENVIRONMENT);
+        }else {
+            setResult(AppConfig.REQUEST_CODE_DATE_SOURCE);
+        }
+        super.onBackPressed();
     }
 
     private void cleanAppData(){
@@ -130,7 +147,7 @@ public class RequestSourceActivity extends CPBaseActivity {
         //删除本地缓存文件夹 /mnt/sdcard/Android/data/[app package]/cache
         DataCleanManager.deleteFielOrDirectoryByPath(CPFileUtils.getAppCacheRootFilePath(getApplicationContext()));
 
-        BaseApplication.setSharePerfence(CPConfiguration.ENVIRONMENT_KEY, String.valueOf(DatappConfig.enviromentType));
+        CPSharedPreferenceManager.getInstance(RequestSourceActivity.this).saveData(DatappConfig.ENVIRONMENT_KEY, String.valueOf(DatappConfig.enviromentType));
     }
 
     @Override

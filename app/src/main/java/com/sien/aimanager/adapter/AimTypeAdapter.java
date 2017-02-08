@@ -14,9 +14,9 @@ import java.util.Collection;
  * @date 2017/2/5
  * @descript 首页适配器
  */
-public class MainAdapter extends CPBaseRecyclerAdapter<AimTypeVO> {
+public class AimTypeAdapter extends CPBaseRecyclerAdapter<AimTypeVO> {
 
-    public MainAdapter(RecyclerView v, Collection<AimTypeVO> data){
+    public AimTypeAdapter(RecyclerView v, Collection<AimTypeVO> data){
         super(v,data, R.layout.item_main_adapter);
     }
 

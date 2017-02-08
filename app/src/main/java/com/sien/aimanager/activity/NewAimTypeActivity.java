@@ -333,7 +333,7 @@ public class NewAimTypeActivity extends CPBaseBoostActivity implements INewAimTy
             aimTypeVO = new AimTypeVO();
             aimTypeVO.setCustomed(true);
             aimTypeVO.setFinishPercent(0);
-            aimTypeVO.setFinishStatus(0);
+            aimTypeVO.setFinishStatus(AimTypeVO.STATUS_UNDO);
         }
 
         aimTypeVO.setTypeName(title);
@@ -349,7 +349,7 @@ public class NewAimTypeActivity extends CPBaseBoostActivity implements INewAimTy
         aimTypeVO.setCover(cover);
 
         if (presenter != null) {
-            presenter.insertAimTypeRecord(aimTypeVO);
+            presenter.insertOrReplaceAimTypeRecord(aimTypeVO);
         }
     }
 

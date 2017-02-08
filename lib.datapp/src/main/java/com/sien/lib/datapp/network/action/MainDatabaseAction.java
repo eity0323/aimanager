@@ -34,98 +34,98 @@ public class MainDatabaseAction {
         //every day
         AimTypeVO aimTypeVO = new AimTypeVO();
         aimTypeVO.setCustomed(false);
-        aimTypeVO.setDesc("targets for every day");
+        aimTypeVO.setDesc("1天完成的目标");
         aimTypeVO.setFinishPercent(0);
-        aimTypeVO.setFinishStatus(0);
-        aimTypeVO.setPeriod(1);
+        aimTypeVO.setFinishStatus(AimTypeVO.STATUS_UNDO);
+        aimTypeVO.setPeriod(AimTypeVO.PERIOD_DAY);
         aimTypeVO.setModifyTime(new Date());
-        aimTypeVO.setPriority(5);
+        aimTypeVO.setPriority(AimTypeVO.PRIORITY_FIVE);
         aimTypeVO.setRecyclable(true);
-        aimTypeVO.setTargetPeriod(1);
+        aimTypeVO.setTargetPeriod(AimTypeVO.PERIOD_DAY);
         aimTypeVO.setCover("drawable://" + R.mipmap.icon_everyday);
-        aimTypeVO.setTypeName("Every day");
+        aimTypeVO.setTypeName("每天");
 
-        insertAimType(context,aimTypeVO);
+        insertOrReplaceAimType(context,aimTypeVO);
 
         //every week
         aimTypeVO = new AimTypeVO();
         aimTypeVO.setCustomed(false);
-        aimTypeVO.setDesc("targets for every week");
+        aimTypeVO.setDesc("1周完成的目标");
         aimTypeVO.setFinishPercent(0);
-        aimTypeVO.setFinishStatus(0);
-        aimTypeVO.setPeriod(7);
+        aimTypeVO.setFinishStatus(AimTypeVO.STATUS_UNDO);
+        aimTypeVO.setPeriod(AimTypeVO.PERIOD_WEEK);
         aimTypeVO.setModifyTime(new Date());
-        aimTypeVO.setPriority(5);
+        aimTypeVO.setPriority(AimTypeVO.PRIORITY_FIVE);
         aimTypeVO.setRecyclable(true);
-        aimTypeVO.setTargetPeriod(7);
+        aimTypeVO.setTargetPeriod(AimTypeVO.PERIOD_WEEK);
         aimTypeVO.setCover("drawable://" + R.mipmap.icon_everyweek);
-        aimTypeVO.setTypeName("Every week");
+        aimTypeVO.setTypeName("每周");
 
-        insertAimType(context,aimTypeVO);
+        insertOrReplaceAimType(context,aimTypeVO);
 
         //every month
         aimTypeVO = new AimTypeVO();
         aimTypeVO.setCustomed(false);
-        aimTypeVO.setDesc("targets for every month");
+        aimTypeVO.setDesc("1个月完成的目标");
         aimTypeVO.setFinishPercent(0);
-        aimTypeVO.setFinishStatus(0);
-        aimTypeVO.setPeriod(30);
+        aimTypeVO.setFinishStatus(AimTypeVO.STATUS_UNDO);
+        aimTypeVO.setPeriod(AimTypeVO.PERIOD_MONTH);
         aimTypeVO.setModifyTime(new Date());
-        aimTypeVO.setPriority(5);
+        aimTypeVO.setPriority(AimTypeVO.PRIORITY_FIVE);
         aimTypeVO.setRecyclable(true);
-        aimTypeVO.setTargetPeriod(30);
+        aimTypeVO.setTargetPeriod(AimTypeVO.PERIOD_MONTH);
         aimTypeVO.setCover("drawable://" + R.mipmap.icon_everyday);
-        aimTypeVO.setTypeName("Every month");
+        aimTypeVO.setTypeName("每月");
 
-        insertAimType(context,aimTypeVO);
+        insertOrReplaceAimType(context,aimTypeVO);
 
         //every season
         aimTypeVO = new AimTypeVO();
         aimTypeVO.setCustomed(false);
-        aimTypeVO.setDesc("targets for every season");
+        aimTypeVO.setDesc("1一个季度完成的目标");
         aimTypeVO.setFinishPercent(0);
-        aimTypeVO.setFinishStatus(0);
-        aimTypeVO.setPeriod(90);
+        aimTypeVO.setFinishStatus(AimTypeVO.STATUS_UNDO);
+        aimTypeVO.setPeriod(AimTypeVO.PERIOD_SEASON);
         aimTypeVO.setModifyTime(new Date());
-        aimTypeVO.setPriority(5);
+        aimTypeVO.setPriority(AimTypeVO.PRIORITY_FIVE);
         aimTypeVO.setRecyclable(true);
-        aimTypeVO.setTargetPeriod(90);
+        aimTypeVO.setTargetPeriod(AimTypeVO.PERIOD_SEASON);
         aimTypeVO.setCover("drawable://" + R.mipmap.icon_everyweek);
-        aimTypeVO.setTypeName("Every season");
+        aimTypeVO.setTypeName("每季");
 
-        insertAimType(context,aimTypeVO);
+        insertOrReplaceAimType(context,aimTypeVO);
 
         //every half year
         aimTypeVO = new AimTypeVO();
         aimTypeVO.setCustomed(false);
-        aimTypeVO.setDesc("targets for every half year");
+        aimTypeVO.setDesc("半年完成的目标");
         aimTypeVO.setFinishPercent(0);
-        aimTypeVO.setFinishStatus(0);
-        aimTypeVO.setPeriod(180);
+        aimTypeVO.setFinishStatus(AimTypeVO.STATUS_UNDO);
+        aimTypeVO.setPeriod(AimTypeVO.PERIOD_HALF_YEAR);
         aimTypeVO.setModifyTime(new Date());
-        aimTypeVO.setPriority(5);
+        aimTypeVO.setPriority(AimTypeVO.PRIORITY_FIVE);
         aimTypeVO.setRecyclable(true);
-        aimTypeVO.setTargetPeriod(180);
+        aimTypeVO.setTargetPeriod(AimTypeVO.PERIOD_HALF_YEAR);
         aimTypeVO.setCover("drawable://" + R.mipmap.icon_everyday);
-        aimTypeVO.setTypeName("Every half year");
+        aimTypeVO.setTypeName("半年");
 
-        insertAimType(context,aimTypeVO);
+        insertOrReplaceAimType(context,aimTypeVO);
 
         //every year
         aimTypeVO = new AimTypeVO();
         aimTypeVO.setCustomed(false);
-        aimTypeVO.setDesc("targets for every year");
+        aimTypeVO.setDesc("1年完成的目标");
         aimTypeVO.setFinishPercent(0);
-        aimTypeVO.setFinishStatus(0);
-        aimTypeVO.setPeriod(360);
+        aimTypeVO.setFinishStatus(AimTypeVO.STATUS_UNDO);
+        aimTypeVO.setPeriod(AimTypeVO.PERIOD_YEAR);
         aimTypeVO.setModifyTime(new Date());
-        aimTypeVO.setPriority(5);
+        aimTypeVO.setPriority(AimTypeVO.PRIORITY_FIVE);
         aimTypeVO.setRecyclable(true);
-        aimTypeVO.setTargetPeriod(360);
+        aimTypeVO.setTargetPeriod(AimTypeVO.PERIOD_YEAR);
         aimTypeVO.setCover("drawable://" + R.mipmap.icon_everyweek);
-        aimTypeVO.setTypeName("Every year");
+        aimTypeVO.setTypeName("每年");
 
-        insertAimType(context,aimTypeVO);
+        insertOrReplaceAimType(context,aimTypeVO);
 
         CPSharedPreferenceManager.getInstance(context).saveData(CPSharedPreferenceManager.SETTINGS_DEFAULT_DATA,"true");
 
@@ -332,7 +332,7 @@ public class MainDatabaseAction {
     }
 
     //----------------------------------------------------------------------------------------------添加 or 修改
-    public static void insertAimType(final Context context,final AimTypeVO aimTypeVO){
+    public static void insertOrReplaceAimType(final Context context,final AimTypeVO aimTypeVO){
         if (context == null) {
             CPLogUtil.logDebug("deleteAimTypeById context can not be null");
             EventPostUtil.post(new DatappEvent.insertAimTypeEvent(DatappEvent.STATUS_FAIL_OHTERERROR, aimTypeVO));
@@ -342,18 +342,18 @@ public class MainDatabaseAction {
         CPThreadPoolManager.newInstance().addExecuteTask(new Runnable() {
             @Override
             public void run() {
-                insertAimTypeSync(context,aimTypeVO);
+                insertOrReplaceAimTypeSync(context,aimTypeVO);
 
                 EventPostUtil.post(new DatappEvent.insertAimTypeEvent(DatappEvent.STATUS_SUCCESS, aimTypeVO));
             }
         });
     }
-    private static void insertAimTypeSync(Context context,AimTypeVO aimTypeVO){
+    private static void insertOrReplaceAimTypeSync(Context context,AimTypeVO aimTypeVO){
         AimTypeVODao dao =  DBManager.getInstance(context).getDaoSession().getAimTypeVODao();
         dao.insertOrReplace(aimTypeVO);
     }
 
-    public static void insertAimItem(final Context context,final AimTypeVO aimTypeVO){
+    public static void insertOrReplaceAimItem(final Context context,final AimItemVO aimTypeVO){
         if (context == null) {
             CPLogUtil.logDebug("deleteAimTypeById context can not be null");
             EventPostUtil.post(new DatappEvent.insertAimTypeEvent(DatappEvent.STATUS_FAIL_OHTERERROR, aimTypeVO));
@@ -363,14 +363,14 @@ public class MainDatabaseAction {
         CPThreadPoolManager.newInstance().addExecuteTask(new Runnable() {
             @Override
             public void run() {
-                insertAimItemSync(context,aimTypeVO);
+                insertOrReplaceAimItemSync(context,aimTypeVO);
 
                 EventPostUtil.post(new DatappEvent.insertAimTypeEvent(DatappEvent.STATUS_SUCCESS, aimTypeVO));
             }
         });
     }
-    private static void insertAimItemSync(Context context,AimTypeVO aimTypeVO){
-        AimTypeVODao dao =  DBManager.getInstance(context).getDaoSession().getAimTypeVODao();
+    private static void insertOrReplaceAimItemSync(Context context,AimItemVO aimTypeVO){
+        AimItemVODao dao =  DBManager.getInstance(context).getDaoSession().getAimItemVODao();
         dao.insertOrReplace(aimTypeVO);
     }
 }
