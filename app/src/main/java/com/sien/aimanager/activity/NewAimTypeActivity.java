@@ -334,6 +334,7 @@ public class NewAimTypeActivity extends CPBaseBoostActivity implements INewAimTy
             aimTypeVO.setCustomed(true);
             aimTypeVO.setFinishPercent(0);
             aimTypeVO.setFinishStatus(AimTypeVO.STATUS_UNDO);
+            aimTypeVO.setStartTime(new Date());
         }
 
         aimTypeVO.setTypeName(title);

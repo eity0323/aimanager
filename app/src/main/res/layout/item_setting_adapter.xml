@@ -1,24 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal" android:layout_width="match_parent"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingLeft="10dp"
-    android:paddingRight="10dp"
-    android:paddingTop="15dp"
-    android:paddingBottom="15dp"
-    android:background="@drawable/selector_item_bg_bubble">
+    android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/settingTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        style="@style/DarkText16Appearance"/>
+    <View
+        android:id="@+id/item_section"
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:background="@color/gray_line"
+        android:visibility="gone" />
 
-    <TextView
-        android:id="@+id/settingValue"
-        android:layout_width="0dp"
-        android:layout_weight="1"
-        android:layout_height="wrap_content"
-        android:gravity="right"
-        style="@style/DarkText16Appearance"/>
+    <RelativeLayout
+        android:id="@+id/item_layout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/item_height_48"
+        android:background="@drawable/selector_item_bg_bubble"
+        android:orientation="vertical"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp">
+
+        <ImageView
+            android:id="@+id/item_icon"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/ic_launcher" />
+
+        <TextView
+            android:id="@+id/item_title"
+            style="@style/DarkText16Appearance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="17dip"
+            android:layout_toRightOf="@id/item_icon" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/icon_right_arrow" />
+    </RelativeLayout>
 </LinearLayout>

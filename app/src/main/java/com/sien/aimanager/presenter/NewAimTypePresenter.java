@@ -36,7 +36,7 @@ public class NewAimTypePresenter extends BusBaseBoostPresenter {
     }
 
     public void searchAimTypeRecord(){
-        MainDatabaseAction.requestAimTypeDatas(mcontext);
+        MainDatabaseAction.requestAimTypeFixedDatas(mcontext);
     }
 
     @Subscribe

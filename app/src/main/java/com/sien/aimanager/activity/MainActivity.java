@@ -121,7 +121,7 @@ public class MainActivity extends CPBaseBoostActivity implements IMainViewModel{
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.setting){
-            startActivity(new Intent(this,MenuSettingActivity.class));
+            startActivity(new Intent(this,SettingActivity.class));
         }
         return super.onOptionsItemSelected(item);
     }

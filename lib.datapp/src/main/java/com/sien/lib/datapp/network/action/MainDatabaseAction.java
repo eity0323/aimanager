@@ -6,11 +6,13 @@ import android.content.Context;
 import com.sien.lib.datapp.R;
 import com.sien.lib.datapp.beans.AimItemVO;
 import com.sien.lib.datapp.beans.AimTypeVO;
+import com.sien.lib.datapp.beans.UserInfoVO;
 import com.sien.lib.datapp.control.CPSharedPreferenceManager;
 import com.sien.lib.datapp.control.CPThreadPoolManager;
 import com.sien.lib.datapp.db.AimItemVODao;
 import com.sien.lib.datapp.db.AimTypeVODao;
 import com.sien.lib.datapp.db.DBManager;
+import com.sien.lib.datapp.db.UserInfoVODao;
 import com.sien.lib.datapp.events.DatappEvent;
 import com.sien.lib.datapp.utils.CPLogUtil;
 import com.sien.lib.datapp.utils.EventPostUtil;
@@ -39,6 +41,7 @@ public class MainDatabaseAction {
         aimTypeVO.setFinishStatus(AimTypeVO.STATUS_UNDO);
         aimTypeVO.setPeriod(AimTypeVO.PERIOD_DAY);
         aimTypeVO.setModifyTime(new Date());
+        aimTypeVO.setStartTime(new Date());
         aimTypeVO.setPriority(AimTypeVO.PRIORITY_FIVE);
         aimTypeVO.setRecyclable(true);
         aimTypeVO.setTargetPeriod(AimTypeVO.PERIOD_DAY);
@@ -55,6 +58,7 @@ public class MainDatabaseAction {
         aimTypeVO.setFinishStatus(AimTypeVO.STATUS_UNDO);
         aimTypeVO.setPeriod(AimTypeVO.PERIOD_WEEK);
         aimTypeVO.setModifyTime(new Date());
+        aimTypeVO.setStartTime(new Date());
         aimTypeVO.setPriority(AimTypeVO.PRIORITY_FIVE);
         aimTypeVO.setRecyclable(true);
         aimTypeVO.setTargetPeriod(AimTypeVO.PERIOD_WEEK);
@@ -71,6 +75,7 @@ public class MainDatabaseAction {
         aimTypeVO.setFinishStatus(AimTypeVO.STATUS_UNDO);
         aimTypeVO.setPeriod(AimTypeVO.PERIOD_MONTH);
         aimTypeVO.setModifyTime(new Date());
+        aimTypeVO.setStartTime(new Date());
         aimTypeVO.setPriority(AimTypeVO.PRIORITY_FIVE);
         aimTypeVO.setRecyclable(true);
         aimTypeVO.setTargetPeriod(AimTypeVO.PERIOD_MONTH);
@@ -87,6 +92,7 @@ public class MainDatabaseAction {
         aimTypeVO.setFinishStatus(AimTypeVO.STATUS_UNDO);
         aimTypeVO.setPeriod(AimTypeVO.PERIOD_SEASON);
         aimTypeVO.setModifyTime(new Date());
+        aimTypeVO.setStartTime(new Date());
         aimTypeVO.setPriority(AimTypeVO.PRIORITY_FIVE);
         aimTypeVO.setRecyclable(true);
         aimTypeVO.setTargetPeriod(AimTypeVO.PERIOD_SEASON);
@@ -103,6 +109,7 @@ public class MainDatabaseAction {
         aimTypeVO.setFinishStatus(AimTypeVO.STATUS_UNDO);
         aimTypeVO.setPeriod(AimTypeVO.PERIOD_HALF_YEAR);
         aimTypeVO.setModifyTime(new Date());
+        aimTypeVO.setStartTime(new Date());
         aimTypeVO.setPriority(AimTypeVO.PRIORITY_FIVE);
         aimTypeVO.setRecyclable(true);
         aimTypeVO.setTargetPeriod(AimTypeVO.PERIOD_HALF_YEAR);
@@ -119,6 +126,7 @@ public class MainDatabaseAction {
         aimTypeVO.setFinishStatus(AimTypeVO.STATUS_UNDO);
         aimTypeVO.setPeriod(AimTypeVO.PERIOD_YEAR);
         aimTypeVO.setModifyTime(new Date());
+        aimTypeVO.setStartTime(new Date());
         aimTypeVO.setPriority(AimTypeVO.PRIORITY_FIVE);
         aimTypeVO.setRecyclable(true);
         aimTypeVO.setTargetPeriod(AimTypeVO.PERIOD_YEAR);
@@ -133,7 +141,7 @@ public class MainDatabaseAction {
     }
     //----------------------------------------------------------------------------------------------查询
     /**
-     * 请求目标分类数据
+     * 请求目标分类数据(all)
      */
     public static void requestAimTypeDatas(final Context context){
         if (context == null) {
@@ -154,9 +162,101 @@ public class MainDatabaseAction {
         });
     }
 
-    private static List<AimTypeVO> requestAimTypeDatasSync(Context context){
+    public static List<AimTypeVO> requestAimTypeDatasSync(Context context){
         AimTypeVODao dao = DBManager.getInstance(context).getDaoSession().getAimTypeVODao();
         QueryBuilder<AimTypeVO> qb = dao.queryBuilder();
+        List<AimTypeVO> list = qb.list();
+        return list;
+    }
+
+    /**
+     * 请求目标分类数据(固定分类)
+     */
+    public static void requestAimTypeFixedDatas(final Context context){
+        if (context == null) {
+            CPLogUtil.logDebug("requestCustomTabDatas context can not be null");
+            EventPostUtil.post(new DatappEvent.AimTypeEvent(DatappEvent.STATUS_FAIL_OHTERERROR, null));
+            return;
+        }
+
+        CPThreadPoolManager.newInstance().addExecuteTask(new Runnable() {
+            @Override
+            public void run() {
+                List<AimTypeVO> list = requestAimTypeFixedDatasSync(context);
+
+                CPLogUtil.logDebug("requestCustomTabDatas Result " + list.size() );
+
+                EventPostUtil.post(new DatappEvent.AimTypeEvent(DatappEvent.STATUS_SUCCESS, list));
+            }
+        });
+    }
+
+    public static List<AimTypeVO> requestAimTypeFixedDatasSync(Context context){
+        AimTypeVODao dao = DBManager.getInstance(context).getDaoSession().getAimTypeVODao();
+        QueryBuilder<AimTypeVO> qb = dao.queryBuilder();
+        qb.where(AimTypeVODao.Properties.Recyclable.eq(true));
+        List<AimTypeVO> list = qb.list();
+        return list;
+    }
+
+    /**
+     * 根据周期请求目标分类数据(固定分类)
+     * @param context
+     * @param period
+     * @return
+     */
+    public static void requestAimTypeFixedDatas(final Context context, final int period){
+        if (context == null) {
+            CPLogUtil.logDebug("requestCustomTabDatas context can not be null");
+            EventPostUtil.post(new DatappEvent.AimTypeEvent(DatappEvent.STATUS_FAIL_OHTERERROR, null));
+            return;
+        }
+
+        CPThreadPoolManager.newInstance().addExecuteTask(new Runnable() {
+            @Override
+            public void run() {
+                List<AimTypeVO> list = requestAimTypeFixedDatasSync(context,period);
+
+                CPLogUtil.logDebug("requestCustomTabDatas Result " + list.size() );
+
+                EventPostUtil.post(new DatappEvent.AimTypeEvent(DatappEvent.STATUS_SUCCESS, list));
+            }
+        });
+    }
+    public static List<AimTypeVO> requestAimTypeFixedDatasSync(Context context,int period){
+        AimTypeVODao dao = DBManager.getInstance(context).getDaoSession().getAimTypeVODao();
+        QueryBuilder<AimTypeVO> qb = dao.queryBuilder();
+        qb.where(AimTypeVODao.Properties.Recyclable.eq(true),AimTypeVODao.Properties.Period.eq(period));
+        List<AimTypeVO> list = qb.list();
+        return list;
+    }
+
+    /**
+     * 请求目标分类数据（自动创建 or 不可循环创建的目标分类）
+     */
+    public static void requestAimObjectDatas(final Context context){
+        if (context == null) {
+            CPLogUtil.logDebug("requestCustomTabDatas context can not be null");
+            EventPostUtil.post(new DatappEvent.AimTypeEvent(DatappEvent.STATUS_FAIL_OHTERERROR, null));
+            return;
+        }
+
+        CPThreadPoolManager.newInstance().addExecuteTask(new Runnable() {
+            @Override
+            public void run() {
+                List<AimTypeVO> list = requestAimObjectDatasSync(context);
+
+                CPLogUtil.logDebug("requestCustomTabDatas Result " + list.size() );
+
+                EventPostUtil.post(new DatappEvent.AimTypeEvent(DatappEvent.STATUS_SUCCESS, list));
+            }
+        });
+    }
+
+    private static List<AimTypeVO> requestAimObjectDatasSync(Context context){
+        AimTypeVODao dao = DBManager.getInstance(context).getDaoSession().getAimTypeVODao();
+        QueryBuilder<AimTypeVO> qb = dao.queryBuilder();
+        qb.where(AimTypeVODao.Properties.Recyclable.eq(false));
         List<AimTypeVO> list = qb.list();
         return list;
     }
@@ -215,11 +315,79 @@ public class MainDatabaseAction {
         });
     }
 
-    private static List<AimItemVO> requestAimItemDataSync(Context context,Long aimTypeId){
+    public static List<AimItemVO> requestAimItemDataSync(Context context,Long aimTypeId){
         AimItemVODao dao = DBManager.getInstance(context).getDaoSession().getAimItemVODao();
         QueryBuilder<AimItemVO> qb = dao.queryBuilder();
         qb.where(AimItemVODao.Properties.AimTypeId.eq(aimTypeId));
         List<AimItemVO> list = qb.list();
+        return list;
+    }
+
+    /**
+     * 获取分类下的目标项记录数
+     * @param context
+     * @param aimTypeId
+     * @return
+     */
+    public static long requestAimItemCountSync(Context context,Long aimTypeId){
+        AimItemVODao dao = DBManager.getInstance(context).getDaoSession().getAimItemVODao();
+        QueryBuilder<AimItemVO> qb = dao.queryBuilder();
+        qb.where(AimItemVODao.Properties.AimTypeId.eq(aimTypeId));
+        return qb.buildCount().count();
+    }
+
+    /**
+     * 查询用户信息
+     * @param context
+     * @param userName
+     */
+    public static void requestUserInfoDatas(final Context context,final String userName){
+        if (context == null) {
+            CPLogUtil.logDebug("requestUserInfoDatas context can not be null");
+            EventPostUtil.post(new DatappEvent.AimItemEvent(DatappEvent.STATUS_FAIL_OHTERERROR, null));
+            return;
+        }
+        CPThreadPoolManager.newInstance().addExecuteTask(new Runnable() {
+            @Override
+            public void run() {
+                List<UserInfoVO> list = requestUserInfoDataSync(context,userName);
+
+                CPLogUtil.logDebug("requestAimItemDatas Result " + list.size() );
+
+                EventPostUtil.post(new DatappEvent.UserInfoEvent(DatappEvent.STATUS_SUCCESS, list));
+            }
+        });
+    }
+
+    private static List<UserInfoVO> requestUserInfoDataSync(Context context,String userName){
+        UserInfoVODao dao = DBManager.getInstance(context).getDaoSession().getUserInfoVODao();
+        QueryBuilder<UserInfoVO> qb = dao.queryBuilder();
+        qb.where(UserInfoVODao.Properties.UserName.eq(userName));
+        List<UserInfoVO> list = qb.list();
+        return list;
+    }
+
+    public static void requestUserInfoDatas(final Context context){
+        if (context == null) {
+            CPLogUtil.logDebug("requestUserInfoDatas context can not be null");
+            EventPostUtil.post(new DatappEvent.AimItemEvent(DatappEvent.STATUS_FAIL_OHTERERROR, null));
+            return;
+        }
+        CPThreadPoolManager.newInstance().addExecuteTask(new Runnable() {
+            @Override
+            public void run() {
+                List<UserInfoVO> list = requestUserInfoDataSync(context);
+
+                CPLogUtil.logDebug("requestAimItemDatas Result " + list.size() );
+
+                EventPostUtil.post(new DatappEvent.UserInfoEvent(DatappEvent.STATUS_SUCCESS, list));
+            }
+        });
+    }
+    private static List<UserInfoVO> requestUserInfoDataSync(Context context){
+        UserInfoVODao dao = DBManager.getInstance(context).getDaoSession().getUserInfoVODao();
+        QueryBuilder<UserInfoVO> qb = dao.queryBuilder();
+        List<UserInfoVO> list = qb.list();
         return list;
     }
 
@@ -348,9 +516,41 @@ public class MainDatabaseAction {
             }
         });
     }
-    private static void insertOrReplaceAimTypeSync(Context context,AimTypeVO aimTypeVO){
+    public static void insertOrReplaceAimTypeSync(Context context,AimTypeVO aimTypeVO){
         AimTypeVODao dao =  DBManager.getInstance(context).getDaoSession().getAimTypeVODao();
         dao.insertOrReplace(aimTypeVO);
+    }
+
+    public static void insertOrReplaceAimTypeList(final Context context,final List<AimTypeVO> aimTypeVOList){
+        if (context == null) {
+            CPLogUtil.logDebug("deleteAimTypeById context can not be null");
+            EventPostUtil.post(new DatappEvent.insertAimTypeEvent(DatappEvent.STATUS_FAIL_OHTERERROR, aimTypeVOList));
+            return;
+        }
+
+        CPThreadPoolManager.newInstance().addExecuteTask(new Runnable() {
+            @Override
+            public void run() {
+                insertOrReplaceAimTypeListSync(context,aimTypeVOList);
+
+                EventPostUtil.post(new DatappEvent.insertAimTypeEvent(DatappEvent.STATUS_SUCCESS, aimTypeVOList));
+            }
+        });
+    }
+    private static void insertOrReplaceAimTypeListSync(Context context,final List<AimTypeVO> aimTypeVOList){
+        if(aimTypeVOList == null || aimTypeVOList.isEmpty()){
+            return;
+        }
+        final AimTypeVODao dao =  DBManager.getInstance(context).getDaoSession().getAimTypeVODao();
+        dao.getSession().runInTx(new Runnable() {
+            @Override
+            public void run() {
+                for(int i= 0; i<aimTypeVOList.size(); i++){
+                    AimTypeVO note = aimTypeVOList.get(i);
+                    dao.insertOrReplace(note);
+                }
+            }
+        });
     }
 
     public static void insertOrReplaceAimItem(final Context context,final AimItemVO aimTypeVO){
@@ -369,9 +569,62 @@ public class MainDatabaseAction {
             }
         });
     }
-    private static void insertOrReplaceAimItemSync(Context context,AimItemVO aimTypeVO){
+    public static void insertOrReplaceAimItemSync(Context context,AimItemVO aimTypeVO){
         AimItemVODao dao =  DBManager.getInstance(context).getDaoSession().getAimItemVODao();
         dao.insertOrReplace(aimTypeVO);
+    }
+
+    public static void insertOrReplaceAimItemList(final Context context,final List<AimItemVO> aimItemVOList){
+        if (context == null) {
+            CPLogUtil.logDebug("deleteAimTypeById context can not be null");
+            EventPostUtil.post(new DatappEvent.insertAimTypeEvent(DatappEvent.STATUS_FAIL_OHTERERROR, aimItemVOList));
+            return;
+        }
+
+        CPThreadPoolManager.newInstance().addExecuteTask(new Runnable() {
+            @Override
+            public void run() {
+                insertOrReplaceAimItemListSync(context,aimItemVOList);
+
+                EventPostUtil.post(new DatappEvent.insertAimTypeEvent(DatappEvent.STATUS_SUCCESS, aimItemVOList));
+            }
+        });
+    }
+    private static void insertOrReplaceAimItemListSync(Context context,final List<AimItemVO> aimItemVOList){
+        if(aimItemVOList == null || aimItemVOList.isEmpty()){
+            return;
+        }
+        final AimItemVODao dao =  DBManager.getInstance(context).getDaoSession().getAimItemVODao();
+        dao.getSession().runInTx(new Runnable() {
+            @Override
+            public void run() {
+                for(int i= 0; i<aimItemVOList.size(); i++){
+                    AimItemVO note = aimItemVOList.get(i);
+                    dao.insertOrReplace(note);
+                }
+            }
+        });
+    }
+
+    public static void insertOrReplaceUserInfo(final Context context,final UserInfoVO userInfoVO){
+        if (context == null) {
+            CPLogUtil.logDebug("deleteAimTypeById context can not be null");
+            EventPostUtil.post(new DatappEvent.insertUserInfoEvent(DatappEvent.STATUS_FAIL_OHTERERROR, userInfoVO));
+            return;
+        }
+
+        CPThreadPoolManager.newInstance().addExecuteTask(new Runnable() {
+            @Override
+            public void run() {
+                insertOrReplaceUserInfoSync(context,userInfoVO);
+
+                EventPostUtil.post(new DatappEvent.insertUserInfoEvent(DatappEvent.STATUS_SUCCESS, userInfoVO));
+            }
+        });
+    }
+    private static void insertOrReplaceUserInfoSync(Context context,UserInfoVO userInfoVO){
+        UserInfoVODao dao =  DBManager.getInstance(context).getDaoSession().getUserInfoVODao();
+        dao.insertOrReplace(userInfoVO);
     }
 }
 

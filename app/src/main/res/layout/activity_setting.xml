@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <com.sien.lib.baseapp.widgets.CPRefreshView
+        android:id="@+id/refreshPersonal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.v4.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true"
+            android:scrollbars="none">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:paddingBottom="10dp">
+
+                <FrameLayout
+                    android:id="@+id/person_header_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="180dp"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/person_header_bg"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scaleType="fitXY" />
+
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center">
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="180dp"
+                            android:scaleType="centerCrop"
+                            android:src="@mipmap/bg_user_cover" />
+
+                        <ImageView
+                            android:layout_width="100dp"
+                            android:layout_height="100dp"
+                            android:layout_gravity="center"
+                            android:src="@mipmap/image_avatarbg_default_s" />
+
+                        <com.sien.libcomponent.widgets.CircleImageView
+                            android:id="@+id/person_avatar"
+                            android:layout_width="75dip"
+                            android:layout_height="75dip"
+                            android:layout_gravity="center"
+                            android:scaleType="centerCrop"
+                            android:src="@mipmap/image_avatar_default_s_alone"/>
+
+                        <Button
+                            android:id="@+id/btn_person_edit_profile"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="right|center_vertical"
+                            android:layout_marginRight="30dp"
+                            android:alpha="0.7"
+                            android:background="@drawable/selector_button_border"
+                            android:minHeight="26dp"
+                            android:minWidth="80dp"
+                            android:text="@string/setting_profile"
+                            android:textColor="#616161"
+                            android:textSize="13sp"
+                            android:visibility="gone" />
+
+                        <View
+                            android:id="@+id/person_statusbar_bg"
+                            android:layout_width="match_parent"
+                            android:layout_height="24dp"
+                            android:alpha="0.22"
+                            android:background="@color/gray_line"
+                            android:visibility="gone" />
+                    </FrameLayout>
+
+                    <TextView
+                        android:id="@+id/person_name"
+                        style="@style/DarkText14Appearance"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom|center_horizontal"
+                        android:layout_marginBottom="17dp"
+                        android:text="@string/setting_unlogin"/>
+
+                </FrameLayout>
+
+                <LinearLayout
+                    android:id="@+id/main_profile_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:background="@android:color/white"
+                    android:orientation="vertical"
+                    android:paddingBottom="20dp"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp"
+                    android:paddingTop="15dp"
+                    android:visibility="gone">
+
+                    <TextView
+                        style="@style/DarkText14Appearance"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/setting_introduce"/>
+
+                    <TextView
+                        android:id="@+id/main_profile"
+                        style="@style/DarkText14Appearance"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:ellipsize="end"
+                        android:maxLines="2"
+                        android:text="@string/setting_introduce"/>
+                </LinearLayout>
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/person_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/white" />
+            </LinearLayout>
+        </android.support.v4.widget.NestedScrollView>
+    </com.sien.lib.baseapp.widgets.CPRefreshView>
+</LinearLayout>

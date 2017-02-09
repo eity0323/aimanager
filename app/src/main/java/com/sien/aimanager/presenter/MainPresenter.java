@@ -50,7 +50,7 @@ public class MainPresenter extends BusBaseBoostPresenter {
     }
 
     public void requestAimTypeDatas(){
-        MainDatabaseAction.requestAimTypeDatas(mcontext);
+        MainDatabaseAction.requestAimTypeFixedDatas(mcontext);
     }
 
     public void deleteAimType(Long aimTypeId){

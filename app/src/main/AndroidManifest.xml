@@ -12,6 +12,9 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"/>
 
+    <!--开机启动-->
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -61,6 +64,9 @@
             android:screenOrientation="portrait"
             android:theme="@style/BaseActivityTheme" />
 
+        <activity android:name=".activity.SettingActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/BaseActivityTheme"/>
 
         <!--监听网络状态变化-->
         <receiver android:name=".receiver.ConnectionChangeReceiver" android:label="NetworkConnection">
@@ -68,6 +74,23 @@
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE"/>
             </intent-filter>
         </receiver>
+
+        <receiver android:name=".receiver.DeviceBoostReceiver" android:label="DeviceBoost">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+
+        <receiver android:name=".receiver.MonitorAlarmReceiver" android:label="MonitorAlarm">
+            <intent-filter>
+                <action android:name="com.sien.aimanager" />
+            </intent-filter>
+        </receiver>
+
+        <!--监听触发机制-->
+        <service android:name=".services.MonitorServices"  android:enabled="true"/>
+        <service android:name=".services.GenerateAimServices"  android:enabled="true">
+        </service>
     </application>
 
 </manifest>

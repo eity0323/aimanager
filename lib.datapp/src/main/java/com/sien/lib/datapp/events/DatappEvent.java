@@ -1,6 +1,7 @@
 package com.sien.lib.datapp.events;
 
 import com.sien.lib.datapp.beans.AimTypeVO;
+import com.sien.lib.datapp.beans.UserInfoVO;
 import com.sien.lib.datapp.network.result.VersionCheckResult;
 
 import java.util.List;
@@ -188,6 +189,67 @@ public class DatappEvent {
             List<AimTypeVO>  response = null;
             if (status == STATUS_SUCCESS && data != null){
                 response = (List<AimTypeVO>)data;
+            }
+
+            return response;
+        }
+    }
+
+    /**
+     * 添加用户信息数据
+     */
+    public static class insertUserInfoEvent{
+        private int status;
+        private Object data;
+
+        public insertUserInfoEvent(int status,Object data){
+            this.status = status;
+            this.data = data;
+        }
+
+        public boolean checkStatus() {
+            return status == STATUS_SUCCESS;
+        }
+
+        public Object getData() {
+            return data;
+        }
+
+        public List<UserInfoVO> getResult(){
+            List<UserInfoVO>  response = null;
+            if (status == STATUS_SUCCESS && data != null){
+                response = (List<UserInfoVO>)data;
+            }
+
+            return response;
+        }
+    }
+
+
+    /**
+     * 查询用户信息
+     */
+    public static class UserInfoEvent{
+        private int status;
+        private Object data;
+
+        public UserInfoEvent(int status,Object data){
+            this.status = status;
+            this.data = data;
+        }
+
+        public boolean checkStatus() {
+            return status == STATUS_SUCCESS;
+        }
+
+        public Object getData() {
+            return data;
+        }
+
+        public List<UserInfoVO> getResult(){
+            List<UserInfoVO>  response = null;
+            if (status == STATUS_SUCCESS && data != null){
+                response = (List<UserInfoVO>)data;
             }
 
             return response;

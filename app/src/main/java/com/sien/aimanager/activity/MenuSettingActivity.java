@@ -10,7 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.sien.aimanager.R;
-import com.sien.aimanager.adapter.SettingAdapter;
+import com.sien.aimanager.adapter.MenuSettingAdapter;
 import com.sien.aimanager.config.AppConfig;
 import com.sien.aimanager.control.UpdateManager;
 import com.sien.aimanager.model.IMenuSettingViewModel;
@@ -39,7 +39,7 @@ public class MenuSettingActivity extends CPBaseBoostActivity implements IMenuSet
     private MenuSettingPresenter presenter;
 
     private RecyclerView recyclerView;
-    private SettingAdapter adapter;
+    private MenuSettingAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,7 +68,7 @@ public class MenuSettingActivity extends CPBaseBoostActivity implements IMenuSet
 
         presenter = getPresenter();
 
-        adapter = new SettingAdapter(recyclerView,presenter.getDatasource());
+        adapter = new MenuSettingAdapter(recyclerView,presenter.getDatasource());
         adapter.setOnItemClickListener(new CPBaseRecyclerAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, Object data, int position) {

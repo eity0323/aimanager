@@ -22,6 +22,10 @@
     <string name="setting_switch_log">日志打印</string>
     <string name="setting_using_psd">启动密码</string>
 
+    <string name="setting_profile">edit_profile</string>
+    <string name="setting_introduce">个人简介</string>
+    <string name="setting_unlogin">未登录</string>
+
     <!--引导页-->
     <string name="guide_page1_text1">新年新期望</string>
     <string name="guide_page1_text2">每个女人都能拥有独一无二的鞋子</string>

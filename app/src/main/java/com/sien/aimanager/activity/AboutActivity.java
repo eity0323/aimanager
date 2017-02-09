@@ -40,25 +40,25 @@ public class AboutActivity extends CPBaseActivity {
     protected void onResume() {
         super.onResume();
 
-//        mShakeListener.setOnShakeListener(onShakeListener);
-//        mShakeListener.register();
+        mShakeListener.setOnShakeListener(onShakeListener);
+        mShakeListener.register();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-//        mShakeListener.unregister();
+        mShakeListener.unregister();
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-//        mShakeListener.unregister();
+        mShakeListener.unregister();
     }
 
     @Override
     protected void onDestroy() {
-//        mShakeListener.unregister();
+        mShakeListener.unregister();
         super.onDestroy();
 
     }

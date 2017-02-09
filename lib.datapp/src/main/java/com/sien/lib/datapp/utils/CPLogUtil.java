@@ -13,44 +13,44 @@ public class CPLogUtil {
 
     public static void logDebug(String tag, String msg){
         if (IS_DEV) {
-            Log.d(tag, "---->" + msg);
+            Log.d(tag, msg);
         }
     }
     public static void logDebug(String msg){
-        logDebug(TAG, "---->" + msg);
+        logDebug(TAG, msg);
     }
 
 
     public static void logError(String tag, String msg, Exception e){
         if (IS_DEV) {
-            Log.e(tag, "---->" + msg,e);
+            Log.e(tag, msg,e);
         }
     }
     public static void logError(String tag, String msg){
         if (IS_DEV) {
-            Log.e(tag, "---->" + msg);
+            Log.e(tag, msg);
         }
     }
     public static void logError(String msg){
-        logError(TAG, "---->" + msg);
+        logError(TAG,msg);
     }
 
     public static void logWarn(String tag, String msg){
         if (IS_DEV) {
-            Log.w(tag, "---->" + msg);
+            Log.w(tag, msg);
         }
     }
     public static void logWarn(String msg){
-        logWarn(TAG, "---->" + msg);
+        logWarn(TAG,msg);
     }
 
 
     public static void logInfo(String tag, String msg){
         if (IS_DEV) {
-            Log.i(tag, "---->" + msg);
+            Log.i(tag,msg);
         }
     }
     public static void logInfo(String msg){
-        logInfo(TAG, "---->" + msg);
+        logInfo(TAG, msg);
     }
 }
