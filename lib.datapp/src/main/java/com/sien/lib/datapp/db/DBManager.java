@@ -3,6 +3,7 @@ package com.sien.lib.datapp.db;
 import android.content.Context;
 
 import com.sien.lib.datapp.config.DatappConfig;
+import com.sien.lib.datapp.db.helper.MySQLiteOpenHelper;
 
 /**
  * [数据库管理类，数据采用GreenDao来实现，所有实现通过模板自动生成；通过获取daoSession来获取所有的dao，从而实现操作对象]
@@ -43,7 +44,10 @@ public class DBManager {
 	private DBManager(Context context) {
 		if (daoSession == null) {
 			if (daoMaster == null) {
-				DaoMaster.OpenHelper helper = new DaoMaster.DevOpenHelper(context, DatappConfig.DATABASENAME, null);
+//				DaoMaster.OpenHelper helper = new DaoMaster.DevOpenHelper(context, DatappConfig.DATABASENAME, null);
+//				daoMaster = new DaoMaster(helper.getWritableDatabase());
+
+				MySQLiteOpenHelper helper = new MySQLiteOpenHelper(context, DatappConfig.DATABASENAME,null);
 				daoMaster = new DaoMaster(helper.getWritableDatabase());
 			}
 			daoSession = daoMaster.newSession();
