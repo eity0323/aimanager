@@ -82,7 +82,7 @@ public class LauncherActivity extends AppCompatActivity {
         if (TextUtils.isEmpty(showGuide)) {
             startActivity(new Intent(this, GuideActivity.class));
         } else {
-            startActivity(new Intent(this, MainActivity.class));
+            startActivity(new Intent(this, AimTypeListActivity.class));
         }
         finish();
     }

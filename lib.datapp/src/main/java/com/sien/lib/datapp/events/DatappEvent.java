@@ -1,5 +1,8 @@
 package com.sien.lib.datapp.events;
 
+import com.sien.lib.datapp.beans.AimItemVO;
+import com.sien.lib.datapp.beans.AimObjectVO;
+import com.sien.lib.datapp.beans.AimRecordVO;
 import com.sien.lib.datapp.beans.AimTypeVO;
 import com.sien.lib.datapp.beans.UserInfoVO;
 import com.sien.lib.datapp.network.result.VersionCheckResult;
@@ -46,6 +49,32 @@ public class DatappEvent {
         }
     }
 
+    public static class AimObjectEvent{
+        private int status;
+        private Object data;
+
+        public AimObjectEvent(int status,Object data){
+            this.status = status;
+            this.data = data;
+        }
+
+        public boolean checkStatus() {
+            return status == STATUS_SUCCESS;
+        }
+
+        public Object getData() {
+            return data;
+        }
+
+        public List<AimObjectVO> getResult(){
+            List<AimObjectVO>  response = null;
+            if (status == STATUS_SUCCESS && data != null){
+                response = (List<AimObjectVO>)data;
+            }
+
+            return response;
+        }
+    }
     /**
      * 目标记录数据
      */
@@ -65,10 +94,36 @@ public class DatappEvent {
             return data;
         }
 
-        public List<AimItemEvent> getResult(){
-            List<AimItemEvent>  response = null;
+        public List<AimItemVO> getResult(){
+            List<AimItemVO>  response = null;
             if (status == STATUS_SUCCESS && data != null){
-                response = (List<AimItemEvent>)data;
+                response = (List<AimItemVO>)data;
+            }
+
+            return response;
+        }
+    }
+
+    public static class AimRecordEvent{
+        private int status;
+        private Object data;
+        public AimRecordEvent(int status,Object data){
+            this.status = status;
+            this.data = data;
+        }
+
+        public boolean checkStatus() {
+            return status == STATUS_SUCCESS;
+        }
+
+        public Object getData() {
+            return data;
+        }
+
+        public List<AimRecordVO> getResult(){
+            List<AimRecordVO>  response = null;
+            if (status == STATUS_SUCCESS && data != null){
+                response = (List<AimRecordVO>)data;
             }
 
             return response;
@@ -125,10 +180,10 @@ public class DatappEvent {
             return data;
         }
 
-        public List<AimTypeVO> getResult(){
-            List<AimTypeVO>  response = null;
+        public List<AimItemVO> getResult(){
+            List<AimItemVO>  response = null;
             if (status == STATUS_SUCCESS && data != null){
-                response = (List<AimTypeVO>)data;
+                response = (List<AimItemVO>)data;
             }
 
             return response;
@@ -185,10 +240,10 @@ public class DatappEvent {
             return data;
         }
 
-        public List<AimTypeVO> getResult(){
-            List<AimTypeVO>  response = null;
+        public List<AimItemVO> getResult(){
+            List<AimItemVO>  response = null;
             if (status == STATUS_SUCCESS && data != null){
-                response = (List<AimTypeVO>)data;
+                response = (List<AimItemVO>)data;
             }
 
             return response;

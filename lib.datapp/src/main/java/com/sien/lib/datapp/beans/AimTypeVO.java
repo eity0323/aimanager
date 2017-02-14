@@ -3,10 +3,11 @@ package com.sien.lib.datapp.beans;
 import org.greenrobot.greendao.annotation.*;
 
 /**
- * 目标分类实体
+ * 固定目标分类（非自动创建项）
  */
 @Entity
 public class AimTypeVO extends CPBaseVO{
+
     public static final int STATUS_UNDO = 0;//未做状态
     public static final int STATUS_DONE = 1;//完成状态
 
@@ -27,6 +28,7 @@ public class AimTypeVO extends CPBaseVO{
     @Id(autoincrement = true)
     private Long id;
     private Integer targetPeriod;//预期完成周期
+    private Boolean planProject;//是否为计划工程
     private String cover;//封面图片
 	
     private String typeName;//类型名称
@@ -50,7 +52,7 @@ public class AimTypeVO extends CPBaseVO{
     }
 
     @Generated
-    public AimTypeVO(Long id, String typeName, String desc, Boolean customed, Boolean recyclable, Integer priority, Integer period, Integer targetPeriod, Integer finishStatus, Integer finishPercent, java.util.Date startTime, java.util.Date endTime, java.util.Date modifyTime, String cover) {
+    public AimTypeVO(Long id, String typeName, String desc, Boolean customed, Boolean recyclable, Integer priority, Integer period, Integer targetPeriod, Integer finishStatus, Integer finishPercent, java.util.Date startTime, java.util.Date endTime, java.util.Date modifyTime, Boolean planProject, String cover) {
         this.id = id;
         this.typeName = typeName;
         this.desc = desc;
@@ -64,6 +66,7 @@ public class AimTypeVO extends CPBaseVO{
         this.startTime = startTime;
         this.endTime = endTime;
         this.modifyTime = modifyTime;
+        this.planProject = planProject;
         this.cover = cover;
     }
 
@@ -169,6 +172,14 @@ public class AimTypeVO extends CPBaseVO{
 
     public void setModifyTime(java.util.Date modifyTime) {
         this.modifyTime = modifyTime;
+    }
+
+    public Boolean getPlanProject() {
+        return planProject;
+    }
+
+    public void setPlanProject(Boolean planProject) {
+        this.planProject = planProject;
     }
 
     public String getCover() {

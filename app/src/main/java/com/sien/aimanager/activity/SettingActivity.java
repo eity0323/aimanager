@@ -23,8 +23,11 @@ import com.sien.lib.baseapp.adapter.CPBaseRecyclerAdapter;
 import com.sien.lib.baseapp.widgets.CPRefreshView;
 import com.sien.lib.baseapp.widgets.recyclerview.CPDividerItemDecoration;
 import com.sien.lib.datapp.network.base.RequestFreshStatus;
-import com.sien.libcomponent.widgets.CircleImageView;
-
+import com.sien.lib.share.ShareConfig;
+import com.sien.lib.share.ShareDialog;
+import com.sien.lib.share.action.CPAppShareAction;
+import com.sien.lib.share.action.CPAppShareBuilder;
+import com.sien.lib.component.imageview.CircleImageView;
 /**
  * @author sien
  * @date 2017/2/9
@@ -100,7 +103,7 @@ public class SettingActivity extends CPBaseActivity implements ISettingViewModel
                 if (position == 0){
 
                 }else if (position == 1){
-
+                    showSharePanel();
                 }else if (position == 2){
                     go2AboutActivity();
                 }
@@ -124,6 +127,13 @@ public class SettingActivity extends CPBaseActivity implements ISettingViewModel
             }
         }
     };
+
+    /*显示分享面板*/
+    private void showSharePanel(){
+        CPAppShareAction shareAction = new CPAppShareBuilder().buildShareLink(this,"http://www.shoelives.com", ShareConfig.SHARE_APP_TITLE,R.mipmap.ic_launcher);
+        ShareDialog shareDialog = new ShareDialog(this,shareAction);
+        shareDialog.show();
+    }
 
     private void go2AboutActivity(){
         startActivity(new Intent(this,AboutActivity.class));

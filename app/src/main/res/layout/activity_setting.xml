@@ -48,7 +48,7 @@
                             android:layout_gravity="center"
                             android:src="@mipmap/image_avatarbg_default_s" />
 
-                        <com.sien.libcomponent.widgets.CircleImageView
+                        <com.sien.lib.component.imageview.CPCircleImageView
                             android:id="@+id/person_avatar"
                             android:layout_width="75dip"
                             android:layout_height="75dip"

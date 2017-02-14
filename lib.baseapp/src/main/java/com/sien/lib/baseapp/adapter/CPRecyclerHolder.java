@@ -14,9 +14,8 @@ import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.sien.lib.baseapp.R;
 import com.sien.lib.baseapp.utils.CPDisplayImageOptionsUtils;
-import com.sien.libcomponent.widgets.CircleImageView;
+import com.sien.lib.component.imageview.CircleImageView;
 
 /**
  * @author sien

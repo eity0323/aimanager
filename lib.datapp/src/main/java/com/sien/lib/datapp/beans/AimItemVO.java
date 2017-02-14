@@ -3,10 +3,10 @@ package com.sien.lib.datapp.beans;
 import org.greenrobot.greendao.annotation.*;
 
 /**
- * E目标项实体
+ * 目标项实体（非自动创建项）
  */
 @Entity
-public class AimItemVO {
+public class AimItemVO  extends CPBaseVO{
     public static final int STATUS_UNDO = 0;//未做状态
     public static final int STATUS_DONE = 1;//完成状态
 

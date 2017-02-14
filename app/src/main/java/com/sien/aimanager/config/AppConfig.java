@@ -55,6 +55,6 @@ public class AppConfig {
 	 */
 	public static final String PRESH_KEY_UPGRADE_FORCED = "upgrade_forced";
 
-	public static String launcherActivityModel = "MainActivity";//首页模式
+	public static String launcherActivityModel = "AimTypeListActivity";//首页模式
 
 }

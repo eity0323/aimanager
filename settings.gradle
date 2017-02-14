@@ -1,4 +1,4 @@
-include ':app', ':lib.baseapp', ':lib.datapp', ':lib.component'
+include ':app', ':lib.baseapp', ':lib.datapp', ':lib.share', ':lib.component'
 
 //true 使用small插件框架独立编译apk,false 不使用small框架
 System.properties['usePlugin'] = "false"

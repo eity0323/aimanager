@@ -346,6 +346,7 @@ public class NewAimTypeActivity extends CPBaseBoostActivity implements INewAimTy
         aimTypeVO.setPriority(priorty);
 
         aimTypeVO.setRecyclable(recyclable);
+        aimTypeVO.setPlanProject(false);
         aimTypeVO.setTargetPeriod(period);
         aimTypeVO.setCover(cover);
 

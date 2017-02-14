@@ -8,8 +8,13 @@ import android.content.SharedPreferences;
 import com.sien.aimanager.services.GenerateAimServices;
 import com.sien.lib.baseapp.utils.CPDateUtil;
 import com.sien.lib.datapp.beans.AimItemVO;
+import com.sien.lib.datapp.beans.AimObjectVO;
+import com.sien.lib.datapp.beans.AimRecordVO;
 import com.sien.lib.datapp.beans.AimTypeVO;
-import com.sien.lib.datapp.network.action.MainDatabaseAction;
+import com.sien.lib.datapp.db.helper.AimItemDBHelper;
+import com.sien.lib.datapp.db.helper.AimObjectHelper;
+import com.sien.lib.datapp.db.helper.AimRecordHelper;
+import com.sien.lib.datapp.db.helper.AimTypeDBHelper;
 import com.sien.lib.datapp.utils.CPLogUtil;
 import com.sien.lib.datapp.utils.CPStringUtil;
 
@@ -42,15 +47,15 @@ public class GeneratePeroidAimUtils {
         //天
         checkGenerateMechanismByPeriod(context,AimTypeVO.PERIOD_DAY);
         //周
-//        checkGenerateMechanismByPeriod(context,AimTypeVO.PERIOD_WEEK);
-//        //月
-//        checkGenerateMechanismByPeriod(context,AimTypeVO.PERIOD_MONTH);
-//        //季
-//        checkGenerateMechanismByPeriod(context,AimTypeVO.PERIOD_SEASON);
-//        //半年
-//        checkGenerateMechanismByPeriod(context,AimTypeVO.PERIOD_HALF_YEAR);
-//        //年
-//        checkGenerateMechanismByPeriod(context,AimTypeVO.PERIOD_YEAR);
+        checkGenerateMechanismByPeriod(context,AimTypeVO.PERIOD_WEEK);
+        //月
+        checkGenerateMechanismByPeriod(context,AimTypeVO.PERIOD_MONTH);
+        //季
+        checkGenerateMechanismByPeriod(context,AimTypeVO.PERIOD_SEASON);
+        //半年
+        checkGenerateMechanismByPeriod(context,AimTypeVO.PERIOD_HALF_YEAR);
+        //年
+        checkGenerateMechanismByPeriod(context,AimTypeVO.PERIOD_YEAR);
         return false;
     }
 
@@ -158,10 +163,10 @@ public class GeneratePeroidAimUtils {
      */
     public static void generatePeriodAimByPeriod(Context context,int period,int diff){
         //1、查询需要创建的目标项;2、创建目标分类;3、创建目标项;4、通知界面更新
-        List<AimTypeVO> dayList = MainDatabaseAction.requestAimTypeFixedDatasSync(context,period);
+        List<AimTypeVO> dayList = AimTypeDBHelper.requestAimTypeFixedDatasSync(context,period);
         if (dayList != null && dayList.size() > 0){
-//            List<AimTypeVO> newDataList = new ArrayList<>();
-            AimTypeVO aimTypeVO;
+//            List<AimObjectVO> newDataList = new ArrayList<>();
+            AimObjectVO aimTypeVO;
 
             for (int i = diff;i > 0;i--) {    //相差天数
 
@@ -170,10 +175,10 @@ public class GeneratePeroidAimUtils {
                 for (AimTypeVO item : dayList) { //需要循环创建的分类数
 
                     //无目标项则不创建该分类对象
-                    long count = MainDatabaseAction.requestAimItemCountSync(context,item.getId());
+                    long count = AimItemDBHelper.requestAimItemCountSync(context,item.getId());
                     if (count <= 0) continue;
 
-                    aimTypeVO = new AimTypeVO();
+                    aimTypeVO = new AimObjectVO();
                     aimTypeVO.setCustomed(true);
                     aimTypeVO.setDesc(item.getDesc());
                     aimTypeVO.setFinishPercent(0);
@@ -183,6 +188,7 @@ public class GeneratePeroidAimUtils {
                     aimTypeVO.setStartTime(nowDate);
                     aimTypeVO.setPriority(AimTypeVO.PRIORITY_FIVE);
                     aimTypeVO.setRecyclable(false);
+                    aimTypeVO.setPlanProject(item.getPlanProject());
                     aimTypeVO.setTargetPeriod(item.getTargetPeriod());
                     aimTypeVO.setCover(item.getCover());
                     aimTypeVO.setTypeName(CPDateUtil.getDateToString(nowDate, CPDateUtil.DATE_FORMAT_3));
@@ -190,7 +196,7 @@ public class GeneratePeroidAimUtils {
 //                    newDataList.add(aimTypeVO);
 
                     //创建目标分类
-                    MainDatabaseAction.insertOrReplaceAimTypeSync(context,aimTypeVO);
+                    AimObjectHelper.insertOrReplaceAimTypeSync(context,aimTypeVO);
 
                     //创建目标项
                     if (aimTypeVO.getId() != null){
@@ -200,7 +206,7 @@ public class GeneratePeroidAimUtils {
             }
 
 //            //批量插入目标分类(单条记录插入，便于获取id创建目标项)
-//            MainDatabaseAction.insertOrReplaceAimTypeList(context,newDataList);
+//            AimObjectHelper.insertOrReplaceAimTypeList(context,newDataList);
 
             //更新最后检测时间
             setLastCheckDate(context,period,new Date());
@@ -211,14 +217,14 @@ public class GeneratePeroidAimUtils {
 
     /*批量插入目标项*/
     private static void generateAimItemByAimType(Context context,Long aimTypeId,Long newAimTypeId){
-        List<AimItemVO> dayList = MainDatabaseAction.requestAimItemDataSync(context,aimTypeId);
+        List<AimItemVO> dayList = AimItemDBHelper.requestAimItemDataSync(context,aimTypeId);
 
         if (dayList != null && dayList.size() > 0) {
-            List<AimItemVO> newDataList = new ArrayList<>();
+            List<AimRecordVO> newDataList = new ArrayList<>();
 
-            AimItemVO itemVO;
+            AimRecordVO itemVO;
             for (AimItemVO item : dayList){
-                itemVO = new AimItemVO();
+                itemVO = new AimRecordVO();
                 itemVO.setAimName(item.getAimName());
                 itemVO.setDesc(item.getDesc());
                 itemVO.setModifyTime(new Date());
@@ -232,7 +238,7 @@ public class GeneratePeroidAimUtils {
 
             if (newDataList.size() > 0) {
                 //批量插入目标项
-                MainDatabaseAction.insertOrReplaceAimItemList(context, newDataList);
+                AimRecordHelper.insertOrReplaceAimRecordListSync(context, newDataList);
             }
         }
     }

@@ -48,7 +48,7 @@
             android:screenOrientation="portrait"
             android:theme="@style/BasePanelTheme" />
 
-        <activity android:name=".activity.MainActivity"
+        <activity android:name=".activity.AimTypeListActivity"
             android:screenOrientation="portrait"
             android:theme="@style/BaseActivityTheme" />
 
@@ -60,13 +60,17 @@
             android:screenOrientation="portrait"
             android:theme="@style/BaseActivityTheme" />
 
-        <activity android:name=".activity.AimTypeActivity"
+        <activity android:name=".activity.AimTypeDetailActivity"
             android:screenOrientation="portrait"
             android:theme="@style/BaseActivityTheme" />
 
         <activity android:name=".activity.SettingActivity"
             android:screenOrientation="portrait"
             android:theme="@style/BaseActivityTheme"/>
+
+        <activity android:name="com.sien.aimanager.wxapi.WXEntryActivity"
+            android:exported="true"
+            android:launchMode="singleTop"/>
 
         <!--监听网络状态变化-->
         <receiver android:name=".receiver.ConnectionChangeReceiver" android:label="NetworkConnection">

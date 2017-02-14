@@ -134,7 +134,7 @@ public class GuideActivity extends CPBaseActivity {
             public void run() {
                 CPSharedPreferenceManager.getInstance(GuideActivity.this).saveData(CPSharedPreferenceManager.SETTINGS_SHOW_GUIDE+ CPDeviceUtil.getVersionName(GuideActivity.this),CPDeviceUtil.getVersionName(GuideActivity.this));
 
-                startActivity(new Intent(GuideActivity.this,MainActivity.class));
+                startActivity(new Intent(GuideActivity.this,AimTypeListActivity.class));
                 finish();
             }
         },300);
