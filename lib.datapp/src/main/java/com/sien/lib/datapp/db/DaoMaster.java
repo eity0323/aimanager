@@ -24,8 +24,6 @@ public class DaoMaster extends AbstractDaoMaster {
         AimTypeVODao.createTable(db, ifNotExists);
         AimItemVODao.createTable(db, ifNotExists);
         UserInfoVODao.createTable(db, ifNotExists);
-        AimRecordVODao.createTable(db, ifNotExists);
-        AimObjectVODao.createTable(db,ifNotExists);
     }
 
     /** Drops underlying database table using DAOs. */
@@ -33,8 +31,6 @@ public class DaoMaster extends AbstractDaoMaster {
         AimTypeVODao.dropTable(db, ifExists);
         AimItemVODao.dropTable(db, ifExists);
         UserInfoVODao.dropTable(db, ifExists);
-        AimRecordVODao.dropTable(db, ifExists);
-        AimObjectVODao.dropTable(db,ifExists);
     }
 
     /**
@@ -56,8 +52,6 @@ public class DaoMaster extends AbstractDaoMaster {
         registerDaoClass(AimTypeVODao.class);
         registerDaoClass(AimItemVODao.class);
         registerDaoClass(UserInfoVODao.class);
-        registerDaoClass(AimRecordVODao.class);
-        registerDaoClass(AimObjectVODao.class);
     }
 
     public DaoSession newSession() {

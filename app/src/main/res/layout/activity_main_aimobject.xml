@@ -5,15 +5,29 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/today_aimtype"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp"
+        style="@style/GrayCommonText14Appearance"/>
+
     <com.sien.lib.component.coverflow.CoverFlow
-        android:id="@+id/custom_gallery"
+        android:id="@+id/aimobject_flow"
         android:layout_width="match_parent"
         android:layout_height="250dp"
         android:layout_gravity="center"
-        android:layout_marginTop="30dp"
-        android:visibility="gone"
         app:autoCycle="true"
         app:coverage="0.2"
         app:flingAllow="true"
         app:orientation="horizontal" />
+
+    <TextView
+        android:id="@+id/aimobject_empty_tips"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:text="@string/none_aimtype_tips"
+        style="@style/DarkText16Appearance"/>
 </LinearLayout>

@@ -40,6 +40,8 @@ public class AimTypeListActivity extends CPBaseBoostActivity implements IAimType
 
     private SwipeRefreshLayout refreshLayout;
 
+    private boolean showFixType = false;//显示固定分类
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -82,7 +84,7 @@ public class AimTypeListActivity extends CPBaseBoostActivity implements IAimType
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                presenter.requestAimTypeDatas();
+                presenter.requestAimTypeDatas(showFixType);
             }
         });
     }
@@ -94,7 +96,7 @@ public class AimTypeListActivity extends CPBaseBoostActivity implements IAimType
         presenter = getPresenter();
 
         presenter.requestVersionCheck();
-        presenter.requestAimTypeDatas();
+        presenter.requestAimTypeDatas(showFixType);
 
         showContentLayout();
     }
@@ -226,7 +228,7 @@ public class AimTypeListActivity extends CPBaseBoostActivity implements IAimType
 
         // 重新请求数据
         if (presenter != null) {
-            presenter.requestAimTypeDatas();
+            presenter.requestAimTypeDatas(showFixType);
         }
     }
 

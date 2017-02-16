@@ -1,8 +1,6 @@
 package com.sien.lib.datapp.db;
 
 import com.sien.lib.datapp.beans.AimItemVO;
-import com.sien.lib.datapp.beans.AimObjectVO;
-import com.sien.lib.datapp.beans.AimRecordVO;
 import com.sien.lib.datapp.beans.AimTypeVO;
 import com.sien.lib.datapp.beans.UserInfoVO;
 
@@ -30,12 +28,6 @@ public class DaoSession extends AbstractDaoSession {
     private final DaoConfig userInfoVODaoConfig;
     private final UserInfoVODao userInfoVODao;
 
-    private final DaoConfig aimRecordVODaoConfig;
-    private final AimRecordVODao aimRecordVODao;
-
-    private final DaoConfig aimObjectVODaoConfig;
-    private final AimObjectVODao aimObjectVODao;
-
     public DaoSession(Database db, IdentityScopeType type, Map<Class<? extends AbstractDao<?, ?>>, DaoConfig>
             daoConfigMap) {
         super(db);
@@ -54,24 +46,12 @@ public class DaoSession extends AbstractDaoSession {
         userInfoVODaoConfig.initIdentityScope(type);
         userInfoVODao = new UserInfoVODao(userInfoVODaoConfig, this);
         registerDao(UserInfoVO.class, userInfoVODao);
-
-        aimRecordVODaoConfig = daoConfigMap.get(AimRecordVODao.class).clone();
-        aimRecordVODaoConfig.initIdentityScope(type);
-        aimRecordVODao = new AimRecordVODao(aimRecordVODaoConfig, this);
-        registerDao(AimRecordVO.class, aimRecordVODao);
-
-        aimObjectVODaoConfig = daoConfigMap.get(AimObjectVODao.class).clone();
-        aimObjectVODaoConfig.initIdentityScope(type);
-        aimObjectVODao = new AimObjectVODao(aimObjectVODaoConfig, this);
-        registerDao(AimObjectVO.class, aimObjectVODao);
     }
     
     public void clear() {
         aimTypeVODaoConfig.clearIdentityScope();
         aimItemVODaoConfig.clearIdentityScope();
         userInfoVODaoConfig.clearIdentityScope();
-        aimRecordVODaoConfig.clearIdentityScope();
-        aimObjectVODaoConfig.clearIdentityScope();
     }
 
     public AimTypeVODao getAimTypeVODao() {
@@ -84,13 +64,5 @@ public class DaoSession extends AbstractDaoSession {
 
     public UserInfoVODao getUserInfoVODao() {
         return userInfoVODao;
-    }
-
-    public AimRecordVODao getAimRecordVODao() {
-        return aimRecordVODao;
-    }
-
-    public AimObjectVODao getAimObjectVODao() {
-        return aimObjectVODao;
     }
 }

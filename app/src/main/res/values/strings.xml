@@ -66,7 +66,11 @@
     <string name="new_aimitem_title">添加目标项</string>
     <string name="new_aimitem_title_hint">请输入目标项名称(10字以内)</string>
     <string name="modify">编辑</string>
+    <string name="category">分类</string>
     <string name="confirm">确定</string>
     <string name="cancel">取消</string>
+
+    <string name="today_aimtype">今日目标</string>
+    <string name="none_aimtype_tips">你还未设定目标，去设置</string>
 
 </resources>

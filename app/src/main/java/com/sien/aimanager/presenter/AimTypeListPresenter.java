@@ -49,8 +49,12 @@ public class AimTypeListPresenter extends BusBaseBoostPresenter {
         MainRequestAction.requestVersionCheck(mcontext);
     }
 
-    public void requestAimTypeDatas(){
-        MainDatabaseAction.requestAimTypeFixedDatas(mcontext);
+    public void requestAimTypeDatas(boolean showFixType){
+        if (showFixType) {
+            MainDatabaseAction.requestAimTypeFixedDatas(mcontext);
+        }else {
+            MainDatabaseAction.requestAimTypeDatas(mcontext);
+        }
     }
 
     public void deleteAimType(Long aimTypeId){
@@ -87,7 +91,7 @@ public class AimTypeListPresenter extends BusBaseBoostPresenter {
         if (event != null){
             if (event.checkStatus()){
                 //删除成功，刷新数据
-                requestAimTypeDatas();
+                requestAimTypeDatas(false);
             }
         }
     }

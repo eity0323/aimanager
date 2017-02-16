@@ -68,6 +68,10 @@
             android:screenOrientation="portrait"
             android:theme="@style/BaseActivityTheme"/>
 
+        <activity android:name=".activity.MainAimObjectActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/BaseActivityTheme"/>
+
         <activity android:name="com.sien.aimanager.wxapi.WXEntryActivity"
             android:exported="true"
             android:launchMode="singleTop"/>

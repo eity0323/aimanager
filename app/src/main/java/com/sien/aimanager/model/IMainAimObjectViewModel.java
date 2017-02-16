@@ -1,6 +1,7 @@
 package com.sien.aimanager.model;
 
 import com.sien.lib.baseapp.model.ICPBaseBoostViewModel;
+import com.sien.lib.datapp.network.base.RequestFreshStatus;
 
 /**
  * @author sien
@@ -8,4 +9,5 @@ import com.sien.lib.baseapp.model.ICPBaseBoostViewModel;
  * @descript aimobject版主页viewmodel
  */
 public interface IMainAimObjectViewModel extends ICPBaseBoostViewModel {
+    public void refreshRequestAimBean(RequestFreshStatus status);
 }

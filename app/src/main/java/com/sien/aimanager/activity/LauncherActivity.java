@@ -36,7 +36,7 @@ public class LauncherActivity extends AppCompatActivity {
             public void run() {
                 go2MainActivity();
             }
-        }, 300);
+        }, 500);
 
     }
 
@@ -82,7 +82,7 @@ public class LauncherActivity extends AppCompatActivity {
         if (TextUtils.isEmpty(showGuide)) {
             startActivity(new Intent(this, GuideActivity.class));
         } else {
-            startActivity(new Intent(this, AimTypeListActivity.class));
+            startActivity(new Intent(this, MainAimObjectActivity.class));
         }
         finish();
     }

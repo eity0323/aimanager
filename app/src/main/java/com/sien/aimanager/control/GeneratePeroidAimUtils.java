@@ -8,12 +8,8 @@ import android.content.SharedPreferences;
 import com.sien.aimanager.services.GenerateAimServices;
 import com.sien.lib.baseapp.utils.CPDateUtil;
 import com.sien.lib.datapp.beans.AimItemVO;
-import com.sien.lib.datapp.beans.AimObjectVO;
-import com.sien.lib.datapp.beans.AimRecordVO;
 import com.sien.lib.datapp.beans.AimTypeVO;
 import com.sien.lib.datapp.db.helper.AimItemDBHelper;
-import com.sien.lib.datapp.db.helper.AimObjectHelper;
-import com.sien.lib.datapp.db.helper.AimRecordHelper;
 import com.sien.lib.datapp.db.helper.AimTypeDBHelper;
 import com.sien.lib.datapp.utils.CPLogUtil;
 import com.sien.lib.datapp.utils.CPStringUtil;
@@ -162,23 +158,24 @@ public class GeneratePeroidAimUtils {
      * @param period 周期
      */
     public static void generatePeriodAimByPeriod(Context context,int period,int diff){
+        CPLogUtil.logDebug("1、start to generate period aimType! period:" + period + " diffDay:" + diff);
+
         //1、查询需要创建的目标项;2、创建目标分类;3、创建目标项;4、通知界面更新
         List<AimTypeVO> dayList = AimTypeDBHelper.requestAimTypeFixedDatasSync(context,period);
         if (dayList != null && dayList.size() > 0){
 //            List<AimObjectVO> newDataList = new ArrayList<>();
-            AimObjectVO aimTypeVO;
+            AimTypeVO aimTypeVO;
 
-            for (int i = diff;i > 0;i--) {    //相差天数
+            for (int i = diff;i >= 0;i-=period) {    //相差天数 + 今天
 
                 Date nowDate = CPDateUtil.getRelativeDate(new Date(),(-1) * i); //往前推i天
 
                 for (AimTypeVO item : dayList) { //需要循环创建的分类数
-
                     //无目标项则不创建该分类对象
-                    long count = AimItemDBHelper.requestAimItemCountSync(context,item.getId());
-                    if (count <= 0) continue;
+//                    long count = AimItemDBHelper.requestAimItemCountSync(context,item.getId());
+//                    if (count <= 0) continue;
 
-                    aimTypeVO = new AimObjectVO();
+                    aimTypeVO = new AimTypeVO();
                     aimTypeVO.setCustomed(true);
                     aimTypeVO.setDesc(item.getDesc());
                     aimTypeVO.setFinishPercent(0);
@@ -196,11 +193,11 @@ public class GeneratePeroidAimUtils {
 //                    newDataList.add(aimTypeVO);
 
                     //创建目标分类
-                    AimObjectHelper.insertOrReplaceAimTypeSync(context,aimTypeVO);
+                    AimTypeDBHelper.insertOrReplaceAimTypeSync(context,aimTypeVO);
 
                     //创建目标项
                     if (aimTypeVO.getId() != null){
-                        generateAimItemByAimType(context,item.getId(),aimTypeVO.getId());
+                        generateAimItemByAimType(context,item.getId(),aimTypeVO.getId(),nowDate);
                     }
                 }
             }
@@ -216,18 +213,21 @@ public class GeneratePeroidAimUtils {
     }
 
     /*批量插入目标项*/
-    private static void generateAimItemByAimType(Context context,Long aimTypeId,Long newAimTypeId){
+    private static void generateAimItemByAimType(Context context,Long aimTypeId,Long newAimTypeId,Date nowDate){
+        CPLogUtil.logDebug("1、start to generate period aimItem! aimTypeId:" + aimTypeId + " newAimTypeId:" + newAimTypeId);
+
         List<AimItemVO> dayList = AimItemDBHelper.requestAimItemDataSync(context,aimTypeId);
 
         if (dayList != null && dayList.size() > 0) {
-            List<AimRecordVO> newDataList = new ArrayList<>();
+            List<AimItemVO> newDataList = new ArrayList<>();
 
-            AimRecordVO itemVO;
+            AimItemVO itemVO;
             for (AimItemVO item : dayList){
-                itemVO = new AimRecordVO();
+                itemVO = new AimItemVO();
                 itemVO.setAimName(item.getAimName());
                 itemVO.setDesc(item.getDesc());
-                itemVO.setModifyTime(new Date());
+                item.setStartTime(nowDate);
+                itemVO.setModifyTime(nowDate);
                 itemVO.setFinishStatus(AimItemVO.STATUS_UNDO);
                 itemVO.setPriority(AimItemVO.PRIORITY_FIVE);
                 itemVO.setFinishPercent(0);
@@ -238,7 +238,7 @@ public class GeneratePeroidAimUtils {
 
             if (newDataList.size() > 0) {
                 //批量插入目标项
-                AimRecordHelper.insertOrReplaceAimRecordListSync(context, newDataList);
+                AimItemDBHelper.insertOrReplaceAimItemListSync(context, newDataList);
             }
         }
     }

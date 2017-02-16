@@ -4,8 +4,6 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.sien.lib.datapp.db.AimItemVODao;
-import com.sien.lib.datapp.db.AimObjectVODao;
-import com.sien.lib.datapp.db.AimRecordVODao;
 import com.sien.lib.datapp.db.AimTypeVODao;
 import com.sien.lib.datapp.db.DaoMaster;
 
@@ -20,6 +18,6 @@ public class MySQLiteOpenHelper extends DaoMaster.OpenHelper {
     }
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        MigrationHelper.migrate(db,AimTypeVODao.class,AimItemVODao.class,AimObjectVODao.class, AimRecordVODao.class);
+        MigrationHelper.migrate(db,AimTypeVODao.class,AimItemVODao.class);
     }
 }

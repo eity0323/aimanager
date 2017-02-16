@@ -4,18 +4,17 @@ package com.sien.lib.datapp.network.action;
 import android.content.Context;
 
 import com.sien.lib.datapp.beans.AimItemVO;
-import com.sien.lib.datapp.beans.AimObjectVO;
 import com.sien.lib.datapp.beans.AimTypeVO;
 import com.sien.lib.datapp.beans.UserInfoVO;
 import com.sien.lib.datapp.control.CPThreadPoolManager;
 import com.sien.lib.datapp.db.helper.AimItemDBHelper;
-import com.sien.lib.datapp.db.helper.AimObjectHelper;
 import com.sien.lib.datapp.db.helper.AimTypeDBHelper;
 import com.sien.lib.datapp.db.helper.UserInfoDBHelper;
 import com.sien.lib.datapp.events.DatappEvent;
 import com.sien.lib.datapp.utils.CPLogUtil;
 import com.sien.lib.datapp.utils.EventPostUtil;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -41,7 +40,7 @@ public class MainDatabaseAction {
      */
     public static void requestAimTypeDatas(final Context context){
         if (context == null) {
-            CPLogUtil.logDebug("requestCustomTabDatas context can not be null");
+            CPLogUtil.logDebug("requestAimTypeDatas context can not be null");
             EventPostUtil.post(new DatappEvent.AimTypeEvent(DatappEvent.STATUS_FAIL_OHTERERROR, null));
             return;
         }
@@ -51,7 +50,7 @@ public class MainDatabaseAction {
             public void run() {
                 List<AimTypeVO> list = AimTypeDBHelper.requestAimTypeDatasSync(context);
 
-                CPLogUtil.logDebug("requestCustomTabDatas Result " + list.size() );
+                CPLogUtil.logDebug("requestAimTypeDatas Result " + list.size() );
 
                 EventPostUtil.post(new DatappEvent.AimTypeEvent(DatappEvent.STATUS_SUCCESS, list));
             }
@@ -63,7 +62,7 @@ public class MainDatabaseAction {
      */
     public static void requestAimTypeFixedDatas(final Context context){
         if (context == null) {
-            CPLogUtil.logDebug("requestCustomTabDatas context can not be null");
+            CPLogUtil.logDebug("requestAimTypeFixedDatas context can not be null");
             EventPostUtil.post(new DatappEvent.AimTypeEvent(DatappEvent.STATUS_FAIL_OHTERERROR, null));
             return;
         }
@@ -73,7 +72,7 @@ public class MainDatabaseAction {
             public void run() {
                 List<AimTypeVO> list = AimTypeDBHelper.requestAimTypeFixedDatasSync(context);
 
-                CPLogUtil.logDebug("requestCustomTabDatas Result " + list.size() );
+                CPLogUtil.logDebug("requestAimTypeFixedDatas Result " + list.size() );
 
                 EventPostUtil.post(new DatappEvent.AimTypeEvent(DatappEvent.STATUS_SUCCESS, list));
             }
@@ -88,7 +87,7 @@ public class MainDatabaseAction {
      */
     public static void requestAimTypeFixedDatas(final Context context, final int period){
         if (context == null) {
-            CPLogUtil.logDebug("requestCustomTabDatas context can not be null");
+            CPLogUtil.logDebug("requestAimTypeFixedDatas context can not be null");
             EventPostUtil.post(new DatappEvent.AimTypeEvent(DatappEvent.STATUS_FAIL_OHTERERROR, null));
             return;
         }
@@ -98,7 +97,7 @@ public class MainDatabaseAction {
             public void run() {
                 List<AimTypeVO> list = AimTypeDBHelper.requestAimTypeFixedDatasSync(context,period);
 
-                CPLogUtil.logDebug("requestCustomTabDatas Result " + list.size() );
+                CPLogUtil.logDebug("requestAimTypeFixedDatas Result " + list.size() );
 
                 EventPostUtil.post(new DatappEvent.AimTypeEvent(DatappEvent.STATUS_SUCCESS, list));
             }
@@ -106,27 +105,27 @@ public class MainDatabaseAction {
     }
 
     /**
-     * 请求目标分类数据（自动创建 or 不可循环创建的目标分类）
+     * 根据日期查询目标分类
+     * @param context
      */
-    public static void requestAimObjectDatas(final Context context){
+    public static void requestAimTypeByDate(final Context context, final Date date){
         if (context == null) {
-            CPLogUtil.logDebug("requestCustomTabDatas context can not be null");
-            EventPostUtil.post(new DatappEvent.AimTypeEvent(DatappEvent.STATUS_FAIL_OHTERERROR, null));
+            CPLogUtil.logDebug("requestAimObjectByDate context can not be null");
+            EventPostUtil.post(new DatappEvent.AimObjectEvent(DatappEvent.STATUS_FAIL_OHTERERROR, null));
             return;
         }
 
         CPThreadPoolManager.newInstance().addExecuteTask(new Runnable() {
             @Override
             public void run() {
-                List<AimObjectVO> list = AimObjectHelper.requestAimObjectDatasSync(context);
+                List<AimTypeVO> list = AimTypeDBHelper.requestAimTypeByDate(context,date);
 
-                CPLogUtil.logDebug("requestCustomTabDatas Result " + list.size() );
+                CPLogUtil.logDebug("requestAimObjectByDate Result " + list.size() );
 
-                EventPostUtil.post(new DatappEvent.AimTypeEvent(DatappEvent.STATUS_SUCCESS, list));
+                EventPostUtil.post(new DatappEvent.AimObjectEvent(DatappEvent.STATUS_SUCCESS, list));
             }
         });
     }
-
 
     /**
      * 请求目标记录数据
@@ -215,7 +214,6 @@ public class MainDatabaseAction {
             }
         });
     }
-
 
     //----------------------------------------------------------------------------------------------删除
     /**
