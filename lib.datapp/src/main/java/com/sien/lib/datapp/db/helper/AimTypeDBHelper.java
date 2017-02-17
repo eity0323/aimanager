@@ -160,6 +160,17 @@ public class AimTypeDBHelper {
     }
 
     /**
+     * 请求目标分类数据(自动创建分类)
+     */
+    public static List<AimTypeVO> requestAimTypeAutoDatasSync(Context context){
+        AimTypeVODao dao = DBManager.getInstance(context).getDaoSession().getAimTypeVODao();
+        QueryBuilder<AimTypeVO> qb = dao.queryBuilder();
+        qb.where(AimTypeVODao.Properties.Recyclable.eq(false));
+        List<AimTypeVO> list = qb.list();
+        return list;
+    }
+
+    /**
      * 根据周期请求目标分类数据(固定分类)
      * @param context
      * @param period
@@ -169,6 +180,20 @@ public class AimTypeDBHelper {
         AimTypeVODao dao = DBManager.getInstance(context).getDaoSession().getAimTypeVODao();
         QueryBuilder<AimTypeVO> qb = dao.queryBuilder();
         qb.where(AimTypeVODao.Properties.Recyclable.eq(true),AimTypeVODao.Properties.Period.eq(period));
+        List<AimTypeVO> list = qb.list();
+        return list;
+    }
+
+    /**
+     * 根据周期请求目标分类数据(自动创建分类)
+     * @param context
+     * @param period
+     * @return
+     */
+    public static List<AimTypeVO> requestAimTypeAutoDatasSync(Context context,int period){
+        AimTypeVODao dao = DBManager.getInstance(context).getDaoSession().getAimTypeVODao();
+        QueryBuilder<AimTypeVO> qb = dao.queryBuilder();
+        qb.where(AimTypeVODao.Properties.Recyclable.eq(false),AimTypeVODao.Properties.Period.eq(period));
         List<AimTypeVO> list = qb.list();
         return list;
     }

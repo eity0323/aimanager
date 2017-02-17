@@ -1,9 +1,11 @@
 package com.sien.aimanager.presenter;
 
 import android.content.Context;
+import android.os.Message;
 
 import com.sien.aimanager.beans.AimBean;
 import com.sien.aimanager.model.IMainAimObjectViewModel;
+import com.sien.lib.baseapp.presenters.BasePresenter;
 import com.sien.lib.baseapp.presenters.BusBaseBoostPresenter;
 import com.sien.lib.baseapp.utils.CollectionUtils;
 import com.sien.lib.datapp.beans.AimItemVO;
@@ -22,9 +24,12 @@ import java.util.List;
  * @descript aimobject版主页presenter
  */
 public class MainAimObjectPresenter extends BusBaseBoostPresenter {
+    private final int MSG_UPDATE_AIMTYPE = 1;//查询自动创建目标类型
+
     private IMainAimObjectViewModel impl;
 
     private List<AimBean> datasource;
+//    private List<AimTypeVO> aimTypeVOList;
 
     public MainAimObjectPresenter(Context context){
         mcontext = context;
@@ -39,6 +44,13 @@ public class MainAimObjectPresenter extends BusBaseBoostPresenter {
         }
         return datasource;
     }
+
+//    public List<AimTypeVO> getAimTypeVOList() {
+//        if (aimTypeVOList == null) {
+//            aimTypeVOList = new ArrayList<>();
+//        }
+//        return aimTypeVOList;
+//    }
 
     /**
      * 请求当天目标数据
@@ -73,6 +85,43 @@ public class MainAimObjectPresenter extends BusBaseBoostPresenter {
         }
 
         impl.refreshRequestAimBean(RequestFreshStatus.REFRESH_NODATA);
+    }
+
+//    public void requestAimTypeData(){
+//        MainDatabaseAction.requestAimTypeAutoDatas(mcontext);
+//    }
+
+//    @Subscribe
+//    public void AimTypeEventReceiver(DatappEvent.AimTypeEvent event){
+//        if (event != null){
+//            postMessage2UI(event.getResult(),MSG_UPDATE_AIMTYPE);
+//        }
+//    }
+
+    @Override
+    protected void handleMessageFunc(BasePresenter helper, Message msg) {
+        super.handleMessageFunc(helper, msg);
+
+//        if (helper == null) return;
+//
+//        MainAimObjectPresenter theActivity = (MainAimObjectPresenter) helper;
+//        if (theActivity == null)    return;
+//
+//        if (impl == null)   return;
+//
+//        if (msg.what == MSG_UPDATE_AIMTYPE){
+//            if (msg.obj != null){
+//                List<AimTypeVO> list = (List<AimTypeVO>) msg.obj;
+//                if (list != null && list.size() > 0 ){
+//                    aimTypeVOList = list;
+//                    impl.refreshRequestAimType(RequestFreshStatus.REFRESH_SUCCESS);
+//                    return;
+//                }
+//                impl.refreshRequestAimType(RequestFreshStatus.REFRESH_NODATA);
+//                return;
+//            }
+//            impl.refreshRequestAimType(RequestFreshStatus.REFRESH_ERROR);
+//        }
     }
 
     @Override

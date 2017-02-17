@@ -79,6 +79,28 @@ public class MainDatabaseAction {
         });
     }
 
+
+    /**
+     * 请求目标分类数据(固定分类)
+     */
+    public static void requestAimTypeAutoDatas(final Context context){
+        if (context == null) {
+            CPLogUtil.logDebug("requestAimTypeAutoDatas context can not be null");
+            EventPostUtil.post(new DatappEvent.AimTypeEvent(DatappEvent.STATUS_FAIL_OHTERERROR, null));
+            return;
+        }
+
+        CPThreadPoolManager.newInstance().addExecuteTask(new Runnable() {
+            @Override
+            public void run() {
+                List<AimTypeVO> list = AimTypeDBHelper.requestAimTypeAutoDatasSync(context);
+
+                CPLogUtil.logDebug("requestAimTypeAutoDatas Result " + list.size() );
+
+                EventPostUtil.post(new DatappEvent.AimTypeEvent(DatappEvent.STATUS_SUCCESS, list));
+            }
+        });
+    }
     /**
      * 根据周期请求目标分类数据(固定分类)
      * @param context
@@ -111,7 +133,7 @@ public class MainDatabaseAction {
     public static void requestAimTypeByDate(final Context context, final Date date){
         if (context == null) {
             CPLogUtil.logDebug("requestAimObjectByDate context can not be null");
-            EventPostUtil.post(new DatappEvent.AimObjectEvent(DatappEvent.STATUS_FAIL_OHTERERROR, null));
+            EventPostUtil.post(new DatappEvent.AimTypeEvent(DatappEvent.STATUS_FAIL_OHTERERROR, null));
             return;
         }
 
@@ -122,7 +144,7 @@ public class MainDatabaseAction {
 
                 CPLogUtil.logDebug("requestAimObjectByDate Result " + list.size() );
 
-                EventPostUtil.post(new DatappEvent.AimObjectEvent(DatappEvent.STATUS_SUCCESS, list));
+                EventPostUtil.post(new DatappEvent.AimTypeEvent(DatappEvent.STATUS_SUCCESS, list));
             }
         });
     }

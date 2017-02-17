@@ -152,7 +152,7 @@ public class AimTypeListActivity extends CPBaseBoostActivity implements IAimType
     }
 
     /*跳转至目标类型管理页*/
-    private void go2AimItemActivity(AimTypeVO aimTypeVO){
+    private void go2AimTypeDetailActivity(AimTypeVO aimTypeVO){
         Intent intent = new Intent(this,AimTypeDetailActivity.class);
         intent.putExtra("ds",aimTypeVO);
         startActivity(intent);
@@ -183,7 +183,7 @@ public class AimTypeListActivity extends CPBaseBoostActivity implements IAimType
             adapter.setOnItemClickListener(new CPBaseRecyclerAdapter.OnItemClickListener() {
                 @Override
                 public void onItemClick(View view, Object data, int position) {
-                    go2AimItemActivity((AimTypeVO)data);
+                    go2AimTypeDetailActivity((AimTypeVO)data);
                 }
             });
             recyclerView.setAdapter(adapter);

@@ -1,33 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-    <TextView
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/aimBeanRefresh"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/today_aimtype"
-        android:layout_marginBottom="10dp"
-        android:layout_marginTop="10dp"
-        style="@style/GrayCommonText14Appearance"/>
+        android:layout_height="0dp"
+        android:layout_above="@id/newAimType"
+        android:layout_weight="1">
 
-    <com.sien.lib.component.coverflow.CoverFlow
-        android:id="@+id/aimobject_flow"
-        android:layout_width="match_parent"
-        android:layout_height="250dp"
-        android:layout_gravity="center"
-        app:autoCycle="true"
-        app:coverage="0.2"
-        app:flingAllow="true"
-        app:orientation="horizontal" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/aimobject_empty_tips"
+            <TextView
+                style="@style/GrayCommonText14Appearance"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                android:text="@string/today_aimtype" />
+
+            <com.sien.lib.component.coverflow.CoverFlow
+                android:id="@+id/aimbean_flow"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                android:layout_gravity="center"
+                app:autoCycle="true"
+                app:coverage="0.2"
+                app:flingAllow="true"
+                app:orientation="horizontal" />
+
+            <TextView
+                android:id="@+id/aimobject_empty_tips"
+                style="@style/DarkText16Appearance"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/none_aimtype_tips"
+                android:visibility="gone" />
+        </LinearLayout>
+    </android.support.v4.widget.SwipeRefreshLayout>
+
+    <LinearLayout
+        android:id="@+id/newAimType"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:visibility="gone"
-        android:text="@string/none_aimtype_tips"
-        style="@style/DarkText16Appearance"/>
+        android:layout_height="48dp"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/selector_button"
+        android:gravity="center">
+
+        <TextView
+            style="@style/WhiteText16Appearance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@mipmap/icon_add"
+            android:drawablePadding="10dp"
+            android:text="@string/main_generate" />
+    </LinearLayout>
 </LinearLayout>
