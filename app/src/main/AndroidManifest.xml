@@ -72,6 +72,18 @@
             android:screenOrientation="portrait"
             android:theme="@style/BaseActivityTheme"/>
 
+        <activity android:name=".activity.FeedbackActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/BaseActivityTheme"/>
+
+        <activity android:name=".activity.CreateGestureActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/BaseActivityTheme"/>
+
+        <activity android:name=".activity.GestureLoginActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/BaseActivityTheme"/>
+
         <activity android:name="com.sien.aimanager.wxapi.WXEntryActivity"
             android:exported="true"
             android:launchMode="singleTop"/>

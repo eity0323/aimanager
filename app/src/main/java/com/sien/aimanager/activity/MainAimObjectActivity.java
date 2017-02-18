@@ -17,6 +17,7 @@ import com.sien.aimanager.presenter.MainAimObjectPresenter;
 import com.sien.lib.baseapp.activity.CPBaseBoostActivity;
 import com.sien.lib.baseapp.utils.CPDateUtil;
 import com.sien.lib.baseapp.utils.CollectionUtils;
+import com.sien.lib.baseapp.widgets.CPRefreshView;
 import com.sien.lib.component.coverflow.CoverFlow;
 import com.sien.lib.component.coverflow.TwoWayAdapterView;
 import com.sien.lib.datapp.beans.AimTypeVO;
@@ -34,11 +35,9 @@ public class MainAimObjectActivity extends CPBaseBoostActivity implements IMainA
 
     private MainAimObjectPresenter presenter;
     private AimBeanAdapter adapter;
-    private SwipeRefreshLayout refreshLayout;
+    private CPRefreshView refreshLayout;
 
     private LinearLayout newAimItemLatyout;
-
-    private View aimItemLayout;
 
     private TextView emptyTV;
 
@@ -72,6 +71,18 @@ public class MainAimObjectActivity extends CPBaseBoostActivity implements IMainA
 
                     go2AimTypeDetailActivity(item);
                 }
+            }
+        });
+
+        coverFlow.setOnItemSelectedListener(new TwoWayAdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(TwoWayAdapterView<?> parent, View view, int position, long id) {
+                coverIndex = position;
+            }
+
+            @Override
+            public void onNothingSelected(TwoWayAdapterView<?> parent) {
+
             }
         });
 
@@ -124,7 +135,7 @@ public class MainAimObjectActivity extends CPBaseBoostActivity implements IMainA
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_aimtype,menu);
+        getMenuInflater().inflate(R.menu.menu_main,menu);
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -132,6 +143,10 @@ public class MainAimObjectActivity extends CPBaseBoostActivity implements IMainA
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.category){
             go2AimTypeListActivity();
+        }else if (item.getItemId() == R.id.setting){
+            startActivity(new Intent(this,SettingActivity.class));
+        }else if (item.getItemId() == R.id.synchronous){
+            //synchronous data to server
         }
         return super.onOptionsItemSelected(item);
     }

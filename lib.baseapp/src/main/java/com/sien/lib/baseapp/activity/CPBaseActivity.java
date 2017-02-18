@@ -2,6 +2,7 @@ package com.sien.lib.baseapp.activity;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
@@ -27,13 +28,17 @@ import com.sien.lib.baseapp.utils.ToastUtil;
 import com.sien.lib.datapp.utils.CPDeviceUtil;
 import com.sien.lib.datapp.utils.CPLogUtil;
 
+import java.util.List;
+
+import pub.devrel.easypermissions.EasyPermissions;
+
 /**
  * @author sien
  * @date 2017/1/22
  * @descript 基类activity
  * 注：基类管理presenter的生命周期，布局完全由子类管理，提供了统一调用独立开发模块页面功能（使用配置文件配置插件模块，插件模块对宿主透明，仅开发配置文件中提供的接口）
  */
-public abstract class CPBaseActivity extends AppCompatActivity implements IPluginOrAloneChecker,IActivityOperater{
+public abstract class CPBaseActivity extends AppCompatActivity implements IPluginOrAloneChecker,IActivityOperater,EasyPermissions.PermissionCallbacks{
     private Toolbar toolbar;
     private BasePresenter innerPresenter;
     private boolean isActive = false;//当前页面是否处于激活状态
@@ -381,6 +386,42 @@ public abstract class CPBaseActivity extends AppCompatActivity implements IPlugi
      * 应用处于前台，内存不足，结束了部分缓存进程，
      */
     public void runningNormalUrgentTrimMemory(){
+
+    }
+
+
+    //------------------------------------------------------------------动态申请权限
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        // EasyPermissions handles the request result.
+        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
+    }
+
+    @Override
+    public void onPermissionsGranted(int requestCode, List<String> perms) {
+//        Log.d(TAG, "onPermissionsGranted:" + requestCode + ":" + perms.size());
+    }
+
+    @Override
+    public void onPermissionsDenied(int requestCode, List<String> perms) {
+        //处理拒绝授权事件（可选）
+        DialogInterface.OnClickListener cancelButtonListener = new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                //TODO Let's show a toast
+//                        showToast("取消设置权限");
+            }
+        };
+
+        // 设置不再询问后，可重新弹出询问框
+        EasyPermissions.checkDeniedPermissionsNeverAskAgain(this,
+                getString(R.string.permission_ask_again),
+                R.string.setting,
+                R.string.cancel,
+                cancelButtonListener,
+                perms);
 
     }
 }

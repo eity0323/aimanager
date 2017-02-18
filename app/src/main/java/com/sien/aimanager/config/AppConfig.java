@@ -13,6 +13,8 @@ public class AppConfig {
 	public final static int REQUEST_CODE_ENVIRONMENT= 2081;//切换网络环境
 	public final static int REQUEST_CODE_DATE_SOURCE = 2082;//切换数据来源
 
+	public static final String GESTURE_PASSWORD = "GesturePassword";
+
 	/**
 	 * 程序应用版本升级信息
 	 */

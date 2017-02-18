@@ -2,9 +2,11 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:layout_width="match_parent"
+    android:layout_width="300dp"
     android:layout_height="match_parent"
+    android:padding="10dp"
     android:gravity="center_horizontal"
+    android:descendantFocusability="afterDescendants"
     android:background="@color/loading_placeholder">
 
     <TextView
@@ -16,7 +18,7 @@
         android:maxLines="1"
         style="@style/DarkText16Appearance"/>
 
-    <android.support.v7.widget.RecyclerView
+    <com.sien.aimanager.widgets.RecyclerViewTouchable
         android:id="@+id/item_aimbean_list"
         android:layout_width="match_parent"
         android:layout_height="0dp"

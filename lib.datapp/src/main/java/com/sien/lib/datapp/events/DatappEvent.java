@@ -2,7 +2,9 @@ package com.sien.lib.datapp.events;
 
 import com.sien.lib.datapp.beans.AimItemVO;
 import com.sien.lib.datapp.beans.AimTypeVO;
+import com.sien.lib.datapp.beans.BaseResult;
 import com.sien.lib.datapp.beans.UserInfoVO;
+import com.sien.lib.datapp.network.result.UploadImageResult;
 import com.sien.lib.datapp.network.result.VersionCheckResult;
 
 import java.util.List;
@@ -286,7 +288,68 @@ public class DatappEvent {
         }
     }
 
+    /**
+     * 添加反馈事件
+     */
+    public static class FeedbackEvent{
+        private int status;
+        private Object data;
+        public FeedbackEvent(int status,Object data){
+            this.status = status;
+            this.data = data;
+        }
 
+        public boolean checkStatus() {
+            return status == STATUS_SUCCESS;
+        }
+
+        public Object getData() {
+            return data;
+        }
+
+        public BaseResult getResult(){
+            BaseResult  response = null;
+            if (status == STATUS_SUCCESS && data != null){
+                response = (BaseResult)data;
+            }
+
+            return response;
+        }
+    }
+
+    /**
+     * 上传图片事件
+     */
+    public static class UploadImageEvent{
+        private int status;
+        private Object data;
+
+        public UploadImageEvent(int status,Object data){
+            this.status = status;
+            this.data = data;
+        }
+
+        public boolean checkStatus() {
+            return status == STATUS_SUCCESS;
+        }
+
+        public Object getData() {
+            return data;
+        }
+
+        public UploadImageResult getResult(){
+            UploadImageResult response = null;
+            if (status == STATUS_SUCCESS && data != null){
+                response = (UploadImageResult)data;
+            }
+
+            return response;
+        }
+    }
+
+    /**
+     * 下载事件
+     */
     public static class DownloadApkEvent{
         private int status;
         private Object data;

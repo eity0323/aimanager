@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <android.support.v4.widget.SwipeRefreshLayout
+    <com.sien.lib.baseapp.widgets.CPRefreshView
         android:id="@+id/aimBeanRefresh"
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -21,8 +21,7 @@
                 style="@style/GrayCommonText14Appearance"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:layout_marginTop="10dp"
+                android:layout_margin="10dp"
                 android:text="@string/today_aimtype" />
 
             <com.sien.lib.component.coverflow.CoverFlow
@@ -43,7 +42,7 @@
                 android:text="@string/none_aimtype_tips"
                 android:visibility="gone" />
         </LinearLayout>
-    </android.support.v4.widget.SwipeRefreshLayout>
+    </com.sien.lib.baseapp.widgets.CPRefreshView>
 
     <LinearLayout
         android:id="@+id/newAimType"
@@ -59,6 +58,6 @@
             android:layout_height="wrap_content"
             android:drawableLeft="@mipmap/icon_add"
             android:drawablePadding="10dp"
-            android:text="@string/main_generate" />
+            android:text="@string/main_add" />
     </LinearLayout>
 </LinearLayout>

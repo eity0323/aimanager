@@ -8,8 +8,6 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -22,7 +20,6 @@ import com.sien.aimanager.presenter.AimTypeListPresenter;
 import com.sien.lib.baseapp.BaseApplication;
 import com.sien.lib.baseapp.activity.CPBaseBoostActivity;
 import com.sien.lib.baseapp.adapter.CPBaseRecyclerAdapter;
-import com.sien.lib.baseapp.utils.RepeatClickUtil;
 import com.sien.lib.baseapp.widgets.recyclerview.CPDividerItemDecoration;
 import com.sien.lib.datapp.beans.AimTypeVO;
 import com.sien.lib.datapp.cache.CacheDataStorage;
@@ -117,19 +114,19 @@ public class AimTypeListActivity extends CPBaseBoostActivity implements IAimType
         }
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_main,menu);
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.setting){
-            startActivity(new Intent(this,SettingActivity.class));
-        }
-        return super.onOptionsItemSelected(item);
-    }
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        getMenuInflater().inflate(R.menu.menu_main,menu);
+//        return super.onCreateOptionsMenu(menu);
+//    }
+//
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        if (item.getItemId() == R.id.setting){
+//            startActivity(new Intent(this,SettingActivity.class));
+//        }
+//        return super.onOptionsItemSelected(item);
+//    }
 
     /*操作面板*/
     private void showOperatePanel(final AimTypeVO aimTypeVO){
@@ -210,11 +207,11 @@ public class AimTypeListActivity extends CPBaseBoostActivity implements IAimType
 
     @Override
     public void onBackPressed() {
-        if(RepeatClickUtil.isRepeatClick(2000)){
+//        if(RepeatClickUtil.isRepeatClick(2000)){
             super.onBackPressed();
-        }else {
-            showToast(R.string.exit_tips);
-        }
+//        }else {
+//            showToast(R.string.exit_tips);
+//        }
     }
 
     @Override

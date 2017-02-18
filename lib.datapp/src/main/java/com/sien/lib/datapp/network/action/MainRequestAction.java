@@ -9,11 +9,16 @@ import com.sien.lib.datapp.beans.BaseResult;
 import com.sien.lib.datapp.cache.CacheDataStorage;
 import com.sien.lib.datapp.cache.CacheDataStorageCallBack;
 import com.sien.lib.datapp.control.CPBaseCallBack;
+import com.sien.lib.datapp.control.JsonMananger;
 import com.sien.lib.datapp.events.DatappEvent;
 import com.sien.lib.datapp.network.RestClient;
+import com.sien.lib.datapp.network.RestClientEx;
+import com.sien.lib.datapp.network.request.FeedbackRequest;
 import com.sien.lib.datapp.network.result.AimItemResult;
 import com.sien.lib.datapp.network.result.AimTypeResult;
+import com.sien.lib.datapp.network.result.UploadImageResult;
 import com.sien.lib.datapp.network.result.VersionCheckResult;
+import com.sien.lib.datapp.utils.CPDeviceUtil;
 import com.sien.lib.datapp.utils.CPLogUtil;
 import com.sien.lib.datapp.utils.EventPostUtil;
 
@@ -24,8 +29,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 
+import okhttp3.MultipartBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
+import retrofit2.Callback;
 import retrofit2.Response;
 
 /**
@@ -118,6 +125,117 @@ public class MainRequestAction {
             @Override
             public void fail(Call<AimItemResult> call, Throwable t) {
                 EventPostUtil.post(new DatappEvent.AimTypeEvent(DatappEvent.STATUS_FAIL_NETERROR,"net error"));
+            }
+        });
+    }
+
+    /**
+     * 提交反馈
+     */
+    public static void requestFeedback(Context context,String content,String uploadpath){
+        MainRequestApi service = RestClient.getClient(context);
+
+        FeedbackRequest request = new FeedbackRequest();
+        request.setContent(content);
+        request.setStatus("0");
+        request.setAppPlat("android");
+        String sysVersion = CPDeviceUtil.getSystemVersion();
+        if (!TextUtils.isEmpty(sysVersion) && !sysVersion.toLowerCase().contains("android")){
+            sysVersion = "Android " + sysVersion;
+        }
+        request.setTerminalOs(sysVersion);
+        request.setIcon(uploadpath);
+        request.setAppVersion(CPDeviceUtil.getVersionName(context));
+        request.setTerminalType(CPDeviceUtil.getBrand());//getBrand or getMobileModel
+
+        try {
+            String jsonContent = JsonMananger.beanToJson(request);
+
+            Call<BaseResult> call = service.submitFeedback(jsonContent);
+            call.enqueue(new CPBaseCallBack<BaseResult>() {
+                @Override
+                public void response(Call<BaseResult> call, Response<BaseResult> response) {
+                    if (response.isSuccessful()) {
+                        BaseResult result = response.body();
+                        if (result.checkRequestSuccess()) {
+                            EventPostUtil.post(new DatappEvent.FeedbackEvent(DatappEvent.STATUS_SUCCESS, result));
+                            return;
+                        }
+                        //找不到商品，后台处理数据失败，抛异常的处理(返回码不为0)
+                        String msg = result.getMessage();
+                        if (TextUtils.isEmpty(msg)){
+                            msg = "request success operation fail";
+                        }
+                        EventPostUtil.post(new DatappEvent.FeedbackEvent(DatappEvent.STATUS_FAIL_OHTERERROR, msg));
+                    } else {
+                        EventPostUtil.post(new DatappEvent.FeedbackEvent(DatappEvent.STATUS_FAIL_OHTERERROR, "request fail"));
+                    }
+                }
+
+                @Override
+                public void fail(Call<BaseResult> call, Throwable t) {
+                    EventPostUtil.post(new DatappEvent.FeedbackEvent(DatappEvent.STATUS_FAIL_NETERROR, "net error"));
+                }
+            });
+        }catch (Exception ex){
+            ex.printStackTrace();
+
+            EventPostUtil.post(new DatappEvent.FeedbackEvent(DatappEvent.STATUS_FAIL_OHTERERROR,"data transfer error"));
+        }
+    }
+
+    /**
+     * 上传多张图片
+     * @param context
+     * @param pathList
+     */
+    public static void requestUploadMultiFile(Context context,List<String> pathList,String modelName){
+        MainRequestApi service = RestClientEx.getClient();
+
+        MultipartBody.Builder builder = new MultipartBody.Builder();
+        builder.addFormDataPart("model",modelName);
+        if(pathList.size() > 0) {
+            for (int i = 0; i < pathList.size(); i++) {
+                File file = new File(pathList.get(i));
+                builder.addFormDataPart("file"+i,file.getName(), MultipartBody.create(MultipartBody.FORM,file));//MediaType.parse("image/png"),file));
+            }
+        }
+
+        Call<String> call = service.uploadMultipleFile(builder.build().parts());
+        call.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call,
+                                   Response<String> response) {
+                if (response.isSuccessful()){
+                    String res = response.body();
+                    if (!TextUtils.isEmpty(res)) {
+                        try {
+                            UploadImageResult result = JsonMananger.jsonToBean(res, UploadImageResult.class);
+                            if (result.checkRequestSuccess()) {
+                                EventPostUtil.post(new DatappEvent.UploadImageEvent(DatappEvent.STATUS_SUCCESS, result));
+                                return;
+                            }
+                            //找不到商品，后台处理数据失败，抛异常的处理(返回码不为0)
+                            String msg = result.getMessage();
+                            if (TextUtils.isEmpty(msg)){
+                                msg = "request success operation fail";
+                            }
+                            EventPostUtil.post(new DatappEvent.UploadImageEvent(DatappEvent.STATUS_FAIL_OHTERERROR, msg));
+                        }catch (Exception ex){
+                            ex.printStackTrace();
+                            EventPostUtil.post(new DatappEvent.UploadImageEvent(DatappEvent.STATUS_FAIL_OHTERERROR, "json error"));
+                        }
+                    }else {
+                        EventPostUtil.post(new DatappEvent.UploadImageEvent(DatappEvent.STATUS_FAIL_OHTERERROR, "result is null"));
+                    }
+                }else {
+                    EventPostUtil.post(new DatappEvent.UploadImageEvent(DatappEvent.STATUS_FAIL_OHTERERROR, "request fail"));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+                EventPostUtil.post(new DatappEvent.UploadImageEvent(DatappEvent.STATUS_FAIL_NETERROR, "net error"));
             }
         });
     }

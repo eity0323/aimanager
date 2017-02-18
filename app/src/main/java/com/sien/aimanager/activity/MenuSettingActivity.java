@@ -18,6 +18,7 @@ import com.sien.aimanager.presenter.MenuSettingPresenter;
 import com.sien.lib.baseapp.BaseApplication;
 import com.sien.lib.baseapp.activity.CPBaseBoostActivity;
 import com.sien.lib.baseapp.adapter.CPBaseRecyclerAdapter;
+import com.sien.lib.baseapp.config.CPConfiguration;
 import com.sien.lib.baseapp.widgets.recyclerview.CPDividerItemDecoration;
 import com.sien.lib.datapp.config.DatappConfig;
 import com.sien.lib.datapp.control.CPSharedPreferenceManager;
@@ -83,7 +84,7 @@ public class MenuSettingActivity extends CPBaseBoostActivity implements IMenuSet
                 }else if (position == 4){
                     switchLog();
                 }else if (position == 5){
-                    //密码
+                    setPwdLock();
                 }else if (position == 6){
                     go2AboutActivity();
                 }
@@ -104,6 +105,19 @@ public class MenuSettingActivity extends CPBaseBoostActivity implements IMenuSet
 
         presenter.changeLogStatus();
         refreshAdapterDisplay();
+    }
+
+    /*设置手势密码锁*/
+    private void setPwdLock(){
+        CPConfiguration.USING_PASSWORD = !CPConfiguration.USING_PASSWORD;
+
+        presenter.changePwdStatus();
+
+        CPSharedPreferenceManager.getInstance(this).saveData(DatappConfig.PWDLOCK_KEY, String.valueOf(CPConfiguration.USING_PASSWORD));
+
+        if (CPConfiguration.USING_PASSWORD) {
+            startActivity(new Intent(this, CreateGestureActivity.class));
+        }
     }
 
     /*刷新显示*/

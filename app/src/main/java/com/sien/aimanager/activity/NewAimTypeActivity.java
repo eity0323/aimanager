@@ -127,6 +127,11 @@ public class NewAimTypeActivity extends CPBaseBoostActivity implements INewAimTy
         recyclable = aimTypeVO.getRecyclable().booleanValue();
         switchCompat.setChecked(recyclable);
 
+        if (!recyclable) {
+            findView(R.id.layout_period).setVisibility(View.GONE);
+            findView(R.id.layout_recyclerable).setVisibility(View.GONE);
+        }
+
         if (aimTypeVO.getTargetPeriod() != null) {
             period = aimTypeVO.getTargetPeriod();
             periodTV.setText(getPeriodTextByIndex(getIndexByPeriod(aimTypeVO.getTargetPeriod())));

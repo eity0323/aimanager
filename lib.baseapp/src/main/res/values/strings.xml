@@ -3,4 +3,11 @@
 
     <string name="base_no_network_warn_tips">世界上最遥远的距离就是没有网络</string>
     <string name="base_no_network_and_retry">网络异常，点击重试</string>
+
+    <string name="permission_msg_contacts">应用需要获取短信、通讯录，以便读取验证码.</string>
+    <string name="permission_location_contacts">应用需要获取定位信息、通讯录，以便填写收件人和联系方式.</string>
+    <string name="permission_camera">应用需要获取摄像头权限，以便选择图片</string>
+    <string name="permission_ask_again">缺少该权限，某些功能无法正常使用。请进入设置页面开启权限.</string>
+    <string name="setting">设置</string>
+    <string name="cancel">取消</string>
 </resources>

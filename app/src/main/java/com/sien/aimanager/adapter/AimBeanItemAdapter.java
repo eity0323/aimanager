@@ -1,7 +1,6 @@
 package com.sien.aimanager.adapter;
 
 import android.support.v7.widget.RecyclerView;
-import android.view.View;
 
 import com.sien.aimanager.R;
 import com.sien.lib.baseapp.adapter.CPBaseRecyclerAdapter;
@@ -17,14 +16,8 @@ import java.util.Collection;
  */
 public class AimBeanItemAdapter extends CPBaseRecyclerAdapter<AimItemVO> {
 
-    private ItemButtonClickListener itemButtonClickListener;
-
     public AimBeanItemAdapter(RecyclerView v, Collection<AimItemVO> data){
-        super(v,data, R.layout.item_aimitem_adapter);
-    }
-
-    public void setOnItemButtonClickListener(ItemButtonClickListener itemButtonClickListener) {
-        this.itemButtonClickListener = itemButtonClickListener;
+        super(v,data, R.layout.item_aimbean_litem_adapter);
     }
 
     @Override
@@ -35,18 +28,5 @@ public class AimBeanItemAdapter extends CPBaseRecyclerAdapter<AimItemVO> {
         }else {
             holder.setImageSource(R.id.aimItemStatus,R.mipmap.icon_uncheck);
         }
-
-        holder.getView(R.id.aimItemEdit).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (itemButtonClickListener != null){
-                    itemButtonClickListener.onItemClick(v,item,position);
-                }
-            }
-        });
-    }
-
-    public interface ItemButtonClickListener{
-        public void onItemClick(View v, AimItemVO data, int position);
     }
 }

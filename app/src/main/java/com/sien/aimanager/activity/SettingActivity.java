@@ -101,9 +101,9 @@ public class SettingActivity extends CPBaseActivity implements ISettingViewModel
             @Override
             public void onItemClick(View view, Object data, int position) {
                 if (position == 0){
-
-                }else if (position == 1){
                     showSharePanel();
+                }else if (position == 1){
+                    go2FeedbackActivity();
                 }else if (position == 2){
                     go2AboutActivity();
                 }
@@ -135,8 +135,14 @@ public class SettingActivity extends CPBaseActivity implements ISettingViewModel
         shareDialog.show();
     }
 
+    /*跳转至关于页面*/
     private void go2AboutActivity(){
         startActivity(new Intent(this,AboutActivity.class));
+    }
+
+    /*跳转至意见反馈页面*/
+    private void go2FeedbackActivity(){
+        startActivity(new Intent(this,FeedbackActivity.class));
     }
 
     private SwipeRefreshLayout.OnRefreshListener refreshListener = new SwipeRefreshLayout.OnRefreshListener() {

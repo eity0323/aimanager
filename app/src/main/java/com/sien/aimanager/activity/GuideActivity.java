@@ -15,7 +15,9 @@ import android.widget.LinearLayout;
 import com.sien.aimanager.R;
 import com.sien.aimanager.adapter.GuideAdapter;
 import com.sien.lib.baseapp.activity.CPBaseActivity;
+import com.sien.lib.baseapp.config.CPConfiguration;
 import com.sien.lib.baseapp.presenters.BasePresenter;
+import com.sien.lib.datapp.config.DatappConfig;
 import com.sien.lib.datapp.control.CPSharedPreferenceManager;
 import com.sien.lib.datapp.utils.CPDeviceUtil;
 
@@ -134,10 +136,20 @@ public class GuideActivity extends CPBaseActivity {
             public void run() {
                 CPSharedPreferenceManager.getInstance(GuideActivity.this).saveData(CPSharedPreferenceManager.SETTINGS_SHOW_GUIDE+ CPDeviceUtil.getVersionName(GuideActivity.this),CPDeviceUtil.getVersionName(GuideActivity.this));
 
-                startActivity(new Intent(GuideActivity.this,AimTypeListActivity.class));
+                go2MainActivity();
+
                 finish();
             }
         },300);
+    }
+
+    private void go2MainActivity(){
+        String needPwdLock = CPSharedPreferenceManager.getInstance(this).getData(DatappConfig.PWDLOCK_KEY);
+        if (String.valueOf(CPConfiguration.USING_PASSWORD).equals(needPwdLock) && CPConfiguration.USING_PASSWORD){
+            startActivity(new Intent(this, GestureLoginActivity.class));
+        }else {
+            startActivity(new Intent(this, MainAimObjectActivity.class));
+        }
     }
 
     /*创建指示索引*/

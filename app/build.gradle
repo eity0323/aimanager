@@ -31,4 +31,5 @@ dependencies {
 
     compile project(":lib.baseapp");
     compile project(":lib.share");
+    compile project(":lib.photopick")
 }

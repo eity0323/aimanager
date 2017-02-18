@@ -2,6 +2,7 @@ package com.sien.lib.baseapp.activity;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
@@ -31,10 +32,14 @@ import com.sien.lib.baseapp.events.IPluginOrAloneChecker;
 import com.sien.lib.baseapp.model.ICPBaseBoostViewModel;
 import com.sien.lib.baseapp.presenters.BasePresenter;
 import com.sien.lib.baseapp.presenters.BusBaseBoostPresenter;
+import com.sien.lib.baseapp.utils.ToastUtil;
 import com.sien.lib.datapp.utils.CPDeviceUtil;
 import com.sien.lib.datapp.utils.CPLogUtil;
 import com.sien.lib.datapp.utils.CPNetworkUtil;
-import com.sien.lib.baseapp.utils.ToastUtil;
+
+import java.util.List;
+
+import pub.devrel.easypermissions.EasyPermissions;
 
 /**
  * @author sien
@@ -43,7 +48,7 @@ import com.sien.lib.baseapp.utils.ToastUtil;
  *
  * 基类管理presenter的生命周期，布局完全由子类管理，提供了统一调用独立开发模块页面功能（使用配置文件配置插件模块，插件模块对宿主透明，仅开发配置文件中提供的接口）
  */
-public abstract class CPBaseBoostActivity extends AppCompatActivity implements IPluginOrAloneChecker,IActivityOperater,ICPBaseBoostViewModel {
+public abstract class CPBaseBoostActivity extends AppCompatActivity implements IPluginOrAloneChecker,IActivityOperater,ICPBaseBoostViewModel,EasyPermissions.PermissionCallbacks {
     public final int LAYOUT_STATUS_LOADING = 1;
     public final int LAYOUT_STATUS_NETWORK = 2;
     public final int LAYOUT_STATUS_CONTENT = 3;
@@ -737,6 +742,41 @@ public abstract class CPBaseBoostActivity extends AppCompatActivity implements I
      * 应用处于前台，内存不足，结束了部分缓存进程，
      */
     public void runningNormalUrgentTrimMemory(){
+
+    }
+
+    //------------------------------------------------------------------动态申请权限
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        // EasyPermissions handles the request result.
+        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
+    }
+
+    @Override
+    public void onPermissionsGranted(int requestCode, List<String> perms) {
+//        Log.d(TAG, "onPermissionsGranted:" + requestCode + ":" + perms.size());
+    }
+
+    @Override
+    public void onPermissionsDenied(int requestCode, List<String> perms) {
+        //处理拒绝授权事件（可选）
+        DialogInterface.OnClickListener cancelButtonListener = new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                //TODO Let's show a toast
+//                        showToast("取消设置权限");
+            }
+        };
+
+        // 设置不再询问后，可重新弹出询问框
+        EasyPermissions.checkDeniedPermissionsNeverAskAgain(this,
+                getString(R.string.permission_ask_again),
+                R.string.setting,
+                R.string.cancel,
+                cancelButtonListener,
+                perms);
 
     }
 }
