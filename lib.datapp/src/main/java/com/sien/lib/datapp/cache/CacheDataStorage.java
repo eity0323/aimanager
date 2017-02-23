@@ -4,6 +4,7 @@ import android.content.Context;
 import android.text.TextUtils;
 
 import com.sien.lib.datapp.beans.BaseResult;
+import com.sien.lib.datapp.cache.disk.DiskLruCacheManager;
 import com.sien.lib.datapp.cache.memory.LruCacheManager;
 import com.sien.lib.datapp.cache.share.ShareCacheManager;
 import com.sien.lib.datapp.control.CPSharedPreferenceManager;

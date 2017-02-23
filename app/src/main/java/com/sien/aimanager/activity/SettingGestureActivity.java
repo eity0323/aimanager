@@ -10,10 +10,11 @@ import com.sien.aimanager.R;
 import com.sien.aimanager.config.AppConfig;
 import com.sien.lib.baseapp.activity.CPBaseBoostActivity;
 import com.sien.lib.baseapp.presenters.BasePresenter;
-import com.sien.lib.component.pwdlock.LockPatternCache;
 import com.sien.lib.component.pwdlock.LockPatternIndicator;
 import com.sien.lib.component.pwdlock.LockPatternUtil;
 import com.sien.lib.component.pwdlock.LockPatternView;
+import com.sien.lib.component.pwdlock.LockStatus;
+import com.sien.lib.datapp.cache.disk.DiskLruCacheManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,18 +25,16 @@ import java.util.List;
  * @date 2016/9/8
  * @descript 设置手势锁
  */
-public class CreateGestureActivity extends CPBaseBoostActivity {
+public class SettingGestureActivity extends CPBaseBoostActivity {
 
 	LockPatternIndicator lockPatternIndicator;
 	LockPatternView lockPatternView;
 	Button resetBtn;
 	TextView messageTv;
 
-	private LockPatternCache aCache;
-
 	private List<LockPatternView.Cell> mChosenPattern = null;
 	private static final long DELAYTIME = 600L;
-	private static final String TAG = "CreateGestureActivity";
+	private static final String TAG = "SettingGestureActivity";
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -61,7 +60,7 @@ public class CreateGestureActivity extends CPBaseBoostActivity {
 			public void onClick(View v) {
 				mChosenPattern = null;
 				lockPatternIndicator.setDefaultIndicator();
-				updateStatus(Status.DEFAULT, null);
+				updateStatus(LockStatus.GEN_DEFAULT, null);
 				lockPatternView.setPattern(LockPatternView.DisplayMode.DEFAULT);
 			}
 		});
@@ -72,7 +71,6 @@ public class CreateGestureActivity extends CPBaseBoostActivity {
 		super.initial();
 
 		lockPatternView.setOnPatternListener(patternListener);
-		aCache = LockPatternCache.get(CreateGestureActivity.this);
 
 		showContentLayout();
 	}
@@ -99,14 +97,14 @@ public class CreateGestureActivity extends CPBaseBoostActivity {
 			//Log.e(TAG, "--onPatternDetected--");
 			if(mChosenPattern == null && pattern.size() >= 4) {
 				mChosenPattern = new ArrayList<LockPatternView.Cell>(pattern);
-				updateStatus(Status.CORRECT, pattern);
+				updateStatus(LockStatus.GEN_CORRECT, pattern);
 			} else if (mChosenPattern == null && pattern.size() < 4) {
-				updateStatus(Status.LESSERROR, pattern);
+				updateStatus(LockStatus.GEN_LESSERROR, pattern);
 			} else if (mChosenPattern != null) {
 				if (mChosenPattern.equals(pattern)) {
-					updateStatus(Status.CONFIRMCORRECT, pattern);
+					updateStatus(LockStatus.GEN_CONFIRMCORRECT, pattern);
 				} else {
-					updateStatus(Status.CONFIRMERROR, pattern);
+					updateStatus(LockStatus.GEN_CONFIRMERROR, pattern);
 				}
 			}
 		}
@@ -117,25 +115,25 @@ public class CreateGestureActivity extends CPBaseBoostActivity {
 	 * @param status
 	 * @param pattern
      */
-	private void updateStatus(Status status, List<LockPatternView.Cell> pattern) {
+	private void updateStatus(LockStatus status, List<LockPatternView.Cell> pattern) {
 		messageTv.setTextColor(getResources().getColor(status.colorId));
 		messageTv.setText(status.strId);
 		switch (status) {
-			case DEFAULT:
+			case GEN_DEFAULT:
 				lockPatternView.setPattern(LockPatternView.DisplayMode.DEFAULT);
 				break;
-			case CORRECT:
+			case GEN_CORRECT:
 				updateLockPatternIndicator();
 				lockPatternView.setPattern(LockPatternView.DisplayMode.DEFAULT);
 				break;
-			case LESSERROR:
+			case GEN_LESSERROR:
 				lockPatternView.setPattern(LockPatternView.DisplayMode.DEFAULT);
 				break;
-			case CONFIRMERROR:
+			case GEN_CONFIRMERROR:
 				lockPatternView.setPattern(LockPatternView.DisplayMode.ERROR);
 				lockPatternView.postClearPatternRunnable(DELAYTIME);
 				break;
-			case CONFIRMCORRECT:
+			case GEN_CONFIRMCORRECT:
 				saveChosenPattern(pattern);
 				lockPatternView.setPattern(LockPatternView.DisplayMode.DEFAULT);
 				setLockPatternSuccess();
@@ -166,32 +164,12 @@ public class CreateGestureActivity extends CPBaseBoostActivity {
 	 */
 	private void saveChosenPattern(List<LockPatternView.Cell> cells) {
 		byte[] bytes = LockPatternUtil.patternToHash(cells);
-		aCache.put(AppConfig.GESTURE_PASSWORD, bytes);
-//		try {
-//			String res = new String(bytes,"UTF-8");
-//			CPSharedPreferenceManager.getInstance(this).saveData(AppConfig.GESTURE_PASSWORD, res);
-//		}catch (Exception ex){
-//			ex.printStackTrace();
-//		}
-	}
-
-	private enum Status {
-		//默认的状态，刚开始的时候（初始化状态）
-		DEFAULT(R.string.create_gesture_default, R.color.grey_a5a5a5),
-		//第一次记录成功
-		CORRECT(R.string.create_gesture_correct, R.color.grey_a5a5a5),
-		//连接的点数小于4（二次确认的时候就不再提示连接的点数小于4，而是提示确认错误）
-		LESSERROR(R.string.create_gesture_less_error, R.color.red_f4333c),
-		//二次确认错误
-		CONFIRMERROR(R.string.create_gesture_confirm_error, R.color.red_f4333c),
-		//二次确认正确
-		CONFIRMCORRECT(R.string.create_gesture_confirm_correct, R.color.grey_a5a5a5);
-
-		private Status(int strId, int colorId) {
-			this.strId = strId;
-			this.colorId = colorId;
+		try {
+			DiskLruCacheManager diskLruCacheManager = new DiskLruCacheManager(this);
+			diskLruCacheManager.put(AppConfig.GESTURE_PASSWORD, bytes);
+		}catch (Exception ex){
+			ex.printStackTrace();
 		}
-		private int strId;
-		private int colorId;
 	}
+
 }

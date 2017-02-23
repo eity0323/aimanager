@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import com.sien.lib.datapp.utils.CPLogUtil;
 import com.sien.lib.baseapp.utils.ToastUtil;
+import com.sien.lib.share.ShareConfig;
 import com.tencent.mm.sdk.constants.ConstantsAPI;
 import com.tencent.mm.sdk.modelbase.BaseReq;
 import com.tencent.mm.sdk.modelbase.BaseResp;
@@ -24,7 +25,6 @@ import de.greenrobot.event.EventBus;
  * @descript 微信登录、分享回传页面
  */
 public class WXEntryActivity extends WechatHandlerActivity implements IWXAPIEventHandler {
-	private final String WE_APP_ID = "wx598e21bc1d406482";
 
 	// IWXAPI 是第三方app和微信通信的openapi接口
 	private IWXAPI api;
@@ -35,7 +35,7 @@ public class WXEntryActivity extends WechatHandlerActivity implements IWXAPIEven
 //        setContentView(R.layout.entry);
 
 		// 通过WXAPIFactory工厂，获取IWXAPI的实例
-		api = WXAPIFactory.createWXAPI(this, WE_APP_ID, false);
+		api = WXAPIFactory.createWXAPI(this, ShareConfig.APPID_CIRCLE_FRIEND, false);
 
 		api.handleIntent(getIntent(), this);
 	}

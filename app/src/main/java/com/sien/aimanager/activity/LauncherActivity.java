@@ -11,7 +11,6 @@ import android.view.View;
 import android.view.WindowManager;
 
 import com.sien.aimanager.R;
-import com.sien.lib.baseapp.config.CPConfiguration;
 import com.sien.lib.datapp.config.DatappConfig;
 import com.sien.lib.datapp.control.CPSharedPreferenceManager;
 import com.sien.lib.datapp.network.action.MainDatabaseAction;
@@ -77,15 +76,13 @@ public class LauncherActivity extends AppCompatActivity {
     }
 
     private void go2MainActivity() {
-//        Small.openUri("main/home",LauncherActivity.this);
-
         String showGuide = CPSharedPreferenceManager.getInstance(this).getData(CPSharedPreferenceManager.SETTINGS_SHOW_GUIDE + CPDeviceUtil.getVersionName(this));
 
         if (TextUtils.isEmpty(showGuide)) {
             startActivity(new Intent(this, GuideActivity.class));
         } else {
             String needPwdLock = CPSharedPreferenceManager.getInstance(this).getData(DatappConfig.PWDLOCK_KEY);
-            if (String.valueOf(CPConfiguration.USING_PASSWORD).equals(needPwdLock) && CPConfiguration.USING_PASSWORD){
+            if (Boolean.valueOf(needPwdLock)){
                 startActivity(new Intent(this, GestureLoginActivity.class));
             }else {
                 startActivity(new Intent(this, MainAimObjectActivity.class));

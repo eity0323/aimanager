@@ -76,7 +76,7 @@
             android:screenOrientation="portrait"
             android:theme="@style/BaseActivityTheme"/>
 
-        <activity android:name=".activity.CreateGestureActivity"
+        <activity android:name=".activity.SettingGestureActivity"
             android:screenOrientation="portrait"
             android:theme="@style/BaseActivityTheme"/>
 
@@ -87,6 +87,11 @@
         <activity android:name="com.sien.aimanager.wxapi.WXEntryActivity"
             android:exported="true"
             android:launchMode="singleTop"/>
+
+        <activity
+            android:name="com.sien.lib.photopick.activity.MISActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/BaseActivityTheme" />
 
         <!--监听网络状态变化-->
         <receiver android:name=".receiver.ConnectionChangeReceiver" android:label="NetworkConnection">

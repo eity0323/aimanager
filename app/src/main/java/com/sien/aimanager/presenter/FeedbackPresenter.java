@@ -5,7 +5,7 @@ import android.os.Message;
 
 import com.sien.aimanager.model.IFeedbackViewModel;
 import com.sien.lib.baseapp.presenters.BasePresenter;
-import com.sien.lib.baseapp.presenters.BusBasePresenter;
+import com.sien.lib.baseapp.presenters.BusBaseBoostPresenter;
 import com.sien.lib.datapp.beans.BaseResult;
 import com.sien.lib.datapp.beans.UploadImageVO;
 import com.sien.lib.datapp.events.DatappEvent;
@@ -22,10 +22,9 @@ import de.greenrobot.event.Subscribe;
  * @date 2016/10/18
  * @descript 反馈处理类
  */
-public class FeedbackPresenter extends BusBasePresenter {
+public class FeedbackPresenter extends BusBaseBoostPresenter {
     private final int MSG_UPDATE_UPLOADIMAGE = 1;//上传图片
     private final int MSG_UPDATE_FEEDBACK = 2;//添加反馈
-
 
     private IFeedbackViewModel impl;
 
@@ -156,5 +155,10 @@ public class FeedbackPresenter extends BusBasePresenter {
         }
 
         impl = null;
+    }
+
+    @Override
+    public IFeedbackViewModel createViewModel() {
+        return impl;
     }
 }

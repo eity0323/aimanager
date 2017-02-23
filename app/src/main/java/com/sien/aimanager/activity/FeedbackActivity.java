@@ -148,6 +148,8 @@ public class FeedbackActivity extends CPBaseBoostActivity implements IFeedbackVi
         rv_img.setAdapter(uploadAdapter);
 
         feedbackET.addTextChangedListener(textWatcher);
+
+        showContentLayout();
     }
 
     /*上传图片并提交反馈内容*/

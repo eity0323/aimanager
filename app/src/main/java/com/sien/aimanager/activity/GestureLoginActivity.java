@@ -11,9 +11,10 @@ import com.sien.aimanager.R;
 import com.sien.aimanager.config.AppConfig;
 import com.sien.lib.baseapp.activity.CPBaseBoostActivity;
 import com.sien.lib.baseapp.presenters.BasePresenter;
-import com.sien.lib.component.pwdlock.LockPatternCache;
 import com.sien.lib.component.pwdlock.LockPatternUtil;
 import com.sien.lib.component.pwdlock.LockPatternView;
+import com.sien.lib.component.pwdlock.LockStatus;
+import com.sien.lib.datapp.cache.disk.DiskLruCacheManager;
 
 import java.util.List;
 
@@ -24,16 +25,12 @@ import java.util.List;
  */
 public class GestureLoginActivity extends CPBaseBoostActivity {
 
-    private static final String TAG = "LoginGestureActivity";
-
-    LockPatternView lockPatternView;
-    TextView messageTv;
-    Button forgetGestureBtn;
+    private LockPatternView lockPatternView;
+    private TextView messageTv;
+    private Button forgetGestureBtn;
 
     private static final long DELAYTIME = 600l;
     private byte[] gesturePassword;
-
-    private LockPatternCache aCache;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +49,7 @@ public class GestureLoginActivity extends CPBaseBoostActivity {
         forgetGestureBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(GestureLoginActivity.this, CreateGestureActivity.class);
+                Intent intent = new Intent(GestureLoginActivity.this, SettingGestureActivity.class);
                 startActivity(intent);
                 finish();
             }
@@ -64,17 +61,15 @@ public class GestureLoginActivity extends CPBaseBoostActivity {
         super.initial();
 
         //得到当前用户的手势密码
-//        try {
-//            gesturePassword = CPSharedPreferenceManager.getInstance(this).getData(AppConfig.GESTURE_PASSWORD).getBytes("UTF-8");
-//        }catch (Exception e){
-//            e.printStackTrace();
-//        }
-        aCache = LockPatternCache.get(GestureLoginActivity.this);
-        //得到当前用户的手势密码
-        gesturePassword = aCache.getAsBinary(AppConfig.GESTURE_PASSWORD);
+        try {
+            DiskLruCacheManager diskLruCacheManager = new DiskLruCacheManager(this);
+            gesturePassword = diskLruCacheManager.getAsBytes(AppConfig.GESTURE_PASSWORD);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
 
         lockPatternView.setOnPatternListener(patternListener);
-        updateStatus(Status.DEFAULT);
+        updateStatus(LockStatus.DEFAULT);
 
         showContentLayout();
     }
@@ -95,9 +90,9 @@ public class GestureLoginActivity extends CPBaseBoostActivity {
         public void onPatternComplete(List<LockPatternView.Cell> pattern) {
             if(pattern != null){
                 if(LockPatternUtil.checkPattern(pattern, gesturePassword)) {
-                    updateStatus(Status.CORRECT);
+                    updateStatus(LockStatus.CORRECT);
                 } else {
-                    updateStatus(Status.ERROR);
+                    updateStatus(LockStatus.ERROR);
                 }
             }
         }
@@ -107,7 +102,7 @@ public class GestureLoginActivity extends CPBaseBoostActivity {
      * 更新状态
      * @param status
      */
-    private void updateStatus(Status status) {
+    private void updateStatus(LockStatus status) {
         messageTv.setText(status.strId);
         messageTv.setTextColor(getResources().getColor(status.colorId));
         switch (status) {
@@ -133,19 +128,4 @@ public class GestureLoginActivity extends CPBaseBoostActivity {
         startActivity(new Intent(this,MainAimObjectActivity.class));
     }
 
-    private enum Status {
-        //默认的状态
-        DEFAULT(R.string.gesture_default, R.color.grey_a5a5a5),
-        //密码输入错误
-        ERROR(R.string.gesture_error, R.color.red_f4333c),
-        //密码输入正确
-        CORRECT(R.string.gesture_correct, R.color.grey_a5a5a5);
-
-        private Status(int strId, int colorId) {
-            this.strId = strId;
-            this.colorId = colorId;
-        }
-        private int strId;
-        private int colorId;
-    }
 }

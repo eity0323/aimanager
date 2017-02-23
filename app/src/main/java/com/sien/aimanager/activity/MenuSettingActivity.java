@@ -113,10 +113,10 @@ public class MenuSettingActivity extends CPBaseBoostActivity implements IMenuSet
 
         presenter.changePwdStatus();
 
-        CPSharedPreferenceManager.getInstance(this).saveData(DatappConfig.PWDLOCK_KEY, String.valueOf(CPConfiguration.USING_PASSWORD));
+//        CPSharedPreferenceManager.getInstance(this).saveData(DatappConfig.PWDLOCK_KEY, String.valueOf(CPConfiguration.USING_PASSWORD));
 
         if (CPConfiguration.USING_PASSWORD) {
-            startActivity(new Intent(this, CreateGestureActivity.class));
+            startActivity(new Intent(this, SettingGestureActivity.class));
         }
     }
 
