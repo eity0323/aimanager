@@ -63,7 +63,7 @@ public class MainAimObjectPresenter extends BusBaseBoostPresenter {
             datasource.clear();
         }
 
-        List<AimTypeVO> objectVOList = AimTypeDBHelper.requestAimTypeByDate(mcontext,date);
+        List<AimTypeVO> objectVOList = AimTypeDBHelper.requestAimTypeAutoByDate(mcontext,date);
         if (!CollectionUtils.IsNullOrEmpty(objectVOList)) {
             AimBean bean;
             List<AimItemVO> recordVOList;

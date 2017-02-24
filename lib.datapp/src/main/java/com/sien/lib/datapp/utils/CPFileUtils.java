@@ -71,15 +71,49 @@ public class CPFileUtils {
     }
 
     /**
-     * 内部应用临时目录
-     * /data/data/[app package]/files
+     * 应用缓存根目录路径
+     * /mnt/sdcard/Android/data/[app package]/file
+     * @param context
+     * @return
+     * 应用卸载自动删除数据
+     */
+    public static String getAppFileRootFilePath(Context context){
+        Context appContext = context.getApplicationContext();
+        String dir = null;
+        if (CPDeviceUtil.hasSdcard()){
+            if(appContext.getExternalCacheDir() != null) {
+                dir = appContext.getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS).getAbsolutePath();
+            }else {
+                dir = Environment.getExternalStorageDirectory().getAbsolutePath();
+            }
+        }else {
+            dir = appContext.getFilesDir().getAbsolutePath();
+        }
+        return dir;
+    }
+
+    /**
+     * 应用数据根目录
+     * /mnt/sdcard/Android/data/[app package]/file
      * @param context
      * @return
      */
-    public static File getInnerCacheDirectory(Context context){
-        Context appContext = context.getApplicationContext();
-        return appContext.getCacheDir();
+    public static File getAppFileRootDirectory(Context context){
+        String dir = getAppFileRootFilePath(context);
+        File file = new File(dir);
+        return file;
     }
+
+//    /**
+//     * 内部应用临时目录(暂未使用)
+//     * /data/data/[app package]/files
+//     * @param context
+//     * @return
+//     */
+//    public static File getInnerCacheDirectory(Context context){
+//        Context appContext = context.getApplicationContext();
+//        return appContext.getCacheDir();
+//    }
 
 
     /**
@@ -93,16 +127,16 @@ public class CPFileUtils {
         return dir;
     }
 
-    /**
-     * 内部临时文件路径
-     * /data/data/[app package]/files
-     * @return
-     */
-    public static String getInnerTempFilePath(Context context){
-        Context appContext = context.getApplicationContext();
-        String dir = appContext.getFilesDir().getAbsolutePath();
-        return dir;
-    }
+//    /**
+//     * 内部临时文件路径(暂未使用)
+//     * /data/data/[app package]/files
+//     * @return
+//     */
+//    public static String getInnerTempFilePath(Context context){
+//        Context appContext = context.getApplicationContext();
+//        String dir = appContext.getFilesDir().getAbsolutePath();
+//        return dir;
+//    }
 
     //-----------------------------------------------------------------------------------------------
     /**

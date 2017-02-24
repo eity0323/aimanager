@@ -103,8 +103,8 @@ public class SettingActivity extends CPBaseActivity implements ISettingViewModel
                 if (position == 0){
                     showSharePanel();
                 }else if (position == 1){
-                    go2FeedbackActivity();
-                }else if (position == 2){
+//                    go2FeedbackActivity();
+//                }else if (position == 2){
                     go2AboutActivity();
                 }
             }

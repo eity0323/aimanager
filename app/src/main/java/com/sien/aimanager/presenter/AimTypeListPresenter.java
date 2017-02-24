@@ -53,7 +53,7 @@ public class AimTypeListPresenter extends BusBaseBoostPresenter {
         if (showFixType) {
             MainDatabaseAction.requestAimTypeFixedDatas(mcontext);
         }else {
-            MainDatabaseAction.requestAimTypeDatas(mcontext);
+            MainDatabaseAction.requestAimTypeAutoDatas(mcontext);
         }
     }
 

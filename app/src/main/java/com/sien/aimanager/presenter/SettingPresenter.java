@@ -57,7 +57,7 @@ public class SettingPresenter extends BusBasePresenter {
         List<PersonSetBean> list = new ArrayList<>();
 
         list.add(new PersonSetBean(R.mipmap.ic_settings_share , "分享给朋友",null));
-        list.add(new PersonSetBean(R.mipmap.ic_settings_suggest , "意见反馈",null));
+//        list.add(new PersonSetBean(R.mipmap.ic_settings_suggest , "意见反馈",null));
         list.add(new PersonSetBean(R.mipmap.ic_settings_about , "关于",null));
 
         return list;

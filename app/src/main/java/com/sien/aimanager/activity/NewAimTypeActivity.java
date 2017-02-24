@@ -18,6 +18,7 @@ import com.sien.aimanager.config.AppConfig;
 import com.sien.aimanager.model.INewAimTypeViewModel;
 import com.sien.aimanager.presenter.NewAimTypePresenter;
 import com.sien.lib.baseapp.activity.CPBaseBoostActivity;
+import com.sien.lib.datapp.utils.CPDateUtil;
 import com.sien.lib.datapp.beans.AimTypeVO;
 import com.sien.lib.datapp.network.base.RequestFreshStatus;
 
@@ -35,7 +36,7 @@ public class NewAimTypeActivity extends CPBaseBoostActivity implements INewAimTy
     private EditText titleET,descET;
     private SwitchCompat switchCompat;
     private ImageView coverIV;
-    private TextView periodTV,priortyTV;
+    private TextView periodTV,priortyTV,startTV,endTV;
     private NewAimTypePresenter presenter;
 
     private OptionPicker periodPicker;
@@ -78,10 +79,14 @@ public class NewAimTypeActivity extends CPBaseBoostActivity implements INewAimTy
         coverIV = findView(R.id.aimtype_cover);
         periodTV = findView(R.id.aimtype_period);
         priortyTV = findView(R.id.aimtype_priorty);
+        startTV = findView(R.id.aimtype_start);
+        endTV = findView(R.id.aimtype_end);
 
         findView(R.id.layout_cover).setOnClickListener(clickListener);
         findView(R.id.layout_period).setOnClickListener(clickListener);
         findView(R.id.layout_priorty).setOnClickListener(clickListener);
+        findView(R.id.layout_start).setOnClickListener(clickListener);
+        findView(R.id.layout_end).setOnClickListener(clickListener);
 
         switchCompat.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -116,6 +121,9 @@ public class NewAimTypeActivity extends CPBaseBoostActivity implements INewAimTy
             }
         }else {
             modifyModel = false;
+
+            startTV.setText(CPDateUtil.getDateString(new Date()));
+            endTV.setText("");
         }
     }
 
@@ -140,6 +148,18 @@ public class NewAimTypeActivity extends CPBaseBoostActivity implements INewAimTy
             priorty = aimTypeVO.getPriority();
 
             priortyTV.setText(getPriorityTextByIndex(getIndexByPriority(aimTypeVO.getPriority())));
+        }
+
+        if (aimTypeVO.getStartTime() != null){
+            startTV.setText(CPDateUtil.getDateString(aimTypeVO.getStartTime()));
+        }else {
+            startTV.setText(CPDateUtil.getDateString(new Date()));
+        }
+
+        if (aimTypeVO.getEndTime() != null){
+            endTV.setText(CPDateUtil.getDateString(aimTypeVO.getEndTime()));
+        }else {
+            endTV.setText("");
         }
 
         if (!TextUtils.isEmpty(aimTypeVO.getCover())) {

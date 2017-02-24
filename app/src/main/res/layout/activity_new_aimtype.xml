@@ -93,6 +93,72 @@
             android:src="@mipmap/icon_right_arrow" />
     </LinearLayout>
 
+    <!--开始时间-->
+    <LinearLayout
+        android:id="@+id/layout_start"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:padding="15dp"
+        android:background="@android:color/white"
+        android:orientation="horizontal"
+        android:divider="@color/gray_line">
+
+        <TextView
+            style="@style/DarkText14Appearance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/new_aimtype_start" />
+
+        <TextView
+            android:id="@+id/aimtype_start"
+            style="@style/DarkText14Appearance"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_marginRight="10dp"
+            android:gravity="center_vertical|right"
+            android:textColorHint="@color/disable_hint"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/icon_right_arrow" />
+    </LinearLayout>
+
+    <!--结束时间-->
+    <LinearLayout
+        android:id="@+id/layout_end"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:padding="15dp"
+        android:background="@android:color/white"
+        android:orientation="horizontal"
+        android:divider="@color/gray_line">
+
+        <TextView
+            style="@style/DarkText14Appearance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/new_aimtype_end" />
+
+        <TextView
+            android:id="@+id/aimtype_end"
+            style="@style/DarkText14Appearance"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_marginRight="10dp"
+            android:gravity="center_vertical|right"
+            android:textColorHint="@color/disable_hint"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/icon_right_arrow" />
+    </LinearLayout>
+
     <!--优先级-->
     <LinearLayout
         android:id="@+id/layout_priorty"

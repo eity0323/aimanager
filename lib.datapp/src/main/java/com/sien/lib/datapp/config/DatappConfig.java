@@ -23,7 +23,7 @@ public class DatappConfig {
 
     public static String DATABASENAME = "datapp_aimanager_db";//数据库名称
 
-    public static String APP_BASE_URL = "http://www.shoelives.com/";//接口api地址
+    public static String APP_BASE_URL = "https://api.bmob.cn/1/classes/";//接口api地址
     public static String APP_BASE_CUSTOM_IMAGE_URL = "http://shoelives.oss-cn-shenzhen.aliyuncs.com/";//定制商品图片地址
 
     public static int DEFAULT_REQUEST_MODEL = BaseRepository.REQUEST_ONLEY_NETWORK;//默认数据请求方式（从网络获取）
@@ -33,19 +33,19 @@ public class DatappConfig {
      */
     public static void setOfficalEnvironment(){
         enviromentType = ENV_OFFICAL;
-        APP_BASE_URL = "http://www.shoelives.com/";//接口api地址
+        APP_BASE_URL = "https://api.bmob.cn/1/classes/";//接口api地址
         APP_BASE_CUSTOM_IMAGE_URL = "http://shoelives.oss-cn-shenzhen.aliyuncs.com/";//定制商品图片地址
     }
 
     public static void setDevelopEnvironment(){
         enviromentType = ENV_DEVELOP;
-        APP_BASE_URL = "http://www.shoelives.com/";//接口api地址
+        APP_BASE_URL = "https://api.bmob.cn/1/classes/";//接口api地址
         APP_BASE_CUSTOM_IMAGE_URL = "http://shoelives.oss-cn-shenzhen.aliyuncs.com/";//定制商品图片地址
     }
 
     public static void setTestEnvironment(){
         enviromentType = ENV_TEST;
-        APP_BASE_URL = "http://www.shoelives.com/";//接口api地址
+        APP_BASE_URL = "https://api.bmob.cn/1/classes/";//接口api地址
         APP_BASE_CUSTOM_IMAGE_URL = "http://shoelives.oss-cn-shenzhen.aliyuncs.com/";//定制商品图片地址
     }
 }

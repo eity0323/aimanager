@@ -6,7 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 
 import com.sien.aimanager.services.GenerateAimServices;
-import com.sien.lib.baseapp.utils.CPDateUtil;
+import com.sien.lib.datapp.utils.CPDateUtil;
 import com.sien.lib.datapp.beans.AimItemVO;
 import com.sien.lib.datapp.beans.AimTypeVO;
 import com.sien.lib.datapp.db.helper.AimItemDBHelper;
@@ -172,8 +172,20 @@ public class GeneratePeroidAimUtils {
 
                 for (AimTypeVO item : dayList) { //需要循环创建的分类数
                     //无目标项则不创建该分类对象
-//                    long count = AimItemDBHelper.requestAimItemCountSync(context,item.getId());
-//                    if (count <= 0) continue;
+                    long count = AimItemDBHelper.requestAimItemCountSync(context,item.getId());
+                    if (count <= 0) continue;
+
+                    //有开始日期，且未到开始日期不创建
+                    if (item.getStartTime() != null) {
+                        int startDiff = CPDateUtil.getTimeDiffDays(nowDate, item.getStartTime());
+                        if (startDiff < 0) continue;
+                    }
+
+                    //又结束日期，且超过结束日期不创建
+                    if (item.getEndTime() != null) {
+                        int endDiff = CPDateUtil.getTimeDiffDays(item.getEndTime(), nowDate);
+                        if (endDiff < 0) continue;
+                    }
 
                     aimTypeVO = new AimTypeVO();
                     aimTypeVO.setCustomed(true);

@@ -81,7 +81,7 @@ public class MainDatabaseAction {
 
 
     /**
-     * 请求目标分类数据(固定分类)
+     * 请求目标分类数据(自动创建分类)
      */
     public static void requestAimTypeAutoDatas(final Context context){
         if (context == null) {
@@ -130,7 +130,7 @@ public class MainDatabaseAction {
      * 根据日期查询目标分类
      * @param context
      */
-    public static void requestAimTypeByDate(final Context context, final Date date){
+    public static void requestAimTypeAutoByDate(final Context context, final Date date){
         if (context == null) {
             CPLogUtil.logDebug("requestAimObjectByDate context can not be null");
             EventPostUtil.post(new DatappEvent.AimTypeEvent(DatappEvent.STATUS_FAIL_OHTERERROR, null));
@@ -140,7 +140,7 @@ public class MainDatabaseAction {
         CPThreadPoolManager.newInstance().addExecuteTask(new Runnable() {
             @Override
             public void run() {
-                List<AimTypeVO> list = AimTypeDBHelper.requestAimTypeByDate(context,date);
+                List<AimTypeVO> list = AimTypeDBHelper.requestAimTypeAutoByDate(context,date);
 
                 CPLogUtil.logDebug("requestAimObjectByDate Result " + list.size() );
 

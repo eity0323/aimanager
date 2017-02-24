@@ -204,7 +204,7 @@ public class AimTypeDBHelper {
      * @param date
      * @return
      */
-    public static List<AimTypeVO> requestAimTypeByDate(Context context, Date date){
+    public static List<AimTypeVO> requestAimTypeAutoByDate(Context context, Date date){
         AimTypeVODao dao = DBManager.getInstance(context).getDaoSession().getAimTypeVODao();
         QueryBuilder<AimTypeVO> qb = dao.queryBuilder();
         qb.where(AimTypeVODao.Properties.Recyclable.eq(false),AimTypeVODao.Properties.StartTime.between(DBDateHelper.getDayStartMillisecond(date),DBDateHelper.getDayEndMillisecond(date)));

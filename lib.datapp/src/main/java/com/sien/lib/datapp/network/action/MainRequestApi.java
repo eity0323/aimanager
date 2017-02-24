@@ -24,13 +24,13 @@ import retrofit2.http.Url;
  * @descript 时尚主编
  */
 public interface MainRequestApi {
-    @POST(RequestApiConfig.ACTION_VERSIONCHECK)
+    @POST(RequestApiConfig.ACTION_AIM_TYPE)
     Call<AimTypeResult> requestAimType();
 
-    @POST(RequestApiConfig.ACTION_VERSIONCHECK)
+    @POST(RequestApiConfig.ACTION_AIM_ITEM)
     Call<AimItemResult> requestAimItems();
 
-    @POST(RequestApiConfig.ACTION_VERSIONCHECK)
+    @POST(RequestApiConfig.ACTION_AIM_TYPE_BYID)
     Call<AimItemResult> requestAimTypeByType(@Path("aimTypeId") String aimTypeId);
 
     @POST(RequestApiConfig.ACTION_VERSIONCHECK)

@@ -15,6 +15,7 @@ import com.sien.lib.component.pwdlock.LockPatternUtil;
 import com.sien.lib.component.pwdlock.LockPatternView;
 import com.sien.lib.component.pwdlock.LockStatus;
 import com.sien.lib.datapp.cache.disk.DiskLruCacheManager;
+import com.sien.lib.datapp.utils.CPFileUtils;
 
 import java.util.List;
 
@@ -49,9 +50,8 @@ public class GestureLoginActivity extends CPBaseBoostActivity {
         forgetGestureBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(GestureLoginActivity.this, SettingGestureActivity.class);
-                startActivity(intent);
-                finish();
+                //TODO 校验身份，重置密码
+                resetPassword();
             }
         });
     }
@@ -62,7 +62,7 @@ public class GestureLoginActivity extends CPBaseBoostActivity {
 
         //得到当前用户的手势密码
         try {
-            DiskLruCacheManager diskLruCacheManager = new DiskLruCacheManager(this);
+            DiskLruCacheManager diskLruCacheManager = new DiskLruCacheManager(this, CPFileUtils.getAppFileRootDirectory(this));
             gesturePassword = diskLruCacheManager.getAsBytes(AppConfig.GESTURE_PASSWORD);
         }catch (Exception e){
             e.printStackTrace();
@@ -72,6 +72,13 @@ public class GestureLoginActivity extends CPBaseBoostActivity {
         updateStatus(LockStatus.DEFAULT);
 
         showContentLayout();
+    }
+
+    /*重置密码*/
+    private void resetPassword(){
+        Intent intent = new Intent(GestureLoginActivity.this, SettingGestureActivity.class);
+        startActivity(intent);
+        finish();
     }
 
     @Override
@@ -126,6 +133,8 @@ public class GestureLoginActivity extends CPBaseBoostActivity {
     private void loginGestureSuccess() {
         Toast.makeText(GestureLoginActivity.this, "登录成功", Toast.LENGTH_SHORT).show();
         startActivity(new Intent(this,MainAimObjectActivity.class));
+
+        finish();
     }
 
 }

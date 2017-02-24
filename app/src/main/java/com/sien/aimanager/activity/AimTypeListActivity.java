@@ -92,6 +92,8 @@ public class AimTypeListActivity extends CPBaseBoostActivity implements IAimType
 
         presenter = getPresenter();
 
+        parseBundleData();
+
         presenter.requestVersionCheck();
         presenter.requestAimTypeDatas(showFixType);
 
@@ -111,6 +113,13 @@ public class AimTypeListActivity extends CPBaseBoostActivity implements IAimType
             }
         } else {
             firstInit = false;
+        }
+    }
+
+    /*解析传入参数*/
+    private void parseBundleData(){
+        if (getIntent() != null && getIntent().hasExtra("showFixType")){
+            showFixType = getIntent().getBooleanExtra("showFixType",false);
         }
     }
 

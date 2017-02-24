@@ -1,5 +1,7 @@
 package com.sien.lib.datapp.db.helper;
 
+import com.sien.lib.datapp.utils.CPDateUtil;
+
 import java.util.Calendar;
 import java.util.Date;
 
@@ -32,10 +34,11 @@ public class DBDateHelper {
      */
     public static Date getDayEndMillisecond(Date date){
         Calendar calendar1 = Calendar.getInstance();
-        calendar1.setTime(date);
-        calendar1.set(Calendar.HOUR_OF_DAY, 23);
-        calendar1.set(Calendar.MINUTE, 59);
-        calendar1.set(Calendar.SECOND, 59);
+        Date nextDate = CPDateUtil.getRelativeDate(date,1);
+        calendar1.setTime(nextDate);
+        calendar1.set(Calendar.HOUR_OF_DAY, 0);
+        calendar1.set(Calendar.MINUTE, 0);
+        calendar1.set(Calendar.SECOND, 0);
         calendar1.set(Calendar.MILLISECOND, 0);
         long time = calendar1.getTime().getTime();
         return new Date(time);

@@ -15,7 +15,7 @@ import com.sien.aimanager.adapter.AimBeanAdapter;
 import com.sien.aimanager.model.IMainAimObjectViewModel;
 import com.sien.aimanager.presenter.MainAimObjectPresenter;
 import com.sien.lib.baseapp.activity.CPBaseBoostActivity;
-import com.sien.lib.baseapp.utils.CPDateUtil;
+import com.sien.lib.datapp.utils.CPDateUtil;
 import com.sien.lib.baseapp.utils.CollectionUtils;
 import com.sien.lib.baseapp.widgets.CPRefreshView;
 import com.sien.lib.component.coverflow.CoverFlow;
@@ -108,12 +108,21 @@ public class MainAimObjectActivity extends CPBaseBoostActivity implements IMainA
             @Override
             public void onClick(View v) {
                 if (coverIndex != -1) {
+                    //1、有今日事项，跳转至变更目标事项
                     AimTypeVO item = presenter.getDatasource().get(coverIndex).aimTypeVO;
                     if (item == null)   return;
                     go2AimTypeDetailActivity(item);
                 }else {
+                    //2、没有事项，跳转至添加目标实现
                     go2NewAimTypeActivity();
                 }
+            }
+        });
+
+        findView(R.id.aimobject_more).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                go2AimTypeListActivity(false);
             }
         });
     }
@@ -142,7 +151,7 @@ public class MainAimObjectActivity extends CPBaseBoostActivity implements IMainA
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.category){
-            go2AimTypeListActivity();
+            go2AimTypeListActivity(true);
         }else if (item.getItemId() == R.id.setting){
             startActivity(new Intent(this,SettingActivity.class));
         }else if (item.getItemId() == R.id.synchronous){
@@ -151,9 +160,11 @@ public class MainAimObjectActivity extends CPBaseBoostActivity implements IMainA
         return super.onOptionsItemSelected(item);
     }
 
-    /*跳转至分类列表页*/
-    private void go2AimTypeListActivity(){
-        startActivity(new Intent(this,AimTypeListActivity.class));
+    /*跳转至分类列表页(目标 or 全部分类项)*/
+    private void go2AimTypeListActivity(boolean showFixType){
+        Intent intent = new Intent(this,AimTypeListActivity.class);
+        intent.putExtra("showFixType",showFixType);
+        startActivity(intent);
     }
 
     /*跳转至添加分类页*/

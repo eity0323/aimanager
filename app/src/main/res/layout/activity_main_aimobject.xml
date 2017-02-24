@@ -29,7 +29,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="250dp"
                 android:layout_gravity="center"
-                app:autoCycle="true"
+                app:autoCycle="false"
                 app:coverage="0.2"
                 app:flingAllow="true"
                 app:orientation="horizontal" />
@@ -41,6 +41,18 @@
                 android:layout_height="wrap_content"
                 android:text="@string/none_aimtype_tips"
                 android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/aimobject_more"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/GrayCommonText16Appearance"
+                android:layout_marginTop="10dp"
+                android:padding="@dimen/_10dp"
+                android:drawablePadding="@dimen/_5dp"
+                android:drawableRight="@mipmap/icon_right_arrow"
+                android:layout_gravity="right"
+                android:text="@string/more"/>
         </LinearLayout>
     </com.sien.lib.baseapp.widgets.CPRefreshView>
 
