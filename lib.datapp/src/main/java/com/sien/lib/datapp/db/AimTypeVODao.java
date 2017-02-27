@@ -37,8 +37,11 @@ public class AimTypeVODao extends AbstractDao<AimTypeVO, Long> {
         public final static Property StartTime = new Property(10, java.util.Date.class, "startTime", false, "START_TIME");
         public final static Property EndTime = new Property(11, java.util.Date.class, "endTime", false, "END_TIME");
         public final static Property ModifyTime = new Property(12, java.util.Date.class, "modifyTime", false, "MODIFY_TIME");
-        public final static Property PlanProject = new Property(13, Boolean.class, "planProject", false, "PLAN_PROJECT");
-        public final static Property Cover = new Property(14, String.class, "cover", false, "COVER");
+        public final static Property Active = new Property(13, Boolean.class, "active", false, "ACTIVE");
+        public final static Property FirstExtra = new Property(14, String.class, "firstExtra", false, "FIRST_EXTRA");
+        public final static Property SecondExtra = new Property(15, String.class, "secondExtra", false, "SECOND_EXTRA");
+        public final static Property PlanProject = new Property(16, Boolean.class, "planProject", false, "PLAN_PROJECT");
+        public final static Property Cover = new Property(17, String.class, "cover", false, "COVER");
     }
 
 
@@ -67,8 +70,11 @@ public class AimTypeVODao extends AbstractDao<AimTypeVO, Long> {
                 "\"START_TIME\" INTEGER," + // 10: startTime
                 "\"END_TIME\" INTEGER," + // 11: endTime
                 "\"MODIFY_TIME\" INTEGER," + // 12: modifyTime
-                "\"PLAN_PROJECT\" INTEGER," + // 13: planProject
-                "\"COVER\" TEXT);"); // 14: cover
+                "\"ACTIVE\" INTEGER," + // 13: active
+                "\"FIRST_EXTRA\" TEXT," + // 14: firstExtra
+                "\"SECOND_EXTRA\" TEXT," + // 15: secondExtra
+                "\"PLAN_PROJECT\" INTEGER," + // 16: planProject
+                "\"COVER\" TEXT);"); // 17: cover
     }
 
     /** Drops the underlying database table. */
@@ -146,14 +152,29 @@ public class AimTypeVODao extends AbstractDao<AimTypeVO, Long> {
             stmt.bindLong(13, modifyTime.getTime());
         }
  
+        Boolean active = entity.getActive();
+        if (active != null) {
+            stmt.bindLong(14, active ? 1L: 0L);
+        }
+ 
+        String firstExtra = entity.getFirstExtra();
+        if (firstExtra != null) {
+            stmt.bindString(15, firstExtra);
+        }
+ 
+        String secondExtra = entity.getSecondExtra();
+        if (secondExtra != null) {
+            stmt.bindString(16, secondExtra);
+        }
+ 
         Boolean planProject = entity.getPlanProject();
         if (planProject != null) {
-            stmt.bindLong(14, planProject ? 1L: 0L);
+            stmt.bindLong(17, planProject ? 1L: 0L);
         }
  
         String cover = entity.getCover();
         if (cover != null) {
-            stmt.bindString(15, cover);
+            stmt.bindString(18, cover);
         }
     }
 
@@ -226,14 +247,29 @@ public class AimTypeVODao extends AbstractDao<AimTypeVO, Long> {
             stmt.bindLong(13, modifyTime.getTime());
         }
  
+        Boolean active = entity.getActive();
+        if (active != null) {
+            stmt.bindLong(14, active ? 1L: 0L);
+        }
+ 
+        String firstExtra = entity.getFirstExtra();
+        if (firstExtra != null) {
+            stmt.bindString(15, firstExtra);
+        }
+ 
+        String secondExtra = entity.getSecondExtra();
+        if (secondExtra != null) {
+            stmt.bindString(16, secondExtra);
+        }
+ 
         Boolean planProject = entity.getPlanProject();
         if (planProject != null) {
-            stmt.bindLong(14, planProject ? 1L: 0L);
+            stmt.bindLong(17, planProject ? 1L: 0L);
         }
  
         String cover = entity.getCover();
         if (cover != null) {
-            stmt.bindString(15, cover);
+            stmt.bindString(18, cover);
         }
     }
 
@@ -258,8 +294,11 @@ public class AimTypeVODao extends AbstractDao<AimTypeVO, Long> {
             cursor.isNull(offset + 10) ? null : new java.util.Date(cursor.getLong(offset + 10)), // startTime
             cursor.isNull(offset + 11) ? null : new java.util.Date(cursor.getLong(offset + 11)), // endTime
             cursor.isNull(offset + 12) ? null : new java.util.Date(cursor.getLong(offset + 12)), // modifyTime
-            cursor.isNull(offset + 13) ? null : cursor.getShort(offset + 13) != 0, // planProject
-            cursor.isNull(offset + 14) ? null : cursor.getString(offset + 14) // cover
+            cursor.isNull(offset + 13) ? null : cursor.getShort(offset + 13) != 0, // active
+            cursor.isNull(offset + 14) ? null : cursor.getString(offset + 14), // firstExtra
+            cursor.isNull(offset + 15) ? null : cursor.getString(offset + 15), // secondExtra
+            cursor.isNull(offset + 16) ? null : cursor.getShort(offset + 16) != 0, // planProject
+            cursor.isNull(offset + 17) ? null : cursor.getString(offset + 17) // cover
         );
         return entity;
     }
@@ -279,8 +318,11 @@ public class AimTypeVODao extends AbstractDao<AimTypeVO, Long> {
         entity.setStartTime(cursor.isNull(offset + 10) ? null : new java.util.Date(cursor.getLong(offset + 10)));
         entity.setEndTime(cursor.isNull(offset + 11) ? null : new java.util.Date(cursor.getLong(offset + 11)));
         entity.setModifyTime(cursor.isNull(offset + 12) ? null : new java.util.Date(cursor.getLong(offset + 12)));
-        entity.setPlanProject(cursor.isNull(offset + 13) ? null : cursor.getShort(offset + 13) != 0);
-        entity.setCover(cursor.isNull(offset + 14) ? null : cursor.getString(offset + 14));
+        entity.setActive(cursor.isNull(offset + 13) ? null : cursor.getShort(offset + 13) != 0);
+        entity.setFirstExtra(cursor.isNull(offset + 14) ? null : cursor.getString(offset + 14));
+        entity.setSecondExtra(cursor.isNull(offset + 15) ? null : cursor.getString(offset + 15));
+        entity.setPlanProject(cursor.isNull(offset + 16) ? null : cursor.getShort(offset + 16) != 0);
+        entity.setCover(cursor.isNull(offset + 17) ? null : cursor.getString(offset + 17));
      }
     
     @Override

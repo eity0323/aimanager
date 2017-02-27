@@ -43,6 +43,10 @@ public class AimTypeVO extends CPBaseVO{
     private String desc;//类型描述
     private Integer finishPercent;//完成百分比
 
+    private Boolean active;//是否为激活状态(激活状态可自动创建，非激活状态不可自动创建)
+    private String firstExtra;//备用字段1
+    private String secondExtra;//备用字段2
+
     @Generated
     public AimTypeVO() {
     }
@@ -51,8 +55,9 @@ public class AimTypeVO extends CPBaseVO{
         this.id = id;
     }
 
+
     @Generated
-    public AimTypeVO(Long id, String typeName, String desc, Boolean customed, Boolean recyclable, Integer priority, Integer period, Integer targetPeriod, Integer finishStatus, Integer finishPercent, java.util.Date startTime, java.util.Date endTime, java.util.Date modifyTime, Boolean planProject, String cover) {
+    public AimTypeVO(Long id, String typeName, String desc, Boolean customed, Boolean recyclable, Integer priority, Integer period, Integer targetPeriod, Integer finishStatus, Integer finishPercent, java.util.Date startTime, java.util.Date endTime, java.util.Date modifyTime, Boolean active, String firstExtra, String secondExtra, Boolean planProject, String cover) {
         this.id = id;
         this.typeName = typeName;
         this.desc = desc;
@@ -66,6 +71,9 @@ public class AimTypeVO extends CPBaseVO{
         this.startTime = startTime;
         this.endTime = endTime;
         this.modifyTime = modifyTime;
+        this.active = active;
+        this.firstExtra = firstExtra;
+        this.secondExtra = secondExtra;
         this.planProject = planProject;
         this.cover = cover;
     }
@@ -172,6 +180,30 @@ public class AimTypeVO extends CPBaseVO{
 
     public void setModifyTime(java.util.Date modifyTime) {
         this.modifyTime = modifyTime;
+    }
+
+    public Boolean getActive() {
+        return active;
+    }
+
+    public void setActive(Boolean active) {
+        this.active = active;
+    }
+
+    public String getFirstExtra() {
+        return firstExtra;
+    }
+
+    public void setFirstExtra(String firstExtra) {
+        this.firstExtra = firstExtra;
+    }
+
+    public String getSecondExtra() {
+        return secondExtra;
+    }
+
+    public void setSecondExtra(String secondExtra) {
+        this.secondExtra = secondExtra;
     }
 
     public Boolean getPlanProject() {

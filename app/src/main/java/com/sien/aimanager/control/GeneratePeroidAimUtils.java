@@ -171,9 +171,10 @@ public class GeneratePeroidAimUtils {
                 Date nowDate = CPDateUtil.getRelativeDate(new Date(),(-1) * i); //往前推i天
 
                 for (AimTypeVO item : dayList) { //需要循环创建的分类数
-                    //无目标项则不创建该分类对象
-                    long count = AimItemDBHelper.requestAimItemCountSync(context,item.getId());
-                    if (count <= 0) continue;
+                    //非激活状态不可自动创建
+                    if (item.getActive() != null && !item.getActive().booleanValue()){
+                        continue;
+                    }
 
                     //有开始日期，且未到开始日期不创建
                     if (item.getStartTime() != null) {
@@ -186,6 +187,10 @@ public class GeneratePeroidAimUtils {
                         int endDiff = CPDateUtil.getTimeDiffDays(item.getEndTime(), nowDate);
                         if (endDiff < 0) continue;
                     }
+
+                    //无目标项则不创建该分类对象
+                    long count = AimItemDBHelper.requestAimItemCountSync(context,item.getId());
+                    if (count <= 0) continue;
 
                     aimTypeVO = new AimTypeVO();
                     aimTypeVO.setCustomed(true);

@@ -3,12 +3,14 @@ package com.sien.lib.datapp.db.helper;
 import android.content.Context;
 
 import com.sien.lib.datapp.beans.AimItemVO;
+import com.sien.lib.datapp.beans.AimTypeVO;
 import com.sien.lib.datapp.db.AimItemVODao;
 import com.sien.lib.datapp.db.DBManager;
 
 import org.greenrobot.greendao.query.DeleteQuery;
 import org.greenrobot.greendao.query.QueryBuilder;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -17,6 +19,35 @@ import java.util.List;
  * @descript 目标项管理类（非自动创建）数据库管理类
  */
 public class AimItemDBHelper {
+    //----------------------------------------------------------------------------------------------初始化系统数据（默认目标项）
+    public static void createInitialAimItem(Context context,Long aimTypeId,int period){
+        if (period == AimTypeVO.PERIOD_DAY){
+            //every day
+            AimItemVO itemVO = new AimItemVO();
+            itemVO.setAimName("运动半小时");
+            itemVO.setDesc("运动半小时");
+            itemVO.setModifyTime(new Date());
+            itemVO.setFinishStatus(AimItemVO.STATUS_UNDO);
+            itemVO.setPriority(AimItemVO.PRIORITY_FIVE);
+            itemVO.setFinishPercent(0);
+            itemVO.setAimTypeId(aimTypeId);
+
+            insertOrReplaceAimItemSync(context,itemVO);
+        }else if (period == AimTypeVO.PERIOD_MONTH){
+            //every month
+            AimItemVO itemVO = new AimItemVO();
+            itemVO.setAimName("阅读一本书");
+            itemVO.setDesc("阅读一本书");
+            itemVO.setModifyTime(new Date());
+            itemVO.setFinishStatus(AimItemVO.STATUS_UNDO);
+            itemVO.setPriority(AimItemVO.PRIORITY_FIVE);
+            itemVO.setFinishPercent(0);
+            itemVO.setAimTypeId(aimTypeId);
+
+            insertOrReplaceAimItemSync(context,itemVO);
+        }
+    }
+
     /**
      * 请求目标记录数据
      */
@@ -80,11 +111,11 @@ public class AimItemDBHelper {
     /**
      * 新增目标项
      * @param context
-     * @param aimTypeVO
+     * @param aimItemVO
      */
-    public static void insertOrReplaceAimItemSync(Context context,AimItemVO aimTypeVO){
+    public static void insertOrReplaceAimItemSync(Context context,AimItemVO aimItemVO){
         AimItemVODao dao =  DBManager.getInstance(context).getDaoSession().getAimItemVODao();
-        dao.insertOrReplace(aimTypeVO);
+        dao.insertOrReplace(aimItemVO);
     }
 
     public static void insertOrReplaceAimItemListSync(Context context,final List<AimItemVO> aimItemVOList){

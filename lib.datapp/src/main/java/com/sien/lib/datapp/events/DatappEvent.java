@@ -169,6 +169,37 @@ public class DatappEvent {
     }
 
     /**
+     * 更新分类完整状态
+     */
+    public static class updateAimTypeStatusEvent{
+        private int status;
+        private Object data;
+
+        public updateAimTypeStatusEvent(int status,Object data){
+            this.status = status;
+            this.data = data;
+        }
+
+        public boolean checkStatus() {
+            return status == STATUS_SUCCESS;
+        }
+
+        public Object getData() {
+            return data;
+        }
+
+        public List<AimTypeVO> getResult(){
+            List<AimTypeVO>  response = null;
+            if (status == STATUS_SUCCESS && data != null){
+                response = (List<AimTypeVO>)data;
+            }
+
+            return response;
+        }
+    }
+
+
+    /**
      * 添加目标记录项数据
      */
     public static class insertAimItemEvent{

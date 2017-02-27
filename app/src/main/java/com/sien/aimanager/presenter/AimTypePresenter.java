@@ -58,6 +58,10 @@ public class AimTypePresenter extends BusBaseBoostPresenter{
         MainDatabaseAction.insertOrReplaceAimItem(mcontext,aimItemVO);
     }
 
+    public void updateAimTypeStatusById(Long aimTypeId,float percent){
+        MainDatabaseAction.updateAimTypeStatus(mcontext,aimTypeId,percent);
+    }
+
     @Subscribe
     public void AimItemEventReceiver(DatappEvent.AimItemEvent event){
         if (event != null){

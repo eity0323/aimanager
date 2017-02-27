@@ -346,7 +346,6 @@ public class MainDatabaseAction {
         });
     }
 
-
     public static void insertOrReplaceAimTypeList(final Context context,final List<AimTypeVO> aimTypeVOList){
         if (context == null) {
             CPLogUtil.logDebug("deleteAimTypeById context can not be null");
@@ -362,6 +361,30 @@ public class MainDatabaseAction {
                 EventPostUtil.post(new DatappEvent.insertAimTypeEvent(DatappEvent.STATUS_SUCCESS, aimTypeVOList));
             }
         });
+    }
+
+    /**
+     * 更新目标分类完成状态
+     * @param context
+     * @param aimTypeId
+     * @param percent
+     */
+    public static void updateAimTypeStatus(final Context context, final Long aimTypeId, final float percent){
+        if (context == null) {
+            CPLogUtil.logDebug("updateAimTypeStatus context can not be null");
+            EventPostUtil.post(new DatappEvent.updateAimTypeStatusEvent(DatappEvent.STATUS_FAIL_OHTERERROR, aimTypeId));
+            return;
+        }
+
+        CPThreadPoolManager.newInstance().addExecuteTask(new Runnable() {
+            @Override
+            public void run() {
+                AimTypeDBHelper.updateAimTypeStatusSync(context,aimTypeId,percent);
+
+                EventPostUtil.post(new DatappEvent.updateAimTypeStatusEvent(DatappEvent.STATUS_SUCCESS, aimTypeId));
+            }
+        });
+
     }
 
     /**

@@ -19,6 +19,12 @@ import java.util.List;
  * @author sien
  * @date 2017/2/13
  * @descript 目标分类（非自动创建）数据库管理类
+ *
+ * String updateQuery = "update "+PersonDao.TABLENAME
++ " set "+PersonDao.Properties.Name.columnName + "=?"
++" where " + PersonDao.Properties.Id.columnName + "=?";
+
+mDaoMaster.getDatabase().execSQL(updateQuery, new Object[] {"VISHAL", 10});
  */
 public class AimTypeDBHelper {
     //----------------------------------------------------------------------------------------------初始化系统数据（默认目标类型）
@@ -38,10 +44,14 @@ public class AimTypeDBHelper {
         aimTypeVO.setRecyclable(true);
         aimTypeVO.setTargetPeriod(AimTypeVO.PERIOD_DAY);
         aimTypeVO.setPlanProject(false);
+        aimTypeVO.setActive(false);
         aimTypeVO.setCover("drawable://" + R.mipmap.icon_everyday);
         aimTypeVO.setTypeName("每天");
 
         insertOrReplaceAimTypeSync(context,aimTypeVO);
+
+        //aim item
+        AimItemDBHelper.createInitialAimItem(context,aimTypeVO.getId(),AimTypeVO.PERIOD_DAY);
 
         //every week
         aimTypeVO = new AimTypeVO();
@@ -56,6 +66,7 @@ public class AimTypeDBHelper {
         aimTypeVO.setRecyclable(true);
         aimTypeVO.setTargetPeriod(AimTypeVO.PERIOD_WEEK);
         aimTypeVO.setPlanProject(false);
+        aimTypeVO.setActive(false);
         aimTypeVO.setCover("drawable://" + R.mipmap.icon_everyweek);
         aimTypeVO.setTypeName("每周");
 
@@ -74,10 +85,14 @@ public class AimTypeDBHelper {
         aimTypeVO.setRecyclable(true);
         aimTypeVO.setTargetPeriod(AimTypeVO.PERIOD_MONTH);
         aimTypeVO.setPlanProject(false);
+        aimTypeVO.setActive(false);
         aimTypeVO.setCover("drawable://" + R.mipmap.icon_everyday);
         aimTypeVO.setTypeName("每月");
 
         insertOrReplaceAimTypeSync(context,aimTypeVO);
+
+        //aim item
+        AimItemDBHelper.createInitialAimItem(context,aimTypeVO.getId(),AimTypeVO.PERIOD_MONTH);
 
         //every season
         aimTypeVO = new AimTypeVO();
@@ -92,6 +107,7 @@ public class AimTypeDBHelper {
         aimTypeVO.setRecyclable(true);
         aimTypeVO.setTargetPeriod(AimTypeVO.PERIOD_SEASON);
         aimTypeVO.setPlanProject(false);
+        aimTypeVO.setActive(false);
         aimTypeVO.setCover("drawable://" + R.mipmap.icon_everyweek);
         aimTypeVO.setTypeName("每季");
 
@@ -110,6 +126,7 @@ public class AimTypeDBHelper {
         aimTypeVO.setRecyclable(true);
         aimTypeVO.setTargetPeriod(AimTypeVO.PERIOD_HALF_YEAR);
         aimTypeVO.setPlanProject(false);
+        aimTypeVO.setActive(false);
         aimTypeVO.setCover("drawable://" + R.mipmap.icon_everyday);
         aimTypeVO.setTypeName("半年");
 
@@ -128,6 +145,7 @@ public class AimTypeDBHelper {
         aimTypeVO.setRecyclable(true);
         aimTypeVO.setTargetPeriod(AimTypeVO.PERIOD_YEAR);
         aimTypeVO.setPlanProject(false);
+        aimTypeVO.setActive(false);
         aimTypeVO.setCover("drawable://" + R.mipmap.icon_everyweek);
         aimTypeVO.setTypeName("每年");
 
@@ -252,5 +270,19 @@ public class AimTypeDBHelper {
                 }
             }
         });
+    }
+
+    /**
+     * 更新目标分类完成状态
+     * @param context
+     * @param aimTypeId
+     * @param percent
+     */
+    public static void updateAimTypeStatusSync(Context context,Long aimTypeId,float percent){
+        AimTypeVODao dao = DBManager.getInstance(context).getDaoSession().getAimTypeVODao();
+        AimTypeVO itemVO = dao.load(aimTypeId);
+        int val = (int)percent * 100;
+        itemVO.setFinishPercent(val);
+        dao.update(itemVO);
     }
 }

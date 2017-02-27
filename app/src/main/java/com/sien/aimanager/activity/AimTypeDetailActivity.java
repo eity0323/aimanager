@@ -21,11 +21,13 @@ import com.sien.aimanager.model.IAimTypeViewModel;
 import com.sien.aimanager.presenter.AimTypePresenter;
 import com.sien.lib.baseapp.activity.CPBaseBoostActivity;
 import com.sien.lib.baseapp.adapter.CPBaseRecyclerAdapter;
+import com.sien.lib.baseapp.utils.CollectionUtils;
 import com.sien.lib.datapp.beans.AimItemVO;
 import com.sien.lib.datapp.beans.AimTypeVO;
 import com.sien.lib.datapp.network.base.RequestFreshStatus;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author sien
@@ -96,6 +98,7 @@ public class AimTypeDetailActivity extends CPBaseBoostActivity implements IAimTy
         }
     }
 
+    /*解析传入参数*/
     private void parseBundleData(){
         if (getIntent() != null){
             aimTypeVO = (AimTypeVO) getIntent().getSerializableExtra("ds");
@@ -159,11 +162,31 @@ public class AimTypeDetailActivity extends CPBaseBoostActivity implements IAimTy
         if (aimItemVO != null){
             if (aimItemVO.getFinishStatus() == AimItemVO.STATUS_DONE) {
                 aimItemVO.setFinishStatus(AimItemVO.STATUS_UNDO);
+                aimItemVO.setFinishPercent(0);
             }else {
                 aimItemVO.setFinishStatus(AimItemVO.STATUS_DONE);
+                aimItemVO.setFinishPercent(100);
             }
             presenter.insertOrReplaceAimItem(aimItemVO);
+
+            /*更新分类完成百分比*/
+            checkAimTypeFinishStatus();
         }
+    }
+
+    /*校验目标分类完成状态（全部分类项完成，目标分类即完成）*/
+    private void checkAimTypeFinishStatus(){
+        List<AimItemVO> itemVOList = presenter.getDatasource();
+        if (CollectionUtils.IsNullOrEmpty(itemVOList))  return;
+
+        int finishCount = 0;
+        for (AimItemVO itemVO : itemVOList){
+            if (itemVO.getFinishStatus() == AimItemVO.STATUS_DONE){
+                finishCount++;
+            }
+        }
+        float percent = finishCount / itemVOList.size();
+        presenter.updateAimTypeStatusById(aimTypeId,percent);
     }
 
     /*校验并添加 or 编辑目标记录*/
