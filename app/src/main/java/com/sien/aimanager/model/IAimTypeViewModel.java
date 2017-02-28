@@ -1,6 +1,7 @@
 package com.sien.aimanager.model;
 
 import com.sien.lib.baseapp.model.ICPBaseBoostViewModel;
+import com.sien.lib.datapp.beans.AimTypeVO;
 import com.sien.lib.datapp.network.base.RequestFreshStatus;
 
 /**
@@ -9,5 +10,8 @@ import com.sien.lib.datapp.network.base.RequestFreshStatus;
  * @descript 目标分类管理viewmodel
  */
 public interface IAimTypeViewModel extends ICPBaseBoostViewModel{
+    /*更新目标项*/
     public void refreshAimItem(RequestFreshStatus status);
+    /*更新目标分类*/
+    public void refreshAimType(RequestFreshStatus status,AimTypeVO aimTypeVO);
 }

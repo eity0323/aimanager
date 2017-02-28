@@ -62,11 +62,6 @@ public class AimTypeListActivity extends CPBaseBoostActivity implements IAimType
     public void initViews() {
         super.initViews();
 
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().setTitle("目标分类");
-            getSupportActionBar().setDisplayHomeAsUpEnabled(false);//将应用程序图标设置为可点击的按钮,并且在图标上添加向左的箭头
-        }
-
         recyclerView = findView(R.id.aimTypeList);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false);
         recyclerView.setLayoutManager(layoutManager);
@@ -93,6 +88,15 @@ public class AimTypeListActivity extends CPBaseBoostActivity implements IAimType
         presenter = getPresenter();
 
         parseBundleData();
+
+        if (getSupportActionBar() != null) {
+            if (showFixType) {
+                getSupportActionBar().setTitle("目标分类");
+            }else {
+                getSupportActionBar().setTitle("更多目标");
+            }
+            getSupportActionBar().setDisplayHomeAsUpEnabled(false);//将应用程序图标设置为可点击的按钮,并且在图标上添加向左的箭头
+        }
 
         presenter.requestVersionCheck();
         presenter.requestAimTypeDatas(showFixType);
@@ -139,10 +143,10 @@ public class AimTypeListActivity extends CPBaseBoostActivity implements IAimType
 
     /*操作面板*/
     private void showOperatePanel(final AimTypeVO aimTypeVO){
-        if (aimTypeVO.getCustomed() != null && !aimTypeVO.getCustomed().booleanValue()){
-            showToast("系统目标类型，不能进行操作");
-            return;
-        }
+//        if (aimTypeVO.getCustomed() != null && !aimTypeVO.getCustomed().booleanValue()){
+//            showToast("系统目标类型，不能进行操作");
+//            return;
+//        }
         String[] titles = {"修改","删除"};
         AlertDialog.Builder builder = new AlertDialog.Builder(this).setItems(titles, new DialogInterface.OnClickListener() {
             @Override
@@ -161,14 +165,14 @@ public class AimTypeListActivity extends CPBaseBoostActivity implements IAimType
     private void go2AimTypeDetailActivity(AimTypeVO aimTypeVO){
         Intent intent = new Intent(this,AimTypeDetailActivity.class);
         intent.putExtra("ds",aimTypeVO);
-        startActivity(intent);
+        startActivityForResult(intent,AppConfig.REQUEST_CODE_EDIT_AIMTYPE);
     }
 
     /*跳转至修改目标类型*/
     private void go2ModifyAimTypeActivity(AimTypeVO aimTypeVO){
         Intent intent = new Intent(this,NewAimTypeActivity.class);
         intent.putExtra("ds",aimTypeVO);
-        startActivity(intent);
+        startActivityForResult(intent,AppConfig.REQUEST_CODE_NEW_AIMTYPE);
     }
 
     /*删除目标类型*/
@@ -211,7 +215,8 @@ public class AimTypeListActivity extends CPBaseBoostActivity implements IAimType
 
     /*跳转至新建目标分类页*/
     private void go2NewAimTypeActivity(){
-        startActivity(new Intent(this,NewAimTypeActivity.class));
+        Intent intent = new Intent(this,NewAimTypeActivity.class);
+        startActivityForResult(intent,AppConfig.REQUEST_CODE_NEW_AIMTYPE);
     }
 
     @Override
@@ -221,6 +226,26 @@ public class AimTypeListActivity extends CPBaseBoostActivity implements IAimType
 //        }else {
 //            showToast(R.string.exit_tips);
 //        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == AppConfig.REQUEST_CODE_NEW_AIMTYPE){
+            if (resultCode == AppConfig.RESULT_CODE_OK){
+                //新增页面返回刷新数据
+                if (presenter != null) {
+                    presenter.requestAimTypeDatas(showFixType);
+                }
+            }
+        }else if (requestCode == AppConfig.REQUEST_CODE_EDIT_AIMTYPE){
+            if (resultCode == AppConfig.RESULT_CODE_OK){
+                //编辑页面返回刷新数据
+                if (presenter != null) {
+                    presenter.requestAimTypeDatas(showFixType);
+                }
+            }
+        }
     }
 
     @Override
@@ -268,6 +293,20 @@ public class AimTypeListActivity extends CPBaseBoostActivity implements IAimType
         if (refreshLayout != null){
             refreshLayout.setRefreshing(false);
         }
+    }
+
+    @Override
+    public void refreshDelAimType(RequestFreshStatus status) {
+        if (status == RequestFreshStatus.REFRESH_SUCCESS){
+            if (presenter != null) {
+                presenter.requestAimTypeDatas(showFixType);
+            }
+        }
+    }
+
+    @Override
+    public boolean checkActiveStatus() {
+        return getActiveStatus();
     }
 
     @Override

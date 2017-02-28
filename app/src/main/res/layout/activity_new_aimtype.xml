@@ -59,6 +59,33 @@
             />
     </LinearLayout>
 
+    <!--激活自动创建-->
+    <LinearLayout
+        android:id="@+id/layout_active"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:padding="15dp"
+        android:background="@android:color/white"
+        android:orientation="horizontal">
+        <TextView
+            style="@style/DarkText14Appearance"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/new_aimtype_active" />
+
+        <android.support.v7.widget.SwitchCompat
+            android:id="@+id/aimtype_active"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            toggle:buttonTint="@color/indigo"
+            android:checked="true"
+            android:layout_gravity="right|center_vertical"
+            />
+    </LinearLayout>
+
     <!--周期-->
     <LinearLayout
         android:id="@+id/layout_period"

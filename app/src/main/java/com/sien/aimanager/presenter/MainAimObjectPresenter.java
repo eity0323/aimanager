@@ -12,11 +12,14 @@ import com.sien.lib.datapp.beans.AimItemVO;
 import com.sien.lib.datapp.beans.AimTypeVO;
 import com.sien.lib.datapp.db.helper.AimItemDBHelper;
 import com.sien.lib.datapp.db.helper.AimTypeDBHelper;
+import com.sien.lib.datapp.events.DatappEvent;
 import com.sien.lib.datapp.network.base.RequestFreshStatus;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import de.greenrobot.event.Subscribe;
 
 /**
  * @author sien
@@ -25,6 +28,7 @@ import java.util.List;
  */
 public class MainAimObjectPresenter extends BusBaseBoostPresenter {
     private final int MSG_UPDATE_AIMTYPE = 1;//查询自动创建目标类型
+    private final int MSG_UPDATE_NEW_AIMTYPE = 2;//新建目标分类
 
     private IMainAimObjectViewModel impl;
 
@@ -98,18 +102,25 @@ public class MainAimObjectPresenter extends BusBaseBoostPresenter {
 //        }
 //    }
 
+    @Subscribe
+    public void insertAimTypeEventReceiver(DatappEvent.insertAimTypeEvent event){
+        if (event != null){
+            postMessage2UI(event.getResult(),MSG_UPDATE_NEW_AIMTYPE);
+        }
+    }
+
     @Override
     protected void handleMessageFunc(BasePresenter helper, Message msg) {
         super.handleMessageFunc(helper, msg);
 
-//        if (helper == null) return;
-//
-//        MainAimObjectPresenter theActivity = (MainAimObjectPresenter) helper;
-//        if (theActivity == null)    return;
-//
-//        if (impl == null)   return;
-//
-//        if (msg.what == MSG_UPDATE_AIMTYPE){
+        if (helper == null) return;
+
+        MainAimObjectPresenter theActivity = (MainAimObjectPresenter) helper;
+        if (theActivity == null)    return;
+
+        if (impl == null)   return;
+
+        if (msg.what == MSG_UPDATE_AIMTYPE){
 //            if (msg.obj != null){
 //                List<AimTypeVO> list = (List<AimTypeVO>) msg.obj;
 //                if (list != null && list.size() > 0 ){
@@ -121,7 +132,9 @@ public class MainAimObjectPresenter extends BusBaseBoostPresenter {
 //                return;
 //            }
 //            impl.refreshRequestAimType(RequestFreshStatus.REFRESH_ERROR);
-//        }
+        }else if (msg.what == MSG_UPDATE_NEW_AIMTYPE){
+            impl.refreshNewAimType(RequestFreshStatus.REFRESH_SUCCESS);
+        }
     }
 
     @Override

@@ -18,9 +18,9 @@ import com.sien.aimanager.config.AppConfig;
 import com.sien.aimanager.model.INewAimTypeViewModel;
 import com.sien.aimanager.presenter.NewAimTypePresenter;
 import com.sien.lib.baseapp.activity.CPBaseBoostActivity;
-import com.sien.lib.datapp.utils.CPDateUtil;
 import com.sien.lib.datapp.beans.AimTypeVO;
 import com.sien.lib.datapp.network.base.RequestFreshStatus;
+import com.sien.lib.datapp.utils.CPDateUtil;
 
 import java.util.Date;
 
@@ -34,7 +34,7 @@ import cn.qqtheme.framework.picker.OptionPicker;
 public class NewAimTypeActivity extends CPBaseBoostActivity implements INewAimTypeViewModel{
 
     private EditText titleET,descET;
-    private SwitchCompat switchCompat;
+    private SwitchCompat switchCompat,activeCompat;
     private ImageView coverIV;
     private TextView periodTV,priortyTV,startTV,endTV;
     private NewAimTypePresenter presenter;
@@ -44,7 +44,8 @@ public class NewAimTypeActivity extends CPBaseBoostActivity implements INewAimTy
 
     private String cover;
     private int period = 1,priorty = 5;
-    private boolean recyclable = false;
+    private boolean recyclable = false;//是否可循环
+    private boolean activable = true;//是否激活目标
     private boolean modifyModel = false;//是否为修改模式，false 新建  true 修改
     private AimTypeVO aimTypeVO;
 
@@ -76,6 +77,7 @@ public class NewAimTypeActivity extends CPBaseBoostActivity implements INewAimTy
         titleET = findView(R.id.aimtype_title);
         descET = findView(R.id.aimtype_desc);
         switchCompat = findView(R.id.aimtype_recyclerable);
+        activeCompat = findView(R.id.aimtype_active);
         coverIV = findView(R.id.aimtype_cover);
         periodTV = findView(R.id.aimtype_period);
         priortyTV = findView(R.id.aimtype_priorty);
@@ -94,6 +96,13 @@ public class NewAimTypeActivity extends CPBaseBoostActivity implements INewAimTy
                 recyclable = isChecked;
             }
         });
+
+        activeCompat.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                activable = isChecked;
+            }
+        });
     }
 
     @Override
@@ -102,11 +111,15 @@ public class NewAimTypeActivity extends CPBaseBoostActivity implements INewAimTy
 
         presenter = getPresenter();
 
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().setTitle("新建目标分类");
-        }
-
         parseBundleData();
+
+        if (getSupportActionBar() != null) {
+            if (modifyModel){
+                getSupportActionBar().setTitle("编辑目标分类");
+            }else {
+                getSupportActionBar().setTitle("新建目标分类");
+            }
+        }
 
         showContentLayout();
     }
@@ -132,8 +145,15 @@ public class NewAimTypeActivity extends CPBaseBoostActivity implements INewAimTy
         titleET.setText(aimTypeVO.getTypeName());
         descET.setText(aimTypeVO.getDesc());
 
-        recyclable = aimTypeVO.getRecyclable().booleanValue();
+        if (aimTypeVO.getRecyclable() != null) {
+            recyclable = aimTypeVO.getRecyclable().booleanValue();
+        }
         switchCompat.setChecked(recyclable);
+
+        if (aimTypeVO.getActive() != null) {
+            activable = aimTypeVO.getActive().booleanValue();
+        }
+        activeCompat.setChecked(activable);
 
         if (!recyclable) {
             findView(R.id.layout_period).setVisibility(View.GONE);
@@ -359,10 +379,27 @@ public class NewAimTypeActivity extends CPBaseBoostActivity implements INewAimTy
             aimTypeVO.setCustomed(true);
             aimTypeVO.setFinishPercent(0);
             aimTypeVO.setFinishStatus(AimTypeVO.STATUS_UNDO);
-            aimTypeVO.setStartTime(new Date());
         }
         //激活自动创建
-        aimTypeVO.setActive(true);
+        aimTypeVO.setActive(activable);
+
+        //开始时间
+        String startTime = startTV.getText().toString();
+        Date startDate;
+        if (!TextUtils.isEmpty(startTime)){
+            startDate = CPDateUtil.getDateByParse(startTime,CPDateUtil.DATE_FORMAT_DEFAULT);
+        }else {
+            startDate = new Date();
+        }
+        aimTypeVO.setStartTime(startDate);
+
+        //结束时间
+        String endTime = startTV.getText().toString();
+        Date endDate;
+        if (!TextUtils.isEmpty(endTime)){
+            endDate = CPDateUtil.getDateByParse(startTime,CPDateUtil.DATE_FORMAT_DEFAULT);
+            aimTypeVO.setEndTime(endDate);
+        }
 
         aimTypeVO.setTypeName(title);
         aimTypeVO.setDesc(desc);
@@ -379,6 +416,10 @@ public class NewAimTypeActivity extends CPBaseBoostActivity implements INewAimTy
 
         if (presenter != null) {
             presenter.insertOrReplaceAimTypeRecord(aimTypeVO);
+
+            if (recyclable) {       //如果为循环创建分类，需要判断生成自动创建今日事项
+                presenter.checkAndCreateAutoAimType(aimTypeVO);
+            }
         }
     }
 
@@ -417,7 +458,9 @@ public class NewAimTypeActivity extends CPBaseBoostActivity implements INewAimTy
     public void refreshInsertAimType(RequestFreshStatus status) {
         if (status != RequestFreshStatus.REFRESH_ERROR){
             //添加成功后，重新请求数据
-            presenter.searchAimTypeRecord();
+//            presenter.searchAimTypeRecord();
+
+            setResult(AppConfig.RESULT_CODE_OK);
 
             finish();
         }else {

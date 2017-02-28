@@ -15,7 +15,6 @@ import com.sien.aimanager.adapter.AimBeanAdapter;
 import com.sien.aimanager.model.IMainAimObjectViewModel;
 import com.sien.aimanager.presenter.MainAimObjectPresenter;
 import com.sien.lib.baseapp.activity.CPBaseBoostActivity;
-import com.sien.lib.datapp.utils.CPDateUtil;
 import com.sien.lib.baseapp.utils.CollectionUtils;
 import com.sien.lib.baseapp.widgets.CPRefreshView;
 import com.sien.lib.component.coverflow.CoverFlow;
@@ -136,9 +135,9 @@ public class MainAimObjectActivity extends CPBaseBoostActivity implements IMainA
         initRequestData();
     }
 
-    /*初始请求数据*/
+    /*初始请求今日事项数据*/
     private void initRequestData(){
-        Date date = CPDateUtil.getRelativeDate(new Date() ,-1);
+        Date date = new Date();//CPDateUtil.getRelativeDate(new Date() ,-1);
         presenter.requestAimBeanData(date);
     }
 
@@ -197,9 +196,9 @@ public class MainAimObjectActivity extends CPBaseBoostActivity implements IMainA
 
     @Override
     public void refreshRequestAimBean(RequestFreshStatus status) {
-        if (status == RequestFreshStatus.REFRESH_SUCCESS){
-            showContentLayout();
+        showContentLayout();
 
+        if (status == RequestFreshStatus.REFRESH_SUCCESS){
             if (presenter == null)  return;
 
             if (!CollectionUtils.IsNullOrEmpty(presenter.getDatasource())) {
@@ -226,6 +225,13 @@ public class MainAimObjectActivity extends CPBaseBoostActivity implements IMainA
 
         if (refreshLayout != null){
             refreshLayout.setRefreshing(false);
+        }
+    }
+
+    @Override
+    public void refreshNewAimType(RequestFreshStatus status) {
+        if (status == RequestFreshStatus.REFRESH_SUCCESS){
+            initRequestData();
         }
     }
 }

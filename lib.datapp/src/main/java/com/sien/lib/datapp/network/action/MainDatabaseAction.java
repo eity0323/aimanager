@@ -14,6 +14,7 @@ import com.sien.lib.datapp.events.DatappEvent;
 import com.sien.lib.datapp.utils.CPLogUtil;
 import com.sien.lib.datapp.utils.EventPostUtil;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -50,6 +51,32 @@ public class MainDatabaseAction {
             public void run() {
                 List<AimTypeVO> list = AimTypeDBHelper.requestAimTypeDatasSync(context);
 
+                CPLogUtil.logDebug("requestAimTypeDatas Result " + list.size() );
+
+                EventPostUtil.post(new DatappEvent.AimTypeEvent(DatappEvent.STATUS_SUCCESS, list));
+            }
+        });
+    }
+
+    /**
+     * 根据id查目标分类
+     * @param context
+     * @param aimTypeId
+     */
+    public static void requestAimTypeDatasById(final Context context, final Long aimTypeId){
+        if (context == null) {
+            CPLogUtil.logDebug("requestAimTypeDatas context can not be null");
+            EventPostUtil.post(new DatappEvent.AimTypeEvent(DatappEvent.STATUS_FAIL_OHTERERROR, null));
+            return;
+        }
+
+        CPThreadPoolManager.newInstance().addExecuteTask(new Runnable() {
+            @Override
+            public void run() {
+                AimTypeVO aimTypeVO = AimTypeDBHelper.requestAimTypeDatasByIdSync(context,aimTypeId);
+
+                List<AimTypeVO> list = new ArrayList<AimTypeVO>();
+                list.add(aimTypeVO);
                 CPLogUtil.logDebug("requestAimTypeDatas Result " + list.size() );
 
                 EventPostUtil.post(new DatappEvent.AimTypeEvent(DatappEvent.STATUS_SUCCESS, list));

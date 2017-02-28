@@ -166,6 +166,13 @@ public class AimTypeDBHelper {
         return list;
     }
 
+    public static AimTypeVO requestAimTypeDatasByIdSync(Context context,Long aimTypeId){
+        AimTypeVODao dao = DBManager.getInstance(context).getDaoSession().getAimTypeVODao();
+        QueryBuilder<AimTypeVO> qb = dao.queryBuilder();
+        AimTypeVO aimTypeVO = dao.load(aimTypeId);
+        return aimTypeVO;
+    }
+
     /**
      * 请求目标分类数据(固定分类)
      */

@@ -34,7 +34,7 @@ public interface MainRequestApi {
     Call<AimItemResult> requestAimTypeByType(@Path("aimTypeId") String aimTypeId);
 
     @POST(RequestApiConfig.ACTION_VERSIONCHECK)
-    Call<VersionCheckResult> requestVersionCheck(@Path("appType") String deviceType);
+    Call<VersionCheckResult> requestVersionCheck();
 
     @Multipart
     @POST(RequestApiConfig.ACTION_UPLOADFILE)

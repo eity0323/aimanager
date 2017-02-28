@@ -6,7 +6,9 @@ import android.os.Message;
 import com.sien.aimanager.model.IAimTypeViewModel;
 import com.sien.lib.baseapp.presenters.BasePresenter;
 import com.sien.lib.baseapp.presenters.BusBaseBoostPresenter;
+import com.sien.lib.baseapp.utils.CollectionUtils;
 import com.sien.lib.datapp.beans.AimItemVO;
+import com.sien.lib.datapp.beans.AimTypeVO;
 import com.sien.lib.datapp.events.DatappEvent;
 import com.sien.lib.datapp.network.action.MainDatabaseAction;
 import com.sien.lib.datapp.network.base.RequestFreshStatus;
@@ -23,6 +25,7 @@ import de.greenrobot.event.Subscribe;
  */
 public class AimTypePresenter extends BusBaseBoostPresenter{
     private final int MSG_UPDATE_AIMITEM = 1;//请求目标记录
+    private final int MSG_UPDATE_AIMTYPE = 2;//目标分类更新，请求最新数据
     private IAimTypeViewModel impl;
     private Long mAimTypeId;
 
@@ -46,6 +49,11 @@ public class AimTypePresenter extends BusBaseBoostPresenter{
         MainDatabaseAction.requestAimItemDatas(mcontext,aimTypeId);
     }
 
+    /*分类数据变更，请求新数据*/
+    public void requestAimTypeDatas(Long aimTypeId){
+        MainDatabaseAction.requestAimTypeDatasById(mcontext,aimTypeId);
+    }
+
     public void deleteAimItem(Long aimItemId){
         MainDatabaseAction.deleteAimItemById(mcontext,aimItemId);
     }
@@ -66,6 +74,13 @@ public class AimTypePresenter extends BusBaseBoostPresenter{
     public void AimItemEventReceiver(DatappEvent.AimItemEvent event){
         if (event != null){
             postMessage2UI(event.getResult(),MSG_UPDATE_AIMITEM);
+        }
+    }
+
+    @Subscribe
+    public void AimTypeEventReceiver(DatappEvent.AimTypeEvent event){
+        if (event != null){
+            postMessage2UI(event.getResult(),MSG_UPDATE_AIMTYPE);
         }
     }
 
@@ -106,6 +121,13 @@ public class AimTypePresenter extends BusBaseBoostPresenter{
                 return;
             }
             impl.refreshAimItem(RequestFreshStatus.REFRESH_NODATA);
+        }else if (msg.what == MSG_UPDATE_AIMTYPE){
+            List<AimTypeVO> list = (List<AimTypeVO>) msg.obj;
+            if (!CollectionUtils.IsNullOrEmpty(list)){
+                impl.refreshAimType(RequestFreshStatus.REFRESH_SUCCESS,list.get(0));
+                return;
+            }
+            impl.refreshAimType(RequestFreshStatus.REFRESH_NODATA,null);
         }
     }
 

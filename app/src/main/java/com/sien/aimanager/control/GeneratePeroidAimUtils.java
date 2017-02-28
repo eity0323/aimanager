@@ -182,7 +182,7 @@ public class GeneratePeroidAimUtils {
                         if (startDiff < 0) continue;
                     }
 
-                    //又结束日期，且超过结束日期不创建
+                    //有结束日期，且超过结束日期不创建
                     if (item.getEndTime() != null) {
                         int endDiff = CPDateUtil.getTimeDiffDays(item.getEndTime(), nowDate);
                         if (endDiff < 0) continue;

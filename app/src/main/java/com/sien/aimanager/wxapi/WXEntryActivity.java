@@ -3,8 +3,9 @@ package com.sien.aimanager.wxapi;
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.sien.lib.datapp.utils.CPLogUtil;
 import com.sien.lib.baseapp.utils.ToastUtil;
+import com.sien.lib.datapp.utils.CPLogUtil;
+import com.sien.lib.share.AESUtil;
 import com.sien.lib.share.ShareConfig;
 import com.tencent.mm.sdk.constants.ConstantsAPI;
 import com.tencent.mm.sdk.modelbase.BaseReq;
@@ -35,7 +36,8 @@ public class WXEntryActivity extends WechatHandlerActivity implements IWXAPIEven
 //        setContentView(R.layout.entry);
 
 		// 通过WXAPIFactory工厂，获取IWXAPI的实例
-		api = WXAPIFactory.createWXAPI(this, ShareConfig.APPID_CIRCLE_FRIEND, false);
+		String decryptstr = AESUtil.decryptPassword(ShareConfig.APPID_CIRCLE_FRIEND);
+		api = WXAPIFactory.createWXAPI(this, decryptstr, false);
 
 		api.handleIntent(getIntent(), this);
 	}

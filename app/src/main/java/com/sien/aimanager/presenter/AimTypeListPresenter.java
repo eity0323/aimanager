@@ -28,6 +28,7 @@ import de.greenrobot.event.Subscribe;
 public class AimTypeListPresenter extends BusBaseBoostPresenter {
     private final int MSG_UPDATE_VERSIONCHECK = 1;//版本校验
     private final int MSG_UPDATE_AIMTYPE = 2;//查询目标类型
+    private final int MSG_UPDATE_DEL_AIMTYPE = 3;//删除目标类型
 
     private IAimTypeListViewModel impl;
 
@@ -81,6 +82,9 @@ public class AimTypeListPresenter extends BusBaseBoostPresenter {
 
     @Subscribe
     public void AimTypeEventReceiver(DatappEvent.AimTypeEvent event){
+        if (impl == null)   return;
+        if (!impl.checkActiveStatus())   return;
+
         if (event != null){
             postMessage2UI(event.getResult(),MSG_UPDATE_AIMTYPE);
         }
@@ -91,7 +95,7 @@ public class AimTypeListPresenter extends BusBaseBoostPresenter {
         if (event != null){
             if (event.checkStatus()){
                 //删除成功，刷新数据
-                requestAimTypeDatas(false);
+                postMessage2UI(event.getResult(),MSG_UPDATE_DEL_AIMTYPE);
             }
         }
     }
@@ -133,6 +137,8 @@ public class AimTypeListPresenter extends BusBaseBoostPresenter {
                 return;
             }
             impl.refreshRequestAimType(RequestFreshStatus.REFRESH_ERROR);
+        }else if (msg.what == MSG_UPDATE_DEL_AIMTYPE){
+            impl.refreshDelAimType(RequestFreshStatus.REFRESH_SUCCESS);
         }
     }
 

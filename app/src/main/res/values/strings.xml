@@ -67,6 +67,7 @@
     <string name="new_aimtype_title_hint">请输入分类名称(10字以内)</string>
     <string name="new_aimtype_desc_hint">请输入分类描述(200字以内)</string>
     <string name="new_aimtype_recyclerable">自动创建</string>
+    <string name="new_aimtype_active">激活目标</string>
     <string name="new_aimtype_period">执行周期</string>
     <string name="new_aimtype_start">开始时间</string>
     <string name="new_aimtype_end">结束时间</string>

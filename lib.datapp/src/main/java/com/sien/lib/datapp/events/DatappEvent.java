@@ -158,10 +158,10 @@ public class DatappEvent {
             return data;
         }
 
-        public List<AimTypeVO> getResult(){
-            List<AimTypeVO>  response = null;
+        public AimTypeVO getResult(){
+            AimTypeVO  response = null;
             if (status == STATUS_SUCCESS && data != null){
-                response = (List<AimTypeVO>)data;
+                response = (AimTypeVO)data;
             }
 
             return response;
@@ -188,10 +188,10 @@ public class DatappEvent {
             return data;
         }
 
-        public List<AimTypeVO> getResult(){
-            List<AimTypeVO>  response = null;
+        public AimTypeVO getResult(){
+            AimTypeVO  response = null;
             if (status == STATUS_SUCCESS && data != null){
-                response = (List<AimTypeVO>)data;
+                response = (AimTypeVO)data;
             }
 
             return response;

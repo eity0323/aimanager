@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import com.sien.aimanager.R;
 import com.sien.aimanager.adapter.AimItemAdapter;
+import com.sien.aimanager.config.AppConfig;
 import com.sien.aimanager.model.IAimTypeViewModel;
 import com.sien.aimanager.presenter.AimTypePresenter;
 import com.sien.lib.baseapp.activity.CPBaseBoostActivity;
@@ -222,14 +223,29 @@ public class AimTypeDetailActivity extends CPBaseBoostActivity implements IAimTy
     /*跳转只编辑目标分类页*/
     private void go2NewAimTypeActivity(){
         if (aimTypeVO != null){
-            if (aimTypeVO.getCustomed() != null && !aimTypeVO.getCustomed().booleanValue()) {
-                showToast("系统目标类型，不能进行操作");
-                return;
-            }
+//            if (aimTypeVO.getCustomed() != null && !aimTypeVO.getCustomed().booleanValue()) {
+//                showToast("系统目标类型，不能进行操作");
+//                return;
+//            }
+
+            setResult(AppConfig.RESULT_CODE_OK);
 
             Intent intent = new Intent(this, NewAimTypeActivity.class);
             intent.putExtra("ds", aimTypeVO);
-            startActivity(intent);
+            startActivityForResult(intent,AppConfig.REQUEST_CODE_NEW_AIMTYPE);
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == AppConfig.REQUEST_CODE_NEW_AIMTYPE){
+            if (resultCode == AppConfig.RESULT_CODE_OK){
+                if (aimTypeId != null) {
+                    presenter.requestAimTypeDatas(aimTypeId);
+                }
+            }
         }
     }
 
@@ -273,6 +289,20 @@ public class AimTypeDetailActivity extends CPBaseBoostActivity implements IAimTy
 
         if (refreshLayout != null){
             refreshLayout.setRefreshing(false);
+        }
+    }
+
+    @Override
+    public void refreshAimType(RequestFreshStatus status, AimTypeVO aimTypeVO) {
+        if (status == RequestFreshStatus.REFRESH_SUCCESS){
+            if (aimTypeVO != null){
+                //更新分类名称
+                if (getSupportActionBar() != null) {
+                    if (aimTypeVO != null) {
+                        getSupportActionBar().setTitle(aimTypeVO.getTypeName());
+                    }
+                }
+            }
         }
     }
 }

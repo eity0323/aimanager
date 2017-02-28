@@ -9,6 +9,7 @@ import android.graphics.BitmapFactory;
 import android.text.TextUtils;
 import android.widget.Toast;
 
+import com.sien.lib.share.AESUtil;
 import com.sien.lib.share.R;
 import com.sien.lib.share.ShareConfig;
 
@@ -27,8 +28,8 @@ public class CPAppShareAction extends AbstractShareAction {
 	public final int SHARE_TYPE_FILE = 4;//分享文件
 
 	private String mUrl="http://www.shoelives.com";//分享链接
-	private String mTitle = "新年新期望，我先送自己一双满意的鞋子吧";//分享标题
-	private String mContent = "根据不同脚型专属定制，快快下载APP体验吧";//分享文本
+	private String mTitle = "目标管理";//分享标题
+	private String mContent = "每天进步一点点";//分享文本
 	private int mIconId = -1;//分享url icon
 	private String mCover = "";//分享图片
 	private boolean mLocalCover = true;
@@ -451,8 +452,10 @@ public class CPAppShareAction extends AbstractShareAction {
 	/*获取微信配置参数*/
 	private HashMap<String,Object> getWXAPPConfigParams(){
 		HashMap<String, Object> map = new HashMap<String, Object>();
-		map.put("AppId", ShareConfig.APPID_CIRCLE_FRIEND);
-		map.put("AppSecret", ShareConfig.APPSECRET_CIRCLE_FRIEND);
+		String decryptstr = AESUtil.decryptPassword(ShareConfig.APPID_CIRCLE_FRIEND);
+		map.put("AppId", decryptstr);
+		String decryptsecret = AESUtil.decryptPassword(ShareConfig.APPSECRET_CIRCLE_FRIEND);
+		map.put("AppSecret", decryptsecret);
 		map.put("Enable", ShareConfig.ENABLE_CIRCLE_FRIEND);
 		map.put("BypassApproval", ShareConfig.BYPASSAPPROVAL_CIRCLE_FRIEND);
 		return map;

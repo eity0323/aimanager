@@ -246,7 +246,7 @@ public class MainRequestAction {
     public static void requestVersionCheck(Context context){
         MainRequestApi service = RestClient.getClient(context);
 
-        Call<VersionCheckResult> call = service.requestVersionCheck("android");
+        Call<VersionCheckResult> call = service.requestVersionCheck();
         call.enqueue(new CPBaseCallBack<VersionCheckResult>() {
             @Override
             public void response(Call<VersionCheckResult> call, Response<VersionCheckResult> response) {

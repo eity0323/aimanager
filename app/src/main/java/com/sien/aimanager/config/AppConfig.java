@@ -12,6 +12,10 @@ public class AppConfig {
 	public final static int REQUEST_CODE_SELECTCOVER = 2071;//选择封面图片
 	public final static int REQUEST_CODE_ENVIRONMENT= 2081;//切换网络环境
 	public final static int REQUEST_CODE_DATE_SOURCE = 2082;//切换数据来源
+	public final static int REQUEST_CODE_NEW_AIMTYPE = 2281;//新增目标分类
+	public final static int REQUEST_CODE_EDIT_AIMTYPE = 2282;//编辑目标分类
+	public final static int RESULT_CODE_OK = 200;//页面回传码ok
+
 
 	public static final String GESTURE_PASSWORD = "GesturePassword";
 
