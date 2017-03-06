@@ -8,11 +8,9 @@ import com.sien.lib.baseapp.model.ICPBaseBoostViewModel;
 import com.sien.lib.baseapp.presenters.BasePresenter;
 import com.sien.lib.baseapp.presenters.BusBaseBoostPresenter;
 import com.sien.lib.datapp.beans.AimTypeVO;
-import com.sien.lib.datapp.db.helper.AimTypeDBHelper;
 import com.sien.lib.datapp.events.DatappEvent;
 import com.sien.lib.datapp.network.action.MainDatabaseAction;
 import com.sien.lib.datapp.network.base.RequestFreshStatus;
-import com.sien.lib.datapp.utils.CPDateUtil;
 
 import de.greenrobot.event.Subscribe;
 
@@ -37,49 +35,129 @@ public class NewAimTypePresenter extends BusBaseBoostPresenter {
         MainDatabaseAction.insertOrReplaceAimType(mcontext,aimTypeVO);
     }
 
-    /*校验并生成自动创建分类*/
-    public void checkAndCreateAutoAimType(AimTypeVO fixAimType){
-        //check auto create condition
-
-        //非激活状态不自动创建
-        if (fixAimType.getActive() != null && !fixAimType.getActive().booleanValue()){
-            return;
+    /*根据优先级别值获取索引*/
+    public int getIndexByPriority(int priority){
+        int position = 0;
+        if (priority == 1){
+            position = 4;
+        }else if (priority == 2){
+            position = 3;
+        }else if (priority == 3){
+            position = 2;
+        }else if (priority == 4){
+            position = 1;
+        }else if (priority == 5){
+            position = 0;
         }
-
-        //有开始日期，且未到开始日期不创建
-        if (fixAimType.getStartTime() != null) {
-            int startDiff = CPDateUtil.getTimeDiffDays(fixAimType.getModifyTime(), fixAimType.getStartTime());
-            if (startDiff < 0) return;
-        }
-
-        //有结束日期，且超过结束日期不创建
-        if (fixAimType.getEndTime() != null) {
-            int endDiff = CPDateUtil.getTimeDiffDays(fixAimType.getEndTime(), fixAimType.getModifyTime());
-            if (endDiff < 0) return;
-        }
-
-        AimTypeVO aimTypeVO = new AimTypeVO();
-        aimTypeVO.setCustomed(true);
-        aimTypeVO.setDesc(fixAimType.getDesc());
-        aimTypeVO.setFinishPercent(0);
-        aimTypeVO.setFinishStatus(AimTypeVO.STATUS_UNDO);
-        aimTypeVO.setPeriod(fixAimType.getPeriod());
-        aimTypeVO.setModifyTime(fixAimType.getModifyTime());
-        aimTypeVO.setStartTime(fixAimType.getStartTime());
-        aimTypeVO.setEndTime(fixAimType.getEndTime());
-        aimTypeVO.setPriority(AimTypeVO.PRIORITY_FIVE);
-        aimTypeVO.setRecyclable(false);
-        aimTypeVO.setPlanProject(fixAimType.getPlanProject());
-        aimTypeVO.setTargetPeriod(fixAimType.getTargetPeriod());
-        aimTypeVO.setCover(fixAimType.getCover());
-        aimTypeVO.setTypeName(CPDateUtil.getDateToString(fixAimType.getModifyTime(), CPDateUtil.DATE_FORMAT_3));
-
-        //创建目标分类
-        AimTypeDBHelper.insertOrReplaceAimTypeSync(mcontext,aimTypeVO);
+        return position;
     }
 
-    public void searchAimTypeRecord(){
-        MainDatabaseAction.requestAimTypeFixedDatas(mcontext);
+    /*根据优先级别值获取文本*/
+    public String getPriorityTextByPriority(int position){
+        String priority = "5级";
+        if (position == 1){
+            priority = "5级";
+        }else if (position == 2){
+            priority = "4级";
+        }else if (position == 3){
+            priority = "3级";
+        }else if (position == 4){
+            priority = "2级";
+        }else if (position == 5){
+            priority = "1级";
+        }
+        return priority;
+    }
+
+    /*根据索引获取优先级别值*/
+    public int getPriorityByIndex(int position){
+        int priority = 5;
+        if (position == 0){
+            priority = 5;
+        }else if (position == 1){
+            priority = 4;
+        }else if (position == 2){
+            priority = 3;
+        }else if (position == 3){
+            priority = 2;
+        }else if (position == 4){
+            priority = 1;
+        }
+        return priority;
+    }
+
+    /*根据索引获取优先级别文本*/
+    public String getPriorityTextByIndex(int position){
+        String priority = "5级";
+        if (position == 0){
+            priority = "5级";
+        }else if (position == 1){
+            priority = "4级";
+        }else if (position == 2){
+            priority = "3级";
+        }else if (position == 3){
+            priority = "2级";
+        }else if (position == 4){
+            priority = "1级";
+        }
+        return priority;
+    }
+
+    /*根据周期值获取索引*/
+    public int getIndexByPeriod(int period){
+        int position = 0;
+        if (period == 1){
+            position = 0;
+        }else if (period == 7){
+            position = 1;
+        }else if (period == 30){
+            position = 2;
+        }else if (period == 90){
+            position = 3;
+        }else if (period == 180){
+            position = 4;
+        }else if (period == 365){
+            position = 5;
+        }
+        return position;
+    }
+
+    /*根据索引获取周期值*/
+    public int getPeriodByIndex(int position){
+        int period = 1;
+        if (position == 0){
+            period = 1;
+        }else if (position == 1){
+            period = 7;
+        }else if (position == 2){
+            period = 30;
+        }else if (position == 3){
+            period = 90;
+        }else if (position == 4){
+            period = 180;
+        }else if (position == 5){
+            period = 365;
+        }
+        return period;
+    }
+
+    /*根据索引获取周期文本*/
+    public String getPeriodTextByIndex(int position){
+        String period = "1天";
+        if (position == 0){
+            period = "1天";
+        }else if (position == 1){
+            period = "1周";
+        }else if (position == 2){
+            period = "1月";
+        }else if (position == 3){
+            period = "1季";
+        }else if (position == 4){
+            period = "半年";
+        }else if (position == 5){
+            period = "1年";
+        }
+        return period;
     }
 
     @Subscribe

@@ -216,6 +216,7 @@ public class AimTypeListActivity extends CPBaseBoostActivity implements IAimType
     /*跳转至新建目标分类页*/
     private void go2NewAimTypeActivity(){
         Intent intent = new Intent(this,NewAimTypeActivity.class);
+        intent.putExtra("showFixType",showFixType);
         startActivityForResult(intent,AppConfig.REQUEST_CODE_NEW_AIMTYPE);
     }
 

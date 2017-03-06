@@ -1,6 +1,9 @@
 package com.sien.aimanager.config;
 
 import com.sien.lib.baseapp.BaseApplication;
+import com.sien.lib.datapp.utils.CPDateUtil;
+
+import java.util.Date;
 
 /**
  * 程序配置信息获取类
@@ -45,6 +48,20 @@ public class AppConfig {
 
 	private static String getConfigDataItem(String key){
 		return BaseApplication.getSharePerfence(key);
+	}
+
+	/**
+	 * 格式化自动创建分类名称
+	 * @param oldName
+	 * @param date
+     * @return
+     */
+	public static String formatGenerateTypeName(String oldName,Date date){
+		String val = oldName;
+		if (date != null){
+			val += "(" + CPDateUtil.getDateToString(date, "MM-dd") + ")";
+		}
+		return val;
 	}
 
 	/**

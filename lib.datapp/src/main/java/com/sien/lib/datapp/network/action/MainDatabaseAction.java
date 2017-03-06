@@ -49,7 +49,7 @@ public class MainDatabaseAction {
         CPThreadPoolManager.newInstance().addExecuteTask(new Runnable() {
             @Override
             public void run() {
-                List<AimTypeVO> list = AimTypeDBHelper.requestAimTypeDatasSync(context);
+                List<AimTypeVO> list = AimTypeDBHelper.requestAimTypeSync(context);
 
                 CPLogUtil.logDebug("requestAimTypeDatas Result " + list.size() );
 
@@ -97,7 +97,7 @@ public class MainDatabaseAction {
         CPThreadPoolManager.newInstance().addExecuteTask(new Runnable() {
             @Override
             public void run() {
-                List<AimTypeVO> list = AimTypeDBHelper.requestAimTypeFixedDatasSync(context);
+                List<AimTypeVO> list = AimTypeDBHelper.requestAimTypeFixedSync(context);
 
                 CPLogUtil.logDebug("requestAimTypeFixedDatas Result " + list.size() );
 
@@ -144,7 +144,7 @@ public class MainDatabaseAction {
         CPThreadPoolManager.newInstance().addExecuteTask(new Runnable() {
             @Override
             public void run() {
-                List<AimTypeVO> list = AimTypeDBHelper.requestAimTypeFixedDatasSync(context,period);
+                List<AimTypeVO> list = AimTypeDBHelper.requestAimTypeFixedSync(context,period);
 
                 CPLogUtil.logDebug("requestAimTypeFixedDatas Result " + list.size() );
 

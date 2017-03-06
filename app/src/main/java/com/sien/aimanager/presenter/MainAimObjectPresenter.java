@@ -4,6 +4,8 @@ import android.content.Context;
 import android.os.Message;
 
 import com.sien.aimanager.beans.AimBean;
+import com.sien.aimanager.config.AppConfig;
+import com.sien.aimanager.control.PriorityComparator;
 import com.sien.aimanager.model.IMainAimObjectViewModel;
 import com.sien.lib.baseapp.presenters.BasePresenter;
 import com.sien.lib.baseapp.presenters.BusBaseBoostPresenter;
@@ -14,8 +16,10 @@ import com.sien.lib.datapp.db.helper.AimItemDBHelper;
 import com.sien.lib.datapp.db.helper.AimTypeDBHelper;
 import com.sien.lib.datapp.events.DatappEvent;
 import com.sien.lib.datapp.network.base.RequestFreshStatus;
+import com.sien.lib.datapp.utils.CPDateUtil;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -49,13 +53,6 @@ public class MainAimObjectPresenter extends BusBaseBoostPresenter {
         return datasource;
     }
 
-//    public List<AimTypeVO> getAimTypeVOList() {
-//        if (aimTypeVOList == null) {
-//            aimTypeVOList = new ArrayList<>();
-//        }
-//        return aimTypeVOList;
-//    }
-
     /**
      * 请求当天目标数据
      * @param date
@@ -67,8 +64,12 @@ public class MainAimObjectPresenter extends BusBaseBoostPresenter {
             datasource.clear();
         }
 
+        //根据优先级排序
         List<AimTypeVO> objectVOList = AimTypeDBHelper.requestAimTypeAutoByDate(mcontext,date);
         if (!CollectionUtils.IsNullOrEmpty(objectVOList)) {
+            // 排序(优先级高的往前排)
+            Collections.sort(objectVOList, new PriorityComparator());
+
             AimBean bean;
             List<AimItemVO> recordVOList;
 
@@ -91,16 +92,96 @@ public class MainAimObjectPresenter extends BusBaseBoostPresenter {
         impl.refreshRequestAimBean(RequestFreshStatus.REFRESH_NODATA);
     }
 
-//    public void requestAimTypeData(){
-//        MainDatabaseAction.requestAimTypeAutoDatas(mcontext);
-//    }
+    /*校验并生成自动创建今日目标*/
+    public void checkAndCreateAutoAimType(Date date){
+        if (date == null)   return;
 
-//    @Subscribe
-//    public void AimTypeEventReceiver(DatappEvent.AimTypeEvent event){
-//        if (event != null){
-//            postMessage2UI(event.getResult(),MSG_UPDATE_AIMTYPE);
-//        }
-//    }
+        // 1、查询starttime为今日的固定分类
+        List<AimTypeVO> fixList = AimTypeDBHelper.requestAimTypeFixedByDate(mcontext,date);
+
+        if (CollectionUtils.IsNullOrEmpty(fixList))     return;
+
+        for (AimTypeVO fixAimType : fixList) {
+            //非激活状态不自动创建
+            if (fixAimType.getActive() != null && !fixAimType.getActive().booleanValue()) {
+                return;
+            }
+
+            //有开始日期，且未到开始日期不创建
+            if (fixAimType.getStartTime() != null) {
+                int startDiff = CPDateUtil.getTimeDiffDays(fixAimType.getModifyTime(), fixAimType.getStartTime());
+                if (startDiff < 0) return;
+            }
+
+            //有结束日期，且超过结束日期不创建
+            if (fixAimType.getEndTime() != null) {
+                int endDiff = CPDateUtil.getTimeDiffDays(fixAimType.getEndTime(), fixAimType.getModifyTime());
+                if (endDiff < 0) return;
+            }
+
+            //无目标项则不创建该分类对象
+            long count = AimItemDBHelper.requestAimItemCountSync(mcontext,fixAimType.getId());
+            if (count <= 0) continue;
+
+            //2、查询是否为固定分类创建今日事项
+            List<AimTypeVO> list = AimTypeDBHelper.requestAimTypeAutoByAimTypeIdSync(mcontext, fixAimType.getId());
+
+            //3、如果不存在该自动创建分类则生成;否则不做处理由创建机制自动创建
+            if (CollectionUtils.IsNullOrEmpty(list)) {
+                AimTypeVO aimTypeVO = new AimTypeVO();
+                aimTypeVO.setCustomed(true);
+                aimTypeVO.setDesc(fixAimType.getDesc());
+                aimTypeVO.setFinishPercent(0);
+                aimTypeVO.setFinishStatus(AimTypeVO.STATUS_UNDO);
+                aimTypeVO.setPeriod(fixAimType.getPeriod());
+                aimTypeVO.setModifyTime(fixAimType.getModifyTime());
+                aimTypeVO.setStartTime(fixAimType.getStartTime());
+                aimTypeVO.setEndTime(fixAimType.getEndTime());
+                aimTypeVO.setPriority(AimTypeVO.PRIORITY_FIVE);
+                aimTypeVO.setRecyclable(false);
+                aimTypeVO.setPlanProject(fixAimType.getPlanProject());
+                aimTypeVO.setTargetPeriod(fixAimType.getTargetPeriod());
+                aimTypeVO.setCover(fixAimType.getCover());
+                aimTypeVO.setTypeName(AppConfig.formatGenerateTypeName(fixAimType.getTypeName(),fixAimType.getModifyTime()));
+                aimTypeVO.setFirstExtra(String.valueOf(fixAimType.getId()));
+
+                //创建目标分类
+                AimTypeDBHelper.insertOrReplaceAimTypeSync(mcontext, aimTypeVO);
+
+                //创建分享项
+                generateAimItemByAimType(fixAimType.getId(), aimTypeVO.getId(), fixAimType.getStartTime());
+            }
+        }
+    }
+
+    /*批量插入目标项*/
+    private void generateAimItemByAimType(Long aimTypeId,Long newAimTypeId,Date nowDate){
+        List<AimItemVO> dayList = AimItemDBHelper.requestAimItemDataSync(mcontext,aimTypeId);
+
+        if (dayList != null && dayList.size() > 0) {
+            List<AimItemVO> newDataList = new ArrayList<>();
+
+            AimItemVO itemVO;
+            for (AimItemVO item : dayList){
+                itemVO = new AimItemVO();
+                itemVO.setAimName(item.getAimName());
+                itemVO.setDesc(item.getDesc());
+                item.setStartTime(nowDate);
+                itemVO.setModifyTime(nowDate);
+                itemVO.setFinishStatus(AimItemVO.STATUS_UNDO);
+                itemVO.setPriority(AimItemVO.PRIORITY_FIVE);
+                itemVO.setFinishPercent(0);
+                itemVO.setAimTypeId(newAimTypeId);
+
+                newDataList.add(itemVO);
+            }
+
+            if (newDataList.size() > 0) {
+                //批量插入目标项
+                AimItemDBHelper.insertOrReplaceAimItemListSync(mcontext, newDataList);
+            }
+        }
+    }
 
     @Subscribe
     public void insertAimTypeEventReceiver(DatappEvent.insertAimTypeEvent event){

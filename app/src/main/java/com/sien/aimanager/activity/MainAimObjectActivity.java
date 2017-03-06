@@ -38,7 +38,7 @@ public class MainAimObjectActivity extends CPBaseBoostActivity implements IMainA
 
     private LinearLayout newAimItemLatyout;
 
-    private TextView emptyTV;
+    private TextView emptyTV,editTV;
 
     private int coverIndex = -1;//分类索引
 
@@ -90,7 +90,7 @@ public class MainAimObjectActivity extends CPBaseBoostActivity implements IMainA
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                initRequestData();
+                freshGenerateOrRequestData();
             }
         });
 
@@ -101,6 +101,8 @@ public class MainAimObjectActivity extends CPBaseBoostActivity implements IMainA
                 go2NewAimTypeActivity();
             }
         });
+
+        editTV = findView(R.id.aimObject_edit);
 
         newAimItemLatyout = findView(R.id.newAimType);
         newAimItemLatyout.setOnClickListener(new View.OnClickListener() {
@@ -189,6 +191,15 @@ public class MainAimObjectActivity extends CPBaseBoostActivity implements IMainA
         }
     }
 
+    /*下拉请求创建并获取今日目标*/
+    private void freshGenerateOrRequestData(){
+        Date date = new Date();
+        if (presenter != null) {
+            presenter.checkAndCreateAutoAimType(date);
+            presenter.requestAimBeanData(date);
+        }
+    }
+
     @Override
     public MainAimObjectPresenter createPresenter() {
         return new MainAimObjectPresenter(this);
@@ -208,12 +219,16 @@ public class MainAimObjectActivity extends CPBaseBoostActivity implements IMainA
                 coverFlow.setVisibility(View.VISIBLE);
                 newAimItemLatyout.setVisibility(View.VISIBLE);
 
+                editTV.setText(R.string.aimobject_edit);
+
                 updateCoverAdapter();
             }else {
                 coverIndex = -1;
                 emptyTV.setVisibility(View.VISIBLE);
                 coverFlow.setVisibility(View.GONE);
                 newAimItemLatyout.setVisibility(View.GONE);
+
+                editTV.setText(R.string.aimobject_add);
             }
 
         }else {
@@ -221,6 +236,8 @@ public class MainAimObjectActivity extends CPBaseBoostActivity implements IMainA
 //            showEmptyLayout();
             emptyTV.setVisibility(View.VISIBLE);
             coverFlow.setVisibility(View.GONE);
+
+            editTV.setText(R.string.aimobject_add);
         }
 
         if (refreshLayout != null){

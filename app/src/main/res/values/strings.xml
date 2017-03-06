@@ -62,6 +62,8 @@
     <string name="main_generate">新建</string>
     <string name="main_add">添加</string>
     <string name="exit_tips">再按一次返回键退出</string>
+    <string name="aimobject_edit">编辑目标</string>
+    <string name="aimobject_add">添加目标</string>
 
     <!--新建分类页-->
     <string name="new_aimtype_title_hint">请输入分类名称(10字以内)</string>
@@ -83,9 +85,12 @@
     <string name="new_aimitem_title_hint">请输入目标项名称(10字以内)</string>
     <string name="modify">编辑</string>
     <string name="category">分类</string>
-    <string name="more">更多</string>
+    <string name="more">历史记录</string>
     <string name="confirm">确定</string>
     <string name="cancel">取消</string>
+
+    <!--分类详情-->
+    <string name="generate_item">新建事项</string>
 
     <!-- 手势解锁 -->
     <string name="gesture_forget_gesture">忘记手势密码</string>

@@ -45,7 +45,7 @@ public class AimTypeDBHelper {
         aimTypeVO.setTargetPeriod(AimTypeVO.PERIOD_DAY);
         aimTypeVO.setPlanProject(false);
         aimTypeVO.setActive(false);
-        aimTypeVO.setCover("drawable://" + R.mipmap.icon_everyday);
+        aimTypeVO.setCover("drawable://" + R.mipmap.icon_day_en);
         aimTypeVO.setTypeName("每天");
 
         insertOrReplaceAimTypeSync(context,aimTypeVO);
@@ -67,7 +67,7 @@ public class AimTypeDBHelper {
         aimTypeVO.setTargetPeriod(AimTypeVO.PERIOD_WEEK);
         aimTypeVO.setPlanProject(false);
         aimTypeVO.setActive(false);
-        aimTypeVO.setCover("drawable://" + R.mipmap.icon_everyweek);
+        aimTypeVO.setCover("drawable://" + R.mipmap.icon_week_en);
         aimTypeVO.setTypeName("每周");
 
         insertOrReplaceAimTypeSync(context,aimTypeVO);
@@ -86,7 +86,7 @@ public class AimTypeDBHelper {
         aimTypeVO.setTargetPeriod(AimTypeVO.PERIOD_MONTH);
         aimTypeVO.setPlanProject(false);
         aimTypeVO.setActive(false);
-        aimTypeVO.setCover("drawable://" + R.mipmap.icon_everyday);
+        aimTypeVO.setCover("drawable://" + R.mipmap.icon_month_en);
         aimTypeVO.setTypeName("每月");
 
         insertOrReplaceAimTypeSync(context,aimTypeVO);
@@ -108,7 +108,7 @@ public class AimTypeDBHelper {
         aimTypeVO.setTargetPeriod(AimTypeVO.PERIOD_SEASON);
         aimTypeVO.setPlanProject(false);
         aimTypeVO.setActive(false);
-        aimTypeVO.setCover("drawable://" + R.mipmap.icon_everyweek);
+        aimTypeVO.setCover("drawable://" + R.mipmap.icon_season_en);
         aimTypeVO.setTypeName("每季");
 
         insertOrReplaceAimTypeSync(context,aimTypeVO);
@@ -127,7 +127,7 @@ public class AimTypeDBHelper {
         aimTypeVO.setTargetPeriod(AimTypeVO.PERIOD_HALF_YEAR);
         aimTypeVO.setPlanProject(false);
         aimTypeVO.setActive(false);
-        aimTypeVO.setCover("drawable://" + R.mipmap.icon_everyday);
+        aimTypeVO.setCover("drawable://" + R.mipmap.icon_halfyear_en);
         aimTypeVO.setTypeName("半年");
 
         insertOrReplaceAimTypeSync(context,aimTypeVO);
@@ -146,7 +146,7 @@ public class AimTypeDBHelper {
         aimTypeVO.setTargetPeriod(AimTypeVO.PERIOD_YEAR);
         aimTypeVO.setPlanProject(false);
         aimTypeVO.setActive(false);
-        aimTypeVO.setCover("drawable://" + R.mipmap.icon_everyweek);
+        aimTypeVO.setCover("drawable://" + R.mipmap.icon_year_en);
         aimTypeVO.setTypeName("每年");
 
         insertOrReplaceAimTypeSync(context,aimTypeVO);
@@ -159,7 +159,7 @@ public class AimTypeDBHelper {
     /**
      * 请求目标分类数据(all)
      */
-    public static List<AimTypeVO> requestAimTypeDatasSync(Context context){
+    public static List<AimTypeVO> requestAimTypeSync(Context context){
         AimTypeVODao dao = DBManager.getInstance(context).getDaoSession().getAimTypeVODao();
         QueryBuilder<AimTypeVO> qb = dao.queryBuilder();
         List<AimTypeVO> list = qb.list();
@@ -176,7 +176,7 @@ public class AimTypeDBHelper {
     /**
      * 请求目标分类数据(固定分类)
      */
-    public static List<AimTypeVO> requestAimTypeFixedDatasSync(Context context){
+    public static List<AimTypeVO> requestAimTypeFixedSync(Context context){
         AimTypeVODao dao = DBManager.getInstance(context).getDaoSession().getAimTypeVODao();
         QueryBuilder<AimTypeVO> qb = dao.queryBuilder();
         qb.where(AimTypeVODao.Properties.Recyclable.eq(true));
@@ -201,10 +201,24 @@ public class AimTypeDBHelper {
      * @param period
      * @return
      */
-    public static List<AimTypeVO> requestAimTypeFixedDatasSync(Context context,int period){
+    public static List<AimTypeVO> requestAimTypeFixedSync(Context context,int period){
         AimTypeVODao dao = DBManager.getInstance(context).getDaoSession().getAimTypeVODao();
         QueryBuilder<AimTypeVO> qb = dao.queryBuilder();
         qb.where(AimTypeVODao.Properties.Recyclable.eq(true),AimTypeVODao.Properties.Period.eq(period));
+        List<AimTypeVO> list = qb.list();
+        return list;
+    }
+
+    /**
+     *
+     * @param context
+     * @param date
+     * @return
+     */
+    public static List<AimTypeVO> requestAimTypeFixedByDate(Context context, Date date){
+        AimTypeVODao dao = DBManager.getInstance(context).getDaoSession().getAimTypeVODao();
+        QueryBuilder<AimTypeVO> qb = dao.queryBuilder();
+        qb.where(AimTypeVODao.Properties.Recyclable.eq(true),AimTypeVODao.Properties.StartTime.between(DBDateHelper.getDayStartMillisecond(date),DBDateHelper.getDayEndMillisecond(date)));
         List<AimTypeVO> list = qb.list();
         return list;
     }
@@ -233,6 +247,20 @@ public class AimTypeDBHelper {
         AimTypeVODao dao = DBManager.getInstance(context).getDaoSession().getAimTypeVODao();
         QueryBuilder<AimTypeVO> qb = dao.queryBuilder();
         qb.where(AimTypeVODao.Properties.Recyclable.eq(false),AimTypeVODao.Properties.StartTime.between(DBDateHelper.getDayStartMillisecond(date),DBDateHelper.getDayEndMillisecond(date)));
+        List<AimTypeVO> list = qb.list();
+        return list;
+    }
+
+    /**
+     * 根据父目标分类id查询已自动创建的分类
+     * @param context
+     * @param aimTypeId
+     * @return
+     */
+    public static List<AimTypeVO> requestAimTypeAutoByAimTypeIdSync(Context context,Long aimTypeId){
+        AimTypeVODao dao = DBManager.getInstance(context).getDaoSession().getAimTypeVODao();
+        QueryBuilder<AimTypeVO> qb = dao.queryBuilder();
+        qb.where(AimTypeVODao.Properties.Recyclable.eq(false),AimTypeVODao.Properties.FirstExtra.eq(aimTypeId));
         List<AimTypeVO> list = qb.list();
         return list;
     }

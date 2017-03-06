@@ -17,7 +17,7 @@
             android:layout_height="wrap_content"
             android:drawableLeft="@mipmap/icon_add"
             android:drawablePadding="10dp"
-            android:text="@string/main_generate" />
+            android:text="@string/generate_item" />
     </LinearLayout>
 
     <android.support.v4.widget.SwipeRefreshLayout

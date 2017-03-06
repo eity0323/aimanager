@@ -20,10 +20,10 @@ public class AimTypeVO extends CPBaseVO{
     public static final int PERIOD_HALF_MONTH = 15;//半月
 
     public static final int PRIORITY_ONE = 1;//1级
-    public static final int PRIORITY_TWO = 1;//2级
-    public static final int PRIORITY_THREE = 1;//3级
-    public static final int PRIORITY_FOUR = 1;//4级
-    public static final int PRIORITY_FIVE = 1;//5级
+    public static final int PRIORITY_TWO = 2;//2级
+    public static final int PRIORITY_THREE = 3;//3级
+    public static final int PRIORITY_FOUR = 4;//4级
+    public static final int PRIORITY_FIVE = 5;//5级
 
     @Id(autoincrement = true)
     private Long id;
@@ -44,7 +44,7 @@ public class AimTypeVO extends CPBaseVO{
     private Integer finishPercent;//完成百分比
 
     private Boolean active;//是否为激活状态(激活状态可自动创建，非激活状态不可自动创建)
-    private String firstExtra;//备用字段1
+    private String firstExtra;//备用字段1 （用于记录自动创建的父目标分类id;仅自动创建分类有该字段，固定分类为空）
     private String secondExtra;//备用字段2
 
     @Generated

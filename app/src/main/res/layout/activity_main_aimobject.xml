@@ -18,10 +18,10 @@
             android:orientation="vertical">
 
             <TextView
-                style="@style/GrayCommonText14Appearance"
+                style="@style/GrayCommonText16Appearance"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
+                android:layout_margin="15dp"
                 android:text="@string/today_aimtype" />
 
             <com.sien.lib.component.coverflow.CoverFlow
@@ -66,11 +66,12 @@
         android:gravity="center">
 
         <TextView
+            android:id="@+id/aimObject_edit"
             style="@style/WhiteText16Appearance"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:drawableLeft="@mipmap/icon_add"
             android:drawablePadding="10dp"
-            android:text="@string/main_add" />
+            android:text="@string/aimobject_edit" />
     </LinearLayout>
 </LinearLayout>

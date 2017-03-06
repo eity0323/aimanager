@@ -9,6 +9,5 @@
         android:id="@+id/cover_image"
         android:layout_width="64dp"
         android:layout_height="64dp"
-        android:scaleType="fitCenter"
-        android:background="@color/loading_placeholder"/>
+        android:scaleType="fitCenter"/>
 </LinearLayout>

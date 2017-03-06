@@ -48,6 +48,7 @@ public class NewAimTypeActivity extends CPBaseBoostActivity implements INewAimTy
     private boolean activable = true;//是否激活目标
     private boolean modifyModel = false;//是否为修改模式，false 新建  true 修改
     private AimTypeVO aimTypeVO;
+    private boolean showFixType = false;//创建固定项分类
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -125,6 +126,7 @@ public class NewAimTypeActivity extends CPBaseBoostActivity implements INewAimTy
     }
 
     private void parseBundleData(){
+        //编辑目标分类
         if (getIntent().hasExtra("ds")){
             modifyModel = true;
 
@@ -137,6 +139,32 @@ public class NewAimTypeActivity extends CPBaseBoostActivity implements INewAimTy
 
             startTV.setText(CPDateUtil.getDateString(new Date()));
             endTV.setText("");
+        }
+
+        //新建固定（循环）or 自动创建（不可循环）目标分类
+        if (getIntent().hasExtra("showFixType")){
+            showFixType = getIntent().getBooleanExtra("showFixType",false);
+
+            switchCompat.setChecked(showFixType);
+        }
+
+        displayTypeStatus();
+    }
+
+    /*根据分类类型判断显示状态（编辑模式）*/
+    private void displayTypeStatus(){
+        if (showFixType){
+            findView(R.id.layout_active).setVisibility(View.VISIBLE);
+            findView(R.id.layout_end).setVisibility(View.VISIBLE);
+            findView(R.id.layout_period).setVisibility(View.VISIBLE);
+            findView(R.id.layout_recyclerable).setVisibility(View.VISIBLE);
+        }else {
+            findView(R.id.layout_period).setVisibility(View.GONE);
+            findView(R.id.layout_recyclerable).setVisibility(View.GONE);
+            findView(R.id.layout_active).setVisibility(View.GONE);
+            findView(R.id.layout_end).setVisibility(View.GONE);
+
+            findView(R.id.layout_start).setEnabled(false);
         }
     }
 
@@ -157,17 +185,17 @@ public class NewAimTypeActivity extends CPBaseBoostActivity implements INewAimTy
 
         if (!recyclable) {
             findView(R.id.layout_period).setVisibility(View.GONE);
-            findView(R.id.layout_recyclerable).setVisibility(View.GONE);
+            findView(R.id.layout_active).setVisibility(View.GONE);
         }
 
         if (aimTypeVO.getTargetPeriod() != null) {
             period = aimTypeVO.getTargetPeriod();
-            periodTV.setText(getPeriodTextByIndex(getIndexByPeriod(aimTypeVO.getTargetPeriod())));
+            periodTV.setText(presenter.getPeriodTextByIndex(presenter.getIndexByPeriod(aimTypeVO.getTargetPeriod())));
         }
         if (aimTypeVO.getPriority() != null) {
             priorty = aimTypeVO.getPriority();
 
-            priortyTV.setText(getPriorityTextByIndex(getIndexByPriority(aimTypeVO.getPriority())));
+            priortyTV.setText(presenter.getPriorityTextByPriority(aimTypeVO.getPriority()));
         }
 
         if (aimTypeVO.getStartTime() != null){
@@ -184,9 +212,11 @@ public class NewAimTypeActivity extends CPBaseBoostActivity implements INewAimTy
 
         if (!TextUtils.isEmpty(aimTypeVO.getCover())) {
             cover = aimTypeVO.getCover();
-
-            ImageLoader.getInstance().displayImage(aimTypeVO.getCover(), coverIV);
+        }else {
+            cover = "drawable://" + R.mipmap.icon_day_en;
         }
+
+        ImageLoader.getInstance().displayImage(cover, coverIV);
     }
 
     private View.OnClickListener clickListener = new View.OnClickListener() {
@@ -218,7 +248,7 @@ public class NewAimTypeActivity extends CPBaseBoostActivity implements INewAimTy
         if (aimTypeVO != null){
             tempPeriod = aimTypeVO.getTargetPeriod();
         }
-        int periodIndex = getIndexByPeriod(tempPeriod);
+        int periodIndex = presenter.getIndexByPeriod(tempPeriod);
         String titles[] = getResources().getStringArray(R.array.aimtype_period_source);
         if (periodPicker == null) {
             periodPicker = new OptionPicker(this,titles);
@@ -226,9 +256,9 @@ public class NewAimTypeActivity extends CPBaseBoostActivity implements INewAimTy
             periodPicker.setOnOptionPickListener(new OptionPicker.OnOptionPickListener() {
                 @Override
                 public void onOptionPicked(int position, String option) {
-                    period = getPeriodByIndex(position);
+                    period = presenter.getPeriodByIndex(position);
 
-                    periodTV.setText(getPeriodTextByIndex(position));
+                    periodTV.setText(presenter.getPeriodTextByIndex(position));
                 }
             });
         }else {
@@ -237,67 +267,13 @@ public class NewAimTypeActivity extends CPBaseBoostActivity implements INewAimTy
         periodPicker.show();
     }
 
-    private int getIndexByPeriod(int period){
-        int position = 0;
-        if (period == 1){
-            position = 0;
-        }else if (period == 7){
-            position = 1;
-        }else if (period == 30){
-            position = 2;
-        }else if (period == 90){
-            position = 3;
-        }else if (period == 180){
-            position = 4;
-        }else if (period == 365){
-            position = 5;
-        }
-        return position;
-    }
-
-    private int getPeriodByIndex(int position){
-        int period = 1;
-        if (position == 0){
-            period = 1;
-        }else if (position == 1){
-            period = 7;
-        }else if (position == 2){
-            period = 30;
-        }else if (position == 3){
-            period = 90;
-        }else if (position == 4){
-            period = 180;
-        }else if (position == 5){
-            period = 365;
-        }
-        return period;
-    }
-
-    private String getPeriodTextByIndex(int position){
-        String period = "1天";
-        if (position == 0){
-            period = "1天";
-        }else if (position == 1){
-            period = "1周";
-        }else if (position == 2){
-            period = "1月";
-        }else if (position == 3){
-            period = "1季";
-        }else if (position == 4){
-            period = "半年";
-        }else if (position == 5){
-            period = "1年";
-        }
-        return period;
-    }
-
     /*优先级面板*/
     private void showSelectPriortyPanel(){
         int tempPriority = 5;
         if (aimTypeVO != null){
             tempPriority = aimTypeVO.getPriority();
         }
-        int priorityIndex = getIndexByPriority(tempPriority);
+        int priorityIndex = presenter.getIndexByPriority(tempPriority);
         String titles[] = getResources().getStringArray(R.array.aimtype_priorty_source);
         if (priorityPicker == null) {
             priorityPicker = new OptionPicker(this,titles);
@@ -305,63 +281,15 @@ public class NewAimTypeActivity extends CPBaseBoostActivity implements INewAimTy
             priorityPicker.setOnOptionPickListener(new OptionPicker.OnOptionPickListener() {
                 @Override
                 public void onOptionPicked(int position, String option) {
-                    priorty = getPriorityByIndex(position);
+                    priorty = presenter.getPriorityByIndex(position);
 
-                    priortyTV.setText(getPriorityTextByIndex(position));
+                    priortyTV.setText(presenter.getPriorityTextByIndex(position));
                 }
             });
         }else {
             priorityPicker.setSelectedIndex(priorityIndex);
         }
         priorityPicker.show();
-    }
-
-    private int getIndexByPriority(int priority){
-        int position = 0;
-        if (priority == 1){
-            position = 4;
-        }else if (priority == 2){
-            position = 3;
-        }else if (priority == 3){
-            position = 2;
-        }else if (priority == 4){
-            position = 1;
-        }else if (priority == 5){
-            position = 0;
-        }
-        return position;
-    }
-
-    private int getPriorityByIndex(int position){
-        int priority = 5;
-        if (position == 0){
-            priority = 5;
-        }else if (position == 1){
-            priority = 4;
-        }else if (position == 2){
-            priority = 3;
-        }else if (position == 3){
-            priority = 2;
-        }else if (position == 4){
-            priority = 1;
-        }
-        return priority;
-    }
-
-    private String getPriorityTextByIndex(int position){
-        String priority = "5级";
-        if (position == 0){
-            priority = "5级";
-        }else if (position == 1){
-            priority = "4级";
-        }else if (position == 2){
-            priority = "3级";
-        }else if (position == 3){
-            priority = "2级";
-        }else if (position == 4){
-            priority = "1级";
-        }
-        return priority;
     }
 
     /*校验并添加记录*/
@@ -394,7 +322,7 @@ public class NewAimTypeActivity extends CPBaseBoostActivity implements INewAimTy
         aimTypeVO.setStartTime(startDate);
 
         //结束时间
-        String endTime = startTV.getText().toString();
+        String endTime = endTV.getText().toString();
         Date endDate;
         if (!TextUtils.isEmpty(endTime)){
             endDate = CPDateUtil.getDateByParse(startTime,CPDateUtil.DATE_FORMAT_DEFAULT);
@@ -416,10 +344,6 @@ public class NewAimTypeActivity extends CPBaseBoostActivity implements INewAimTy
 
         if (presenter != null) {
             presenter.insertOrReplaceAimTypeRecord(aimTypeVO);
-
-            if (recyclable) {       //如果为循环创建分类，需要判断生成自动创建今日事项
-                presenter.checkAndCreateAutoAimType(aimTypeVO);
-            }
         }
     }
 
@@ -457,9 +381,6 @@ public class NewAimTypeActivity extends CPBaseBoostActivity implements INewAimTy
     @Override
     public void refreshInsertAimType(RequestFreshStatus status) {
         if (status != RequestFreshStatus.REFRESH_ERROR){
-            //添加成功后，重新请求数据
-//            presenter.searchAimTypeRecord();
-
             setResult(AppConfig.RESULT_CODE_OK);
 
             finish();

@@ -7,7 +7,7 @@
     android:padding="10dp"
     android:gravity="center_horizontal"
     android:descendantFocusability="afterDescendants"
-    android:background="@color/loading_placeholder">
+    android:background="@drawable/selector_white_with_black_stroke">
 
     <TextView
         android:id="@+id/item_aimbean_typename"

@@ -81,16 +81,13 @@ public class SelectCoverAvtivity extends CPBaseBoostActivity {
 
     private List<String> getCoverDatasource(){
         List<String> ds = new ArrayList<>();
-        ds.add("drawable://" + R.mipmap.icon_everyday);
-        ds.add("drawable://" + R.mipmap.icon_everyweek);
-        ds.add("drawable://" + R.mipmap.icon_everyday);
-        ds.add("drawable://" + R.mipmap.icon_everyweek);
-        ds.add("drawable://" + R.mipmap.icon_everyday);
-        ds.add("drawable://" + R.mipmap.icon_everyweek);
-        ds.add("drawable://" + R.mipmap.icon_everyday);
-        ds.add("drawable://" + R.mipmap.icon_everyweek);
-        ds.add("drawable://" + R.mipmap.icon_everyday);
-        ds.add("drawable://" + R.mipmap.icon_everyweek);
+        ds.add("drawable://" + R.mipmap.icon_day_en);
+        ds.add("drawable://" + R.mipmap.icon_week_en);
+        ds.add("drawable://" + R.mipmap.icon_month_en);
+        ds.add("drawable://" + R.mipmap.icon_season_en);
+        ds.add("drawable://" + R.mipmap.icon_halfyear_en);
+        ds.add("drawable://" + R.mipmap.icon_year_en);
+        ds.add("drawable://" + R.mipmap.icon_other_en);
         return ds;
     }
 

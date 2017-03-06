@@ -10,6 +10,10 @@
 
 
     <!--common text style-->
+    <style name="GrayCommonText18Appearance" parent="@android:style/TextAppearance">
+        <item name="android:textSize">@dimen/font_siez_18</item>
+        <item name="android:textColor">@color/text_gray_light</item>
+    </style>
     <style name="DarkText16Appearance" parent="@android:style/TextAppearance">
         <item name="android:textSize">@dimen/font_siez_16</item>
         <item name="android:textColor">@color/text_gray_dark</item>

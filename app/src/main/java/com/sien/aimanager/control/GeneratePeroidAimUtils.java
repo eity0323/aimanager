@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 
+import com.sien.aimanager.config.AppConfig;
 import com.sien.aimanager.services.GenerateAimServices;
 import com.sien.lib.datapp.utils.CPDateUtil;
 import com.sien.lib.datapp.beans.AimItemVO;
@@ -161,7 +162,7 @@ public class GeneratePeroidAimUtils {
         CPLogUtil.logDebug("1、start to generate period aimType! period:" + period + " diffDay:" + diff);
 
         //1、查询需要创建的目标项;2、创建目标分类;3、创建目标项;4、通知界面更新
-        List<AimTypeVO> dayList = AimTypeDBHelper.requestAimTypeFixedDatasSync(context,period);
+        List<AimTypeVO> dayList = AimTypeDBHelper.requestAimTypeFixedSync(context,period);
         if (dayList != null && dayList.size() > 0){
 //            List<AimObjectVO> newDataList = new ArrayList<>();
             AimTypeVO aimTypeVO;
@@ -205,7 +206,8 @@ public class GeneratePeroidAimUtils {
                     aimTypeVO.setPlanProject(item.getPlanProject());
                     aimTypeVO.setTargetPeriod(item.getTargetPeriod());
                     aimTypeVO.setCover(item.getCover());
-                    aimTypeVO.setTypeName(CPDateUtil.getDateToString(nowDate, CPDateUtil.DATE_FORMAT_3));
+                    aimTypeVO.setTypeName(AppConfig.formatGenerateTypeName(item.getTypeName(),nowDate));
+                    aimTypeVO.setFirstExtra(String.valueOf(item.getId()));
 
 //                    newDataList.add(aimTypeVO);
 

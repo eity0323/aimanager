@@ -244,8 +244,7 @@
             android:layout_width="@dimen/item_height_48"
             android:layout_height="@dimen/item_height_48"
             android:layout_marginRight="10dp"
-            android:gravity="right|center_vertical"
-            android:background="@color/loading_placeholder"/>
+            android:gravity="right|center_vertical"/>
 
         <ImageView
             android:layout_width="wrap_content"
