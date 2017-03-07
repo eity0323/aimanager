@@ -45,7 +45,7 @@ public class AimTypeVO extends CPBaseVO{
 
     private Boolean active;//是否为激活状态(激活状态可自动创建，非激活状态不可自动创建)
     private String firstExtra;//备用字段1 （用于记录自动创建的父目标分类id;仅自动创建分类有该字段，固定分类为空）
-    private String secondExtra;//备用字段2
+    private String secondExtra;//备用字段2 (用于开启倒计时)
 
     @Generated
     public AimTypeVO() {
@@ -220,6 +220,22 @@ public class AimTypeVO extends CPBaseVO{
 
     public void setCover(String cover) {
         this.cover = cover;
+    }
+
+    /**
+     * 校验是否开启倒计时
+     * @return
+     */
+    public boolean checkCountdown(){
+        if (secondExtra == null){
+            return false;
+        }
+
+        if ("true".equals(secondExtra)){
+            return true;
+        }
+
+        return false;
     }
 
 }

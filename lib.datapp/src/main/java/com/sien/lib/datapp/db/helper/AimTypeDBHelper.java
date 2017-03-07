@@ -2,8 +2,8 @@ package com.sien.lib.datapp.db.helper;
 
 import android.content.Context;
 
-import com.sien.lib.datapp.R;
 import com.sien.lib.datapp.beans.AimTypeVO;
+import com.sien.lib.datapp.beans.CoverIcon;
 import com.sien.lib.datapp.control.CPSharedPreferenceManager;
 import com.sien.lib.datapp.db.AimTypeVODao;
 import com.sien.lib.datapp.db.DBManager;
@@ -45,7 +45,7 @@ public class AimTypeDBHelper {
         aimTypeVO.setTargetPeriod(AimTypeVO.PERIOD_DAY);
         aimTypeVO.setPlanProject(false);
         aimTypeVO.setActive(false);
-        aimTypeVO.setCover("drawable://" + R.mipmap.icon_day_en);
+        aimTypeVO.setCover(CoverIcon.ICON_DAY.getValue());
         aimTypeVO.setTypeName("每天");
 
         insertOrReplaceAimTypeSync(context,aimTypeVO);
@@ -67,7 +67,7 @@ public class AimTypeDBHelper {
         aimTypeVO.setTargetPeriod(AimTypeVO.PERIOD_WEEK);
         aimTypeVO.setPlanProject(false);
         aimTypeVO.setActive(false);
-        aimTypeVO.setCover("drawable://" + R.mipmap.icon_week_en);
+        aimTypeVO.setCover(CoverIcon.ICON_WEEK.getValue());
         aimTypeVO.setTypeName("每周");
 
         insertOrReplaceAimTypeSync(context,aimTypeVO);
@@ -86,7 +86,7 @@ public class AimTypeDBHelper {
         aimTypeVO.setTargetPeriod(AimTypeVO.PERIOD_MONTH);
         aimTypeVO.setPlanProject(false);
         aimTypeVO.setActive(false);
-        aimTypeVO.setCover("drawable://" + R.mipmap.icon_month_en);
+        aimTypeVO.setCover(CoverIcon.ICON_MONTH.getValue());
         aimTypeVO.setTypeName("每月");
 
         insertOrReplaceAimTypeSync(context,aimTypeVO);
@@ -108,7 +108,7 @@ public class AimTypeDBHelper {
         aimTypeVO.setTargetPeriod(AimTypeVO.PERIOD_SEASON);
         aimTypeVO.setPlanProject(false);
         aimTypeVO.setActive(false);
-        aimTypeVO.setCover("drawable://" + R.mipmap.icon_season_en);
+        aimTypeVO.setCover(CoverIcon.ICON_SEASON.getValue());
         aimTypeVO.setTypeName("每季");
 
         insertOrReplaceAimTypeSync(context,aimTypeVO);
@@ -127,7 +127,7 @@ public class AimTypeDBHelper {
         aimTypeVO.setTargetPeriod(AimTypeVO.PERIOD_HALF_YEAR);
         aimTypeVO.setPlanProject(false);
         aimTypeVO.setActive(false);
-        aimTypeVO.setCover("drawable://" + R.mipmap.icon_halfyear_en);
+        aimTypeVO.setCover(CoverIcon.ICON_HALFYEAR.getValue());
         aimTypeVO.setTypeName("半年");
 
         insertOrReplaceAimTypeSync(context,aimTypeVO);
@@ -146,7 +146,7 @@ public class AimTypeDBHelper {
         aimTypeVO.setTargetPeriod(AimTypeVO.PERIOD_YEAR);
         aimTypeVO.setPlanProject(false);
         aimTypeVO.setActive(false);
-        aimTypeVO.setCover("drawable://" + R.mipmap.icon_year_en);
+        aimTypeVO.setCover(CoverIcon.ICON_YEAR.getValue());
         aimTypeVO.setTypeName("每年");
 
         insertOrReplaceAimTypeSync(context,aimTypeVO);

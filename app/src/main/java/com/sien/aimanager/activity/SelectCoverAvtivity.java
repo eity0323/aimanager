@@ -14,6 +14,7 @@ import com.sien.lib.baseapp.activity.CPBaseBoostActivity;
 import com.sien.lib.baseapp.adapter.CPBaseRecyclerAdapter;
 import com.sien.lib.baseapp.presenters.BasePresenter;
 import com.sien.lib.baseapp.widgets.recyclerview.CPDividerGridItemDecoration;
+import com.sien.lib.datapp.beans.CoverIcon;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -81,13 +82,13 @@ public class SelectCoverAvtivity extends CPBaseBoostActivity {
 
     private List<String> getCoverDatasource(){
         List<String> ds = new ArrayList<>();
-        ds.add("drawable://" + R.mipmap.icon_day_en);
-        ds.add("drawable://" + R.mipmap.icon_week_en);
-        ds.add("drawable://" + R.mipmap.icon_month_en);
-        ds.add("drawable://" + R.mipmap.icon_season_en);
-        ds.add("drawable://" + R.mipmap.icon_halfyear_en);
-        ds.add("drawable://" + R.mipmap.icon_year_en);
-        ds.add("drawable://" + R.mipmap.icon_other_en);
+        ds.add(CoverIcon.ICON_DAY.getValue());
+        ds.add(CoverIcon.ICON_WEEK.getValue());
+        ds.add(CoverIcon.ICON_MONTH.getValue());
+        ds.add(CoverIcon.ICON_SEASON.getValue());
+        ds.add(CoverIcon.ICON_HALFYEAR.getValue());
+        ds.add(CoverIcon.ICON_YEAR.getValue());
+        ds.add(CoverIcon.ICON_OTHER.getValue());
         return ds;
     }
 

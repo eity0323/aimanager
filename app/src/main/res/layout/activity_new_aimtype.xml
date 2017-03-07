@@ -1,254 +1,292 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:toggle="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/app_bg_color"
+    android:orientation="vertical"
     android:paddingTop="@dimen/activity_vertical_margin">
 
-    <!--名称-->
-    <EditText
-        android:id="@+id/aimtype_title"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:maxLength="10"
-        android:gravity="top|left"
-        android:padding="15dp"
-        android:background="@android:color/white"
-        style="@style/DarkCommonHint14Appearance"
-        android:hint="@string/new_aimtype_title_hint"/>
+        android:layout_height="match_parent">
 
-    <!--描述-->
-    <EditText
-        android:id="@+id/aimtype_desc"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="15dp"
-        android:gravity="top|left"
-        android:lines="5"
-        android:maxLength="200"
-        android:layout_marginTop="10dp"
-        style="@style/DarkCommonHint14Appearance"
-        android:background="@android:color/white"
-        android:hint="@string/new_aimtype_desc_hint"/>
-
-    <!--自动创建-->
-    <LinearLayout
-        android:id="@+id/layout_recyclerable"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:padding="15dp"
-        android:background="@android:color/white"
-        android:orientation="horizontal">
-        <TextView
-            style="@style/DarkText14Appearance"
-            android:layout_gravity="center_vertical"
-            android:layout_weight="1"
-            android:layout_width="0dp"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/new_aimtype_recyclerable" />
+            android:orientation="vertical">
 
-        <android.support.v7.widget.SwitchCompat
-            android:id="@+id/aimtype_recyclerable"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            toggle:buttonTint="@color/indigo"
-            android:layout_gravity="right|center_vertical"
-            />
-    </LinearLayout>
 
-    <!--激活自动创建-->
-    <LinearLayout
-        android:id="@+id/layout_active"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:padding="15dp"
-        android:background="@android:color/white"
-        android:orientation="horizontal">
-        <TextView
-            style="@style/DarkText14Appearance"
-            android:layout_gravity="center_vertical"
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="@string/new_aimtype_active" />
+            <!--名称-->
+            <EditText
+                android:id="@+id/aimtype_title"
+                style="@style/DarkCommonHint14Appearance"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/white"
+                android:gravity="top|left"
+                android:hint="@string/new_aimtype_title_hint"
+                android:maxLength="10"
+                android:padding="15dp" />
 
-        <android.support.v7.widget.SwitchCompat
-            android:id="@+id/aimtype_active"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            toggle:buttonTint="@color/indigo"
-            android:checked="true"
-            android:layout_gravity="right|center_vertical"
-            />
-    </LinearLayout>
+            <!--描述-->
+            <EditText
+                android:id="@+id/aimtype_desc"
+                style="@style/DarkCommonHint14Appearance"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@android:color/white"
+                android:gravity="top|left"
+                android:hint="@string/new_aimtype_desc_hint"
+                android:lines="5"
+                android:maxLength="200"
+                android:padding="15dp" />
 
-    <!--周期-->
-    <LinearLayout
-        android:id="@+id/layout_period"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:padding="15dp"
-        android:background="@android:color/white"
-        android:orientation="horizontal"
-        android:divider="@color/gray_line">
+            <!--自动创建-->
+            <LinearLayout
+                android:id="@+id/layout_recyclerable"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@android:color/white"
+                android:orientation="horizontal"
+                android:padding="15dp">
 
-        <TextView
-            style="@style/DarkText14Appearance"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/new_aimtype_period" />
+                <TextView
+                    style="@style/DarkText14Appearance"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:text="@string/new_aimtype_recyclerable" />
 
-        <TextView
-            android:id="@+id/aimtype_period"
-            style="@style/DarkText14Appearance"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:layout_marginRight="10dp"
-            android:gravity="center_vertical|right"
-            android:text="@string/period_one_day"
-            android:textColorHint="@color/disable_hint"/>
+                <android.support.v7.widget.SwitchCompat
+                    android:id="@+id/aimtype_recyclerable"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right|center_vertical"
+                    toggle:buttonTint="@color/indigo" />
+            </LinearLayout>
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@mipmap/icon_right_arrow" />
-    </LinearLayout>
+            <!--激活自动创建-->
+            <LinearLayout
+                android:id="@+id/layout_active"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@android:color/white"
+                android:orientation="horizontal"
+                android:padding="15dp">
 
-    <!--开始时间-->
-    <LinearLayout
-        android:id="@+id/layout_start"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:padding="15dp"
-        android:background="@android:color/white"
-        android:orientation="horizontal"
-        android:divider="@color/gray_line">
+                <TextView
+                    style="@style/DarkText14Appearance"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:text="@string/new_aimtype_active" />
 
-        <TextView
-            style="@style/DarkText14Appearance"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/new_aimtype_start" />
+                <android.support.v7.widget.SwitchCompat
+                    android:id="@+id/aimtype_active"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right|center_vertical"
+                    android:checked="true"
+                    toggle:buttonTint="@color/indigo" />
+            </LinearLayout>
 
-        <TextView
-            android:id="@+id/aimtype_start"
-            style="@style/DarkText14Appearance"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:layout_marginRight="10dp"
-            android:gravity="center_vertical|right"
-            android:textColorHint="@color/disable_hint"/>
+            <!--开启倒计时-->
+            <LinearLayout
+                android:id="@+id/layout_countdown"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@android:color/white"
+                android:orientation="horizontal"
+                android:padding="15dp">
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@mipmap/icon_right_arrow" />
-    </LinearLayout>
+                <TextView
+                    style="@style/DarkText14Appearance"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:text="@string/new_aimtype_countdown" />
 
-    <!--结束时间-->
-    <LinearLayout
-        android:id="@+id/layout_end"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:padding="15dp"
-        android:background="@android:color/white"
-        android:orientation="horizontal"
-        android:divider="@color/gray_line">
+                <android.support.v7.widget.SwitchCompat
+                    android:id="@+id/aimtype_countdown"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right|center_vertical"
+                    toggle:buttonTint="@color/indigo" />
+            </LinearLayout>
 
-        <TextView
-            style="@style/DarkText14Appearance"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/new_aimtype_end" />
+            <!--周期-->
+            <LinearLayout
+                android:id="@+id/layout_period"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@android:color/white"
+                android:divider="@color/gray_line"
+                android:orientation="horizontal"
+                android:padding="15dp">
 
-        <TextView
-            android:id="@+id/aimtype_end"
-            style="@style/DarkText14Appearance"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:layout_marginRight="10dp"
-            android:gravity="center_vertical|right"
-            android:textColorHint="@color/disable_hint"/>
+                <TextView
+                    style="@style/DarkText14Appearance"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/new_aimtype_period" />
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@mipmap/icon_right_arrow" />
-    </LinearLayout>
+                <TextView
+                    android:id="@+id/aimtype_period"
+                    style="@style/DarkText14Appearance"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical|right"
+                    android:text="@string/period_one_day"
+                    android:textColorHint="@color/disable_hint" />
 
-    <!--优先级-->
-    <LinearLayout
-        android:id="@+id/layout_priorty"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:padding="15dp"
-        android:background="@android:color/white"
-        android:orientation="horizontal"
-        android:divider="@color/gray_line">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/icon_right_arrow" />
+            </LinearLayout>
 
-        <TextView
-            style="@style/DarkText14Appearance"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/new_aimtype_priorty" />
+            <!--开始时间-->
+            <LinearLayout
+                android:id="@+id/layout_start"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@android:color/white"
+                android:divider="@color/gray_line"
+                android:orientation="horizontal"
+                android:padding="15dp">
 
-        <TextView
-            android:id="@+id/aimtype_priorty"
-            style="@style/DarkText14Appearance"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_marginRight="10dp"
-            android:gravity="center_vertical|right"
-            android:text="@string/priority_five_level"
-            android:textColorHint="@color/disable_hint"/>
+                <TextView
+                    style="@style/DarkText14Appearance"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/new_aimtype_start" />
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@mipmap/icon_right_arrow" />
-    </LinearLayout>
+                <TextView
+                    android:id="@+id/aimtype_start"
+                    style="@style/DarkText14Appearance"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical|right"
+                    android:textColorHint="@color/disable_hint" />
 
-    <!--封面图片-->
-    <LinearLayout
-        android:id="@+id/layout_cover"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:padding="15dp"
-        android:gravity="center_vertical"
-        android:background="@android:color/white"
-        android:orientation="horizontal"
-        android:divider="@color/gray_line">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/icon_right_arrow" />
+            </LinearLayout>
 
-        <TextView
-            style="@style/DarkText14Appearance"
-            android:layout_width="wrap_content"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:text="@string/new_aimtype_cover" />
+            <!--结束时间-->
+            <LinearLayout
+                android:id="@+id/layout_end"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@android:color/white"
+                android:divider="@color/gray_line"
+                android:orientation="horizontal"
+                android:padding="15dp">
 
-        <ImageView
-            android:id="@+id/aimtype_cover"
-            android:layout_width="@dimen/item_height_48"
-            android:layout_height="@dimen/item_height_48"
-            android:layout_marginRight="10dp"
-            android:gravity="right|center_vertical"/>
+                <TextView
+                    style="@style/DarkText14Appearance"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/new_aimtype_end" />
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@mipmap/icon_right_arrow" />
-    </LinearLayout>
+                <TextView
+                    android:id="@+id/aimtype_end"
+                    style="@style/DarkText14Appearance"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical|right"
+                    android:textColorHint="@color/disable_hint" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/icon_right_arrow" />
+            </LinearLayout>
+
+            <!--优先级-->
+            <LinearLayout
+                android:id="@+id/layout_priorty"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@android:color/white"
+                android:divider="@color/gray_line"
+                android:orientation="horizontal"
+                android:padding="15dp">
+
+                <TextView
+                    style="@style/DarkText14Appearance"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/new_aimtype_priorty" />
+
+                <TextView
+                    android:id="@+id/aimtype_priorty"
+                    style="@style/DarkText14Appearance"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical|right"
+                    android:text="@string/priority_five_level"
+                    android:textColorHint="@color/disable_hint" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/icon_right_arrow" />
+            </LinearLayout>
+
+            <!--封面图片-->
+            <LinearLayout
+                android:id="@+id/layout_cover"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@android:color/white"
+                android:divider="@color/gray_line"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="15dp">
+
+                <TextView
+                    style="@style/DarkText14Appearance"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/new_aimtype_cover" />
+
+                <ImageView
+                    android:id="@+id/aimtype_cover"
+                    android:layout_width="@dimen/item_height_48"
+                    android:layout_height="@dimen/item_height_48"
+                    android:layout_marginRight="10dp"
+                    android:gravity="right|center_vertical" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/icon_right_arrow" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
 </LinearLayout>

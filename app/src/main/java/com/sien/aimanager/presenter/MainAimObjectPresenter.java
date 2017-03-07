@@ -104,19 +104,19 @@ public class MainAimObjectPresenter extends BusBaseBoostPresenter {
         for (AimTypeVO fixAimType : fixList) {
             //非激活状态不自动创建
             if (fixAimType.getActive() != null && !fixAimType.getActive().booleanValue()) {
-                return;
+                continue;
             }
 
             //有开始日期，且未到开始日期不创建
             if (fixAimType.getStartTime() != null) {
                 int startDiff = CPDateUtil.getTimeDiffDays(fixAimType.getModifyTime(), fixAimType.getStartTime());
-                if (startDiff < 0) return;
+                if (startDiff < 0) continue;
             }
 
             //有结束日期，且超过结束日期不创建
             if (fixAimType.getEndTime() != null) {
                 int endDiff = CPDateUtil.getTimeDiffDays(fixAimType.getEndTime(), fixAimType.getModifyTime());
-                if (endDiff < 0) return;
+                if (endDiff < 0) continue;
             }
 
             //无目标项则不创建该分类对象

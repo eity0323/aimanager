@@ -1,7 +1,9 @@
 package com.sien.aimanager.activity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.SwitchCompat;
 import android.text.TextUtils;
 import android.view.Menu;
@@ -12,18 +14,20 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.nostra13.universalimageloader.core.ImageLoader;
 import com.sien.aimanager.R;
 import com.sien.aimanager.config.AppConfig;
 import com.sien.aimanager.model.INewAimTypeViewModel;
 import com.sien.aimanager.presenter.NewAimTypePresenter;
 import com.sien.lib.baseapp.activity.CPBaseBoostActivity;
 import com.sien.lib.datapp.beans.AimTypeVO;
+import com.sien.lib.datapp.beans.CoverIcon;
 import com.sien.lib.datapp.network.base.RequestFreshStatus;
 import com.sien.lib.datapp.utils.CPDateUtil;
 
+import java.util.Calendar;
 import java.util.Date;
 
+import cn.qqtheme.framework.picker.DatePicker;
 import cn.qqtheme.framework.picker.OptionPicker;
 
 /**
@@ -34,18 +38,21 @@ import cn.qqtheme.framework.picker.OptionPicker;
 public class NewAimTypeActivity extends CPBaseBoostActivity implements INewAimTypeViewModel{
 
     private EditText titleET,descET;
-    private SwitchCompat switchCompat,activeCompat;
+    private SwitchCompat switchCompat,activeCompat,countdownCompat;
     private ImageView coverIV;
     private TextView periodTV,priortyTV,startTV,endTV;
     private NewAimTypePresenter presenter;
 
     private OptionPicker periodPicker;
     private OptionPicker priorityPicker;
+    private DatePicker startTimePicker;
+    private DatePicker endTimePicker;
 
     private String cover;
     private int period = 1,priorty = 5;
     private boolean recyclable = false;//是否可循环
     private boolean activable = true;//是否激活目标
+    private String countdownable;//是否开启倒计时
     private boolean modifyModel = false;//是否为修改模式，false 新建  true 修改
     private AimTypeVO aimTypeVO;
     private boolean showFixType = false;//创建固定项分类
@@ -84,6 +91,7 @@ public class NewAimTypeActivity extends CPBaseBoostActivity implements INewAimTy
         priortyTV = findView(R.id.aimtype_priorty);
         startTV = findView(R.id.aimtype_start);
         endTV = findView(R.id.aimtype_end);
+        countdownCompat = findView(R.id.aimtype_countdown);
 
         findView(R.id.layout_cover).setOnClickListener(clickListener);
         findView(R.id.layout_period).setOnClickListener(clickListener);
@@ -102,6 +110,17 @@ public class NewAimTypeActivity extends CPBaseBoostActivity implements INewAimTy
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 activable = isChecked;
+            }
+        });
+
+        countdownCompat.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked){
+                    countdownable = "true";
+                }else {
+                    countdownable = "false";
+                }
             }
         });
     }
@@ -137,6 +156,9 @@ public class NewAimTypeActivity extends CPBaseBoostActivity implements INewAimTy
         }else {
             modifyModel = false;
 
+            cover = CoverIcon.ICON_OTHER.getValue();
+            coverIV.setImageResource(R.mipmap.icon_other_en);
+
             startTV.setText(CPDateUtil.getDateString(new Date()));
             endTV.setText("");
         }
@@ -159,12 +181,14 @@ public class NewAimTypeActivity extends CPBaseBoostActivity implements INewAimTy
             findView(R.id.layout_period).setVisibility(View.VISIBLE);
             findView(R.id.layout_recyclerable).setVisibility(View.VISIBLE);
         }else {
-            findView(R.id.layout_period).setVisibility(View.GONE);
             findView(R.id.layout_recyclerable).setVisibility(View.GONE);
+            findView(R.id.layout_period).setVisibility(View.GONE);
             findView(R.id.layout_active).setVisibility(View.GONE);
-            findView(R.id.layout_end).setVisibility(View.GONE);
 
-            findView(R.id.layout_start).setEnabled(false);
+            if (modifyModel) {
+                findView(R.id.layout_start).setEnabled(false);
+                findView(R.id.layout_end).setVisibility(View.GONE);
+            }
         }
     }
 
@@ -186,6 +210,12 @@ public class NewAimTypeActivity extends CPBaseBoostActivity implements INewAimTy
         if (!recyclable) {
             findView(R.id.layout_period).setVisibility(View.GONE);
             findView(R.id.layout_active).setVisibility(View.GONE);
+        }
+
+        if (aimTypeVO.checkCountdown()){
+            countdownCompat.setChecked(true);
+        }else {
+            countdownCompat.setChecked(false);
         }
 
         if (aimTypeVO.getTargetPeriod() != null) {
@@ -212,11 +242,13 @@ public class NewAimTypeActivity extends CPBaseBoostActivity implements INewAimTy
 
         if (!TextUtils.isEmpty(aimTypeVO.getCover())) {
             cover = aimTypeVO.getCover();
+            coverIV.setImageResource(AppConfig.getResIdByString(this,cover));
         }else {
-            cover = "drawable://" + R.mipmap.icon_day_en;
+            cover = CoverIcon.ICON_OTHER.getValue();
+            coverIV.setImageResource(R.mipmap.icon_other_en);
         }
 
-        ImageLoader.getInstance().displayImage(cover, coverIV);
+//        ImageLoader.getInstance().displayImage(cover, coverIV);
     }
 
     private View.OnClickListener clickListener = new View.OnClickListener() {
@@ -229,6 +261,10 @@ public class NewAimTypeActivity extends CPBaseBoostActivity implements INewAimTy
                 showSelectPeriodPanel();
             }else if (vid == R.id.layout_priorty){
                 showSelectPriortyPanel();
+            }else if (vid == R.id.layout_start){
+                chooseStartTime();
+            }else if (vid == R.id.layout_end){
+                chooseEndTime();
             }
         }
     };
@@ -292,8 +328,80 @@ public class NewAimTypeActivity extends CPBaseBoostActivity implements INewAimTy
         priorityPicker.show();
     }
 
-    /*校验并添加记录*/
-    private void checkAndInsertAimType(){
+    /*开始日期选择面板*/
+    public void showSelectStartTimePanel(Date birth) {
+        if (birth == null){
+            //无开始数据时，默认为当前日期
+            birth = new Date();
+        }
+
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(birth);
+
+        int year = cal.get(Calendar.YEAR);
+        int month = cal.get(Calendar.MONTH);
+        int day = cal.get(Calendar.DAY_OF_MONTH);
+
+        Calendar calendarNow = Calendar.getInstance();
+        int nowYear = calendarNow.get(Calendar.YEAR);
+        int nowMonth = calendarNow.get(Calendar.MONTH) + 1;
+        int nowDay = calendarNow.get(Calendar.DAY_OF_MONTH);
+
+        if (startTimePicker == null) {
+            startTimePicker = new DatePicker(this);
+            startTimePicker.setRangeStart(nowYear, nowMonth, nowDay);
+            startTimePicker.setRangeEnd(2099, 12, 30);
+            startTimePicker.setSelectedItem(year, month, day);
+            startTimePicker.setOnDatePickListener(new DatePicker.OnYearMonthDayPickListener() {
+                @Override
+                public void onDatePicked(String year, String month, String day) {
+                    startTV.setText(year + "-" + month + "-" + day);
+                }
+            });
+        }else {
+            startTimePicker.setSelectedItem(year, month, day);
+        }
+        startTimePicker.show();
+    }
+
+    /*结束日期选择面板*/
+    public void showSelectEndTimePanel(Date birth) {
+        if (birth == null)  return;
+
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(birth);
+
+        int year = cal.get(Calendar.YEAR);
+        int month = cal.get(Calendar.MONTH);
+        int day = cal.get(Calendar.DAY_OF_MONTH);
+
+        Calendar calendarNow = Calendar.getInstance();
+        int nowYear = calendarNow.get(Calendar.YEAR);
+        int nowMonth = calendarNow.get(Calendar.MONTH) + 1;
+        int nowDay = calendarNow.get(Calendar.DAY_OF_MONTH);
+
+        if (endTimePicker == null) {
+            endTimePicker = new DatePicker(this);
+            endTimePicker.setRangeStart(nowYear, nowMonth, nowDay);
+            endTimePicker.setRangeEnd(2099, 12, 30);
+            endTimePicker.setSelectedItem(year, month, day);
+            endTimePicker.setOnDatePickListener(new DatePicker.OnYearMonthDayPickListener() {
+                @Override
+                public void onDatePicked(String year, String month, String day) {
+                    endTV.setText(year + "-" + month + "-" + day);
+                }
+            });
+        }else {
+            endTimePicker.setSelectedItem(year, month, day);
+        }
+        endTimePicker.show();
+    }
+
+    /**
+     * 校验并添加记录
+     * @param ignoreCountdown 是否忽略倒计时校验
+     */
+    private void checkAndInsertAimType(boolean ignoreCountdown){
         String title = titleET.getText().toString();
         if (TextUtils.isEmpty(title)){
             showToast("分类名称不能为空");
@@ -325,25 +433,67 @@ public class NewAimTypeActivity extends CPBaseBoostActivity implements INewAimTy
         String endTime = endTV.getText().toString();
         Date endDate;
         if (!TextUtils.isEmpty(endTime)){
-            endDate = CPDateUtil.getDateByParse(startTime,CPDateUtil.DATE_FORMAT_DEFAULT);
+            endTime += " 11:59:59";
+            endDate = CPDateUtil.getDateByParse(endTime,CPDateUtil.DATE_FORMAT_DEFAULT);
             aimTypeVO.setEndTime(endDate);
         }
 
-        aimTypeVO.setTypeName(title);
-        aimTypeVO.setDesc(desc);
+        if (!ignoreCountdown && "true".equals(countdownable) && TextUtils.isEmpty(endTime)){
+            askCountDownPanel();
+        }else {
+            //开启倒计时
+            aimTypeVO.setSecondExtra(countdownable);
 
-        aimTypeVO.setModifyTime(new Date());
+            aimTypeVO.setTypeName(title);
+            aimTypeVO.setDesc(desc);
 
-        aimTypeVO.setPeriod(period);
-        aimTypeVO.setPriority(priorty);
+            aimTypeVO.setModifyTime(new Date());
 
-        aimTypeVO.setRecyclable(recyclable);
-        aimTypeVO.setPlanProject(false);
-        aimTypeVO.setTargetPeriod(period);
-        aimTypeVO.setCover(cover);
+            aimTypeVO.setPeriod(period);
+            aimTypeVO.setPriority(priorty);
 
-        if (presenter != null) {
-            presenter.insertOrReplaceAimTypeRecord(aimTypeVO);
+            aimTypeVO.setRecyclable(recyclable);
+            aimTypeVO.setPlanProject(false);
+            aimTypeVO.setTargetPeriod(period);
+            aimTypeVO.setCover(cover);
+
+            if (presenter != null) {
+                presenter.insertOrReplaceAimTypeRecord(aimTypeVO);
+            }
+        }
+    }
+
+    /*未设置结束日期，无法开启倒计时*/
+    private void askCountDownPanel(){
+        AlertDialog alertDialog = new AlertDialog.Builder(this).setMessage("未设置结束日期，无法开启倒计时").setNegativeButton(R.string.cancel_countdonw, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                checkAndInsertAimType(true);
+            }
+        }).setPositiveButton(R.string.set_endtime, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                chooseEndTime();
+            }
+        }).create();
+        alertDialog.show();
+    }
+
+    /*选择结束日期*/
+    private void chooseEndTime(){
+        if (aimTypeVO != null && aimTypeVO.getEndTime() != null){
+            showSelectEndTimePanel(aimTypeVO.getEndTime());
+        }else {
+            showSelectEndTimePanel(new Date());
+        }
+    }
+
+    /*选择开始日期*/
+    private void chooseStartTime(){
+        if (aimTypeVO != null && aimTypeVO.getStartTime() != null){
+            showSelectStartTimePanel(aimTypeVO.getStartTime());
+        }else {
+            showSelectStartTimePanel(new Date());
         }
     }
 
@@ -356,7 +506,7 @@ public class NewAimTypeActivity extends CPBaseBoostActivity implements INewAimTy
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.submit){
-            checkAndInsertAimType();
+            checkAndInsertAimType(false);
         }
         return super.onOptionsItemSelected(item);
     }
@@ -371,7 +521,8 @@ public class NewAimTypeActivity extends CPBaseBoostActivity implements INewAimTy
 
                     //预览图片
                     if (!TextUtils.isEmpty(cover)){
-                        ImageLoader.getInstance().displayImage(cover,coverIV);
+//                        ImageLoader.getInstance().displayImage(cover,coverIV);
+                        coverIV.setImageResource(AppConfig.getResIdByString(this,cover));
                     }
                 }
             }

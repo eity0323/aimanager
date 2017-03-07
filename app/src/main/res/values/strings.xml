@@ -70,6 +70,7 @@
     <string name="new_aimtype_desc_hint">请输入分类描述(200字以内)</string>
     <string name="new_aimtype_recyclerable">自动创建</string>
     <string name="new_aimtype_active">激活目标</string>
+    <string name="new_aimtype_countdown">开启倒计时</string>
     <string name="new_aimtype_period">执行周期</string>
     <string name="new_aimtype_start">开始时间</string>
     <string name="new_aimtype_end">结束时间</string>
@@ -77,6 +78,9 @@
     <string name="new_aimtype_cover">Icon图标</string>
     <string name="period_one_day">1天</string>
     <string name="priority_five_level">5级</string>
+
+    <string name="cancel_countdonw">取消倒计时</string>
+    <string name="set_endtime">设置结束日期</string>
 
     <string name="submit">提交</string>
 

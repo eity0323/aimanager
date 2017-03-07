@@ -1,5 +1,9 @@
 package com.sien.aimanager.config;
 
+import android.content.Context;
+import android.text.TextUtils;
+import android.view.View;
+
 import com.sien.lib.baseapp.BaseApplication;
 import com.sien.lib.datapp.utils.CPDateUtil;
 
@@ -62,6 +66,20 @@ public class AppConfig {
 			val += "(" + CPDateUtil.getDateToString(date, "MM-dd") + ")";
 		}
 		return val;
+	}
+
+	/**
+	 * 根据名称获取资源id
+	 * @param context
+	 * @param source
+     * @return
+     */
+	public static int getResIdByString(Context context,String source){
+		int resId = View.NO_ID;
+		if (context != null && !TextUtils.isEmpty(source)){
+			resId = context.getResources().getIdentifier(source,"mipmap",context.getPackageName());
+		}
+		return resId;
 	}
 
 	/**

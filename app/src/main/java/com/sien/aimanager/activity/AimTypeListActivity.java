@@ -127,26 +127,8 @@ public class AimTypeListActivity extends CPBaseBoostActivity implements IAimType
         }
     }
 
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        getMenuInflater().inflate(R.menu.menu_main,menu);
-//        return super.onCreateOptionsMenu(menu);
-//    }
-//
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        if (item.getItemId() == R.id.setting){
-//            startActivity(new Intent(this,SettingActivity.class));
-//        }
-//        return super.onOptionsItemSelected(item);
-//    }
-
     /*操作面板*/
     private void showOperatePanel(final AimTypeVO aimTypeVO){
-//        if (aimTypeVO.getCustomed() != null && !aimTypeVO.getCustomed().booleanValue()){
-//            showToast("系统目标类型，不能进行操作");
-//            return;
-//        }
         String[] titles = {"修改","删除"};
         AlertDialog.Builder builder = new AlertDialog.Builder(this).setItems(titles, new DialogInterface.OnClickListener() {
             @Override
