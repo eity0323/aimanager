@@ -1,8 +1,8 @@
 package com.sien.aimanager.beans;
 
-import com.sien.lib.datapp.beans.AimItemVO;
-import com.sien.lib.datapp.beans.AimTypeVO;
-import com.sien.lib.datapp.beans.CPBaseVO;
+import com.sien.lib.databmob.beans.AimItemVO;
+import com.sien.lib.databmob.beans.AimTypeVO;
+import com.sien.lib.databmob.beans.CPBaseVO;
 
 import java.util.List;
 

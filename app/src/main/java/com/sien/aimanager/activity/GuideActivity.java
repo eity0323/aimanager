@@ -17,9 +17,9 @@ import com.sien.aimanager.adapter.GuideAdapter;
 import com.sien.lib.baseapp.activity.CPBaseActivity;
 import com.sien.lib.baseapp.config.CPConfiguration;
 import com.sien.lib.baseapp.presenters.BasePresenter;
-import com.sien.lib.datapp.config.DatappConfig;
-import com.sien.lib.datapp.control.CPSharedPreferenceManager;
-import com.sien.lib.datapp.utils.CPDeviceUtil;
+import com.sien.lib.databmob.config.DatappConfig;
+import com.sien.lib.databmob.control.CPSharedPreferenceManager;
+import com.sien.lib.databmob.utils.CPDeviceUtil;
 
 /**
  * @author sien

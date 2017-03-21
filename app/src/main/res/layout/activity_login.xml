@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="false"
+    android:background="@mipmap/image_bg_normal"
+    >
+    <include layout="@layout/fragment_login1" android:id="@+id/login1"/>
+    <include layout="@layout/fragment_login2" android:id="@+id/login2"/>
+    <include layout="@layout/fragment_login3" android:id="@+id/login3"/>
+</FrameLayout>

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="72dp"
+            android:src="@mipmap/ic_launcher" />
+
+        <TextView
+            style="@style/WhiteText18Appearance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="@string/about_slogan" />
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="47dp"
+            >
+
+            <TextView
+                android:id="@+id/login_btn"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textSize="17dp"
+                android:textColor="@android:color/white"
+                android:paddingLeft="120dp"
+                android:gravity="center_vertical"
+                android:background="@drawable/selector_btn_red"
+                android:text="@string/personal_login" />
+            <ImageView
+                android:id="@+id/iv_login1_phone_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="76dp"
+                android:src="@mipmap/login_icon_mobile_default"/>
+        </FrameLayout>
+
+
+        <Button
+            android:id="@+id/login_wx"
+            style="@style/login_button_style"
+            android:layout_marginTop="@dimen/margin_20"
+            android:background="@drawable/btn_translucent_selector"
+            android:drawableLeft="@mipmap/login_icon_wechat_default"
+            android:paddingLeft="@dimen/margin_80"
+            android:paddingRight="@dimen/margin_80"
+            android:text="@string/personal_wxlogin" />
+    </LinearLayout>
+    <ImageButton
+        android:id="@+id/btn_login_close"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="24dp"
+        android:layout_gravity="right"
+        android:layout_marginRight="5dp"
+        android:background="@drawable/selector_roundborder_bg"
+        android:src="@mipmap/login_button_close"/>
+</FrameLayout>

@@ -21,9 +21,8 @@ import com.sien.lib.baseapp.BaseApplication;
 import com.sien.lib.baseapp.activity.CPBaseBoostActivity;
 import com.sien.lib.baseapp.adapter.CPBaseRecyclerAdapter;
 import com.sien.lib.baseapp.widgets.recyclerview.CPDividerItemDecoration;
-import com.sien.lib.datapp.beans.AimTypeVO;
-import com.sien.lib.datapp.cache.CacheDataStorage;
-import com.sien.lib.datapp.network.base.RequestFreshStatus;
+import com.sien.lib.databmob.beans.AimTypeVO;
+import com.sien.lib.databmob.network.base.RequestFreshStatus;
 
 /**
  * 目标分类列表页
@@ -252,10 +251,10 @@ public class AimTypeListActivity extends CPBaseBoostActivity implements IAimType
 
         if (status != RequestFreshStatus.REFRESH_ERROR){
             if (presenter.getVersionCheckVO() != null) {
-                BaseApplication.setSharePerfence(AppConfig.PRESH_CONFIG_UPGRADE_MIN_SUPPORTED_VERSION,presenter.getVersionCheckVO().getMinUpgradeVersion());
-                BaseApplication.setSharePerfence(AppConfig.PRESH_CONFIG_UPGRADE_VERSION_NAME,presenter.getVersionCheckVO().getVersionNumber());
-                BaseApplication.setSharePerfence(AppConfig.PRESH_CONFIG_UPGRADE_APK_DOWNLOAD_URL,presenter.getVersionCheckVO().getFileId());
-                BaseApplication.setSharePerfence(AppConfig.PRESH_CONFIG_UPGRADE_DESC,presenter.getVersionCheckVO().getRemark());
+//                BaseApplication.setSharePerfence(AppConfig.PRESH_CONFIG_UPGRADE_MIN_SUPPORTED_VERSION,presenter.getVersionCheckVO().getMinUpgradeVersion());
+//                BaseApplication.setSharePerfence(AppConfig.PRESH_CONFIG_UPGRADE_VERSION_NAME,presenter.getVersionCheckVO().getVersionNumber());
+//                BaseApplication.setSharePerfence(AppConfig.PRESH_CONFIG_UPGRADE_APK_DOWNLOAD_URL,presenter.getVersionCheckVO().getFileId());
+//                BaseApplication.setSharePerfence(AppConfig.PRESH_CONFIG_UPGRADE_DESC,presenter.getVersionCheckVO().getRemark());
 
                 // 版本升级
                 UpdateManager updateManager = new UpdateManager(this, false);
@@ -299,6 +298,6 @@ public class AimTypeListActivity extends CPBaseBoostActivity implements IAimType
         //清除第三方缓存库
         ImageLoader.getInstance().clearMemoryCache();
         //清除内存缓存
-        CacheDataStorage.getInstance().releaseMemory();
+//        CacheDataStorage.getInstance().releaseMemory();
     }
 }

@@ -11,8 +11,8 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.text.TextUtils;
 
-import com.sien.lib.datapp.utils.CPDeviceUtil;
-import com.sien.lib.datapp.utils.CPLogUtil;
+import com.sien.lib.databmob.utils.CPDeviceUtil;
+import com.sien.lib.databmob.utils.CPLogUtil;
 
 import java.io.File;
 import java.io.FileNotFoundException;

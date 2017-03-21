@@ -26,10 +26,10 @@ import com.sien.lib.baseapp.control.photo.CropParams;
 import com.sien.lib.baseapp.utils.CPImageUtil;
 import com.sien.lib.baseapp.utils.CPPatternUtil;
 import com.sien.lib.baseapp.utils.RepeatClickUtil;
-import com.sien.lib.datapp.network.action.MainRequestAction;
-import com.sien.lib.datapp.network.base.RequestFreshStatus;
-import com.sien.lib.datapp.utils.CPDeviceUtil;
-import com.sien.lib.datapp.utils.CPFileUtils;
+//import com.sien.lib.databmob.network.action.MainRequestAction;
+import com.sien.lib.databmob.network.base.RequestFreshStatus;
+import com.sien.lib.databmob.utils.CPDeviceUtil;
+import com.sien.lib.databmob.utils.CPFileUtils;
 import com.sien.lib.photopick.activity.MISActivity;
 import com.sien.lib.photopick.activity.PhotoViewActivity;
 
@@ -177,7 +177,7 @@ public class FeedbackActivity extends CPBaseBoostActivity implements IFeedbackVi
     private void doFeedBack(){
         String feed = feedbackET.getText().toString();
         //调用反馈接口
-        MainRequestAction.requestFeedback(this,feed,presenter.getUploadPhotoUrls());
+//        MainRequestAction.requestFeedback(this,feed,presenter.getUploadPhotoUrls());
     }
 
     /*相册 or 拍照*/
@@ -253,7 +253,7 @@ public class FeedbackActivity extends CPBaseBoostActivity implements IFeedbackVi
 
     /*上传图片*/
     private void uploadFeedbackImages(){
-        MainRequestAction.requestUploadMultiFile(FeedbackActivity.this,presenter.getPhotosPathExceptHolder(),"users/feedback");
+//        MainRequestAction.requestUploadMultiFile(FeedbackActivity.this,presenter.getPhotosPathExceptHolder(),"users/feedback");
     }
 
     private TextWatcher textWatcher = new TextWatcher() {

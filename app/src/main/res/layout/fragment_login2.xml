@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/transparent"
+    >
+    <ImageView
+        android:id="@+id/iv_login2_blur"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="fitXY"
+        android:src="@mipmap/image_bg_pressed"
+        />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginTop="24dp">
+
+            <TextView
+                android:id="@+id/login2_back"
+                style="@style/login_topbar_icon_style"
+                android:drawableLeft="@mipmap/button_back"
+                android:layout_alignParentLeft="true"/>
+
+            <ImageButton
+                android:id="@+id/btn_login2_close"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_marginRight="5dp"
+                android:src="@mipmap/login_button_close"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"/>
+
+        </RelativeLayout>
+
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:src="@mipmap/ic_launcher" />
+
+        <TextView
+            style="@style/WhiteText18Appearance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_10"
+            android:text="@string/about_slogan" />
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_marginTop="47dp"
+            android:layout_height="48dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:id="@+id/ll_login2_input"
+                style="@style/login_input_style"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_horizontal"
+                android:background="@color/btn_translucent"
+                android:paddingLeft="47dp">
+                <TextView
+                    style="@style/WhiteText18Appearance"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/text_gray_light"
+                    android:text="@string/personal_mobile_prefix"
+                    />
+                <com.sien.lib.component.edittext.ClearEditText
+                    android:id="@+id/login_mobile"
+                    style="@style/login_input_number_style"
+                    android:drawableRight="@drawable/input_box_clear"
+                    android:maxLength="13"
+                    android:hint="@string/personal_mobile_request"
+                    android:textColorHint="@android:color/white"
+                    android:paddingLeft="@dimen/margin_10"
+                    android:paddingRight="@dimen/margin_10"
+                    android:background="@android:color/transparent"
+                    android:singleLine="true" />
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/iv_login2_phone_icon"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="7dp"
+                android:src="@mipmap/login_icon_mobile_default"/>
+
+        </FrameLayout>
+
+        <Button
+            android:id="@+id/login_next_step"
+            style="@style/login_button_style"
+            android:layout_marginTop="@dimen/margin_20"
+            android:background="@drawable/selector_btn_red"
+            android:text="@string/personal_request_checkcode" />
+    </LinearLayout>
+
+</FrameLayout>

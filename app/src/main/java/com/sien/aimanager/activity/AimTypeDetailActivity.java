@@ -23,9 +23,9 @@ import com.sien.aimanager.presenter.AimTypePresenter;
 import com.sien.lib.baseapp.activity.CPBaseBoostActivity;
 import com.sien.lib.baseapp.adapter.CPBaseRecyclerAdapter;
 import com.sien.lib.baseapp.utils.CollectionUtils;
-import com.sien.lib.datapp.beans.AimItemVO;
-import com.sien.lib.datapp.beans.AimTypeVO;
-import com.sien.lib.datapp.network.base.RequestFreshStatus;
+import com.sien.lib.databmob.beans.AimItemVO;
+import com.sien.lib.databmob.beans.AimTypeVO;
+import com.sien.lib.databmob.network.base.RequestFreshStatus;
 
 import java.util.Date;
 import java.util.List;

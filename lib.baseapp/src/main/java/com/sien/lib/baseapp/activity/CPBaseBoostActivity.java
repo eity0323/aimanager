@@ -12,6 +12,7 @@ import android.support.annotation.LayoutRes;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -33,9 +34,9 @@ import com.sien.lib.baseapp.model.ICPBaseBoostViewModel;
 import com.sien.lib.baseapp.presenters.BasePresenter;
 import com.sien.lib.baseapp.presenters.BusBaseBoostPresenter;
 import com.sien.lib.baseapp.utils.ToastUtil;
-import com.sien.lib.datapp.utils.CPDeviceUtil;
-import com.sien.lib.datapp.utils.CPLogUtil;
-import com.sien.lib.datapp.utils.CPNetworkUtil;
+import com.sien.lib.databmob.utils.CPDeviceUtil;
+import com.sien.lib.databmob.utils.CPLogUtil;
+import com.sien.lib.databmob.utils.CPNetworkUtil;
 
 import java.util.List;
 
@@ -589,6 +590,87 @@ public abstract class CPBaseBoostActivity extends AppCompatActivity implements I
         }
     }
 
+    /**
+     * 解析传入参数 （插件 or 非插件方式）
+     */
+    public int parseIntBundleParam(String key){
+        return parseIntBundleParam(key,0);
+    }
+
+    public int parseIntBundleParam(String key,int defValue){
+        int value = defValue;
+        //standard apk
+        Intent tent = getIntent();
+        if (tent != null){
+            if (tent.hasExtra(key)) {
+                value = tent.getIntExtra(key, defValue);
+            }
+        }
+
+        //Small plugin
+        Uri uri = pluginOrAloneGetUri(this);
+        if (uri != null) {
+            String from = uri.getQueryParameter(key);
+            if (!TextUtils.isEmpty(from)) {
+                value = Integer.valueOf(from);
+            }
+        }
+        return value;
+    }
+
+    public boolean parseBooleanBundleParam(String key){
+        return parseBooleanBundleParam(key,false);
+    }
+    public boolean parseBooleanBundleParam(String key,boolean defValue){
+        boolean value = defValue;
+        Intent tent = getIntent();
+        if (tent != null){
+            if (tent.hasExtra(key)) {
+                value = tent.getBooleanExtra(key, defValue);
+            }
+        }
+
+        //Small plugin
+        Uri uri = pluginOrAloneGetUri(this);
+        if (uri != null) {
+            String from = uri.getQueryParameter(key);
+            if (!TextUtils.isEmpty(from)) {
+                if ("true".equals(from)) {
+                    value = true;
+                }else {
+                    value = false;
+                }
+//                value = Boolean.valueOf(from);
+            }
+        }
+        return value;
+    }
+
+    public String parseStringBundleParam(String key){
+        return parseStringBundleParam(key,"");
+    }
+
+    public String parseStringBundleParam(String key,String defValue){
+        String value = defValue;
+        //standard apk
+        Intent tent = getIntent();
+        if (tent != null){
+            if (tent.hasExtra(key)) {
+                value = tent.getStringExtra(key);
+            }
+        }
+
+        //Small plugin
+        Uri uri = pluginOrAloneGetUri(this);
+        if (uri != null) {
+            String from = uri.getQueryParameter(key);
+            if (!TextUtils.isEmpty(from)) {
+                value = from;
+            }
+        }
+        return value;
+    }
+
     //plugin
     /**
      * 打开插件页面
@@ -678,16 +760,22 @@ public abstract class CPBaseBoostActivity extends AppCompatActivity implements I
     public void onTrimMemory(int level) {
         super.onTrimMemory(level);
         if (level ==  TRIM_MEMORY_COMPLETE ){
+            //后台高紧急释放
             backHighUrgentTrimMemory();
         }else if ( level == TRIM_MEMORY_MODERATE ){
+            //后台中紧急释放
             backNormalUrgentTrimMemory();
         }else if (level == TRIM_MEMORY_BACKGROUND ){
+            //后台低紧急释放
             backLowUrgentTrimMemory();
         }else if (level == TRIM_MEMORY_UI_HIDDEN ){
+            //进入后台可以释放
             uiHiddenTrimMemory();
         }else if (level == TRIM_MEMORY_RUNNING_CRITICAL ){
+            //前台高预警
             runningHighUrgentTrimMemory();
         }else if (level == TRIM_MEMORY_RUNNING_LOW ){
+            //前台中预警
             runningNormalUrgentTrimMemory();
         }
     }
@@ -696,7 +784,7 @@ public abstract class CPBaseBoostActivity extends AppCompatActivity implements I
     public void onLowMemory() {
         super.onLowMemory();
 
-        if (innerPresenter != null){
+        if (innerPresenter != null && lowMemoryForceRelease()){
             innerPresenter.releaseMemory();
         }
     }
@@ -705,7 +793,7 @@ public abstract class CPBaseBoostActivity extends AppCompatActivity implements I
      * 应用处于后台运行，内存不足，进程即将被回收
      */
     public void backHighUrgentTrimMemory(){
-        if (innerPresenter != null){
+        if (innerPresenter != null && lowMemoryForceRelease()){
             innerPresenter.releaseMemory();
         }
     }
@@ -743,6 +831,14 @@ public abstract class CPBaseBoostActivity extends AppCompatActivity implements I
      */
     public void runningNormalUrgentTrimMemory(){
 
+    }
+
+    /**
+     * 低内存强制释放presenter内存
+     * @return
+     */
+    public boolean lowMemoryForceRelease(){
+        return true;
     }
 
     //------------------------------------------------------------------动态申请权限

@@ -10,13 +10,13 @@ import com.sien.aimanager.model.IMainAimObjectViewModel;
 import com.sien.lib.baseapp.presenters.BasePresenter;
 import com.sien.lib.baseapp.presenters.BusBaseBoostPresenter;
 import com.sien.lib.baseapp.utils.CollectionUtils;
-import com.sien.lib.datapp.beans.AimItemVO;
-import com.sien.lib.datapp.beans.AimTypeVO;
-import com.sien.lib.datapp.db.helper.AimItemDBHelper;
-import com.sien.lib.datapp.db.helper.AimTypeDBHelper;
-import com.sien.lib.datapp.events.DatappEvent;
-import com.sien.lib.datapp.network.base.RequestFreshStatus;
-import com.sien.lib.datapp.utils.CPDateUtil;
+import com.sien.lib.databmob.beans.AimItemVO;
+import com.sien.lib.databmob.beans.AimTypeVO;
+import com.sien.lib.databmob.db.helper.AimItemDBHelper;
+import com.sien.lib.databmob.db.helper.AimTypeDBHelper;
+import com.sien.lib.databmob.events.DatappEvent;
+import com.sien.lib.databmob.network.base.RequestFreshStatus;
+import com.sien.lib.databmob.utils.CPDateUtil;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -216,6 +216,19 @@ public class MainAimObjectPresenter extends BusBaseBoostPresenter {
         }else if (msg.what == MSG_UPDATE_NEW_AIMTYPE){
             impl.refreshNewAimType(RequestFreshStatus.REFRESH_SUCCESS);
         }
+    }
+
+    @Override
+    public void releaseMemory() {
+        super.releaseMemory();
+
+        datasource = null;
+    }
+
+    @Override
+    public void destory() {
+        super.destory();
+        impl = null;
     }
 
     @Override

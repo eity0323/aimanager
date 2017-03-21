@@ -6,11 +6,11 @@ import android.os.Message;
 import com.sien.aimanager.model.IFeedbackViewModel;
 import com.sien.lib.baseapp.presenters.BasePresenter;
 import com.sien.lib.baseapp.presenters.BusBaseBoostPresenter;
-import com.sien.lib.datapp.beans.BaseResult;
-import com.sien.lib.datapp.beans.UploadImageVO;
-import com.sien.lib.datapp.events.DatappEvent;
-import com.sien.lib.datapp.network.base.RequestFreshStatus;
-import com.sien.lib.datapp.network.result.UploadImageResult;
+import com.sien.lib.databmob.beans.BaseResult;
+import com.sien.lib.databmob.beans.UploadImageVO;
+import com.sien.lib.databmob.events.DatappEvent;
+import com.sien.lib.databmob.network.base.RequestFreshStatus;
+import com.sien.lib.databmob.network.result.UploadImageResult;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -153,7 +153,11 @@ public class FeedbackPresenter extends BusBaseBoostPresenter {
         if (list != null){
             list.clear();
         }
+    }
 
+    @Override
+    public void destory() {
+        super.destory();
         impl = null;
     }
 

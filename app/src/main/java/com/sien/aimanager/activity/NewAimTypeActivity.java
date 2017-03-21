@@ -19,10 +19,10 @@ import com.sien.aimanager.config.AppConfig;
 import com.sien.aimanager.model.INewAimTypeViewModel;
 import com.sien.aimanager.presenter.NewAimTypePresenter;
 import com.sien.lib.baseapp.activity.CPBaseBoostActivity;
-import com.sien.lib.datapp.beans.AimTypeVO;
-import com.sien.lib.datapp.beans.CoverIcon;
-import com.sien.lib.datapp.network.base.RequestFreshStatus;
-import com.sien.lib.datapp.utils.CPDateUtil;
+import com.sien.lib.databmob.beans.AimTypeVO;
+import com.sien.lib.databmob.beans.CoverIcon;
+import com.sien.lib.databmob.network.base.RequestFreshStatus;
+import com.sien.lib.databmob.utils.CPDateUtil;
 
 import java.util.Calendar;
 import java.util.Date;

@@ -22,6 +22,11 @@
         <item name="android:textSize">@dimen/font_siez_16</item>
         <item name="android:textColor">@android:color/black</item>
     </style>
+
+    <style name="WhiteText18Appearance" parent="@android:style/TextAppearance">
+        <item name="android:textSize">@dimen/font_siez_18</item>
+        <item name="android:textColor">@android:color/white</item>
+    </style>
     <style name="WhiteText16Appearance" parent="@android:style/TextAppearance">
         <item name="android:textSize">@dimen/font_siez_16</item>
         <item name="android:textColor">@android:color/white</item>
@@ -75,5 +80,51 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textColor">@color/text_gray</item>
         <item name="android:textSize">15sp</item>
+    </style>
+
+    <!--login-->
+    <style name="login_button_style">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">48dp</item>
+        <item name="android:layout_marginLeft">20dp</item>
+        <item name="android:layout_marginRight">20dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@color/text_btn_login_check_code</item>
+        <item name="android:textSize">@dimen/font_siez_18</item>
+    </style>
+
+    <style name="login_input_style">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">@dimen/font_siez_18</item>
+    </style>
+
+    <style name="login_topbar_icon_style">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:drawablePadding">3dp</item>
+        <item name="android:duplicateParentState">true</item>
+        <item name="android:gravity">center</item>
+        <item name="android:paddingLeft">12dp</item>
+        <item name="android:paddingRight">12dp</item>
+    </style>
+
+    <style name="login_topbar_style">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/width_54</item>
+        <item name="android:gravity">center_vertical</item>
+    </style>
+
+    <style name="login_input_number_style">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/dimem_48</item>
+        <item name="android:paddingTop">4dp</item>
+        <item name="android:paddingBottom">4dp</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:inputType">number</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">@dimen/font_siez_16</item>
     </style>
 </resources>

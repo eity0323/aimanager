@@ -22,21 +22,9 @@ public class DatappEvent {
     /**
      * 目标分类数据
      */
-    public static class AimTypeEvent{
-        private int status;
-        private Object data;
-
+    public static class AimTypeEvent extends BaseEvents{
         public AimTypeEvent(int status,Object data){
-            this.status = status;
-            this.data = data;
-        }
-
-        public boolean checkStatus() {
-            return status == STATUS_SUCCESS;
-        }
-
-        public Object getData() {
-            return data;
+            super(status, data);
         }
 
         public List<AimTypeVO> getResult(){
@@ -52,20 +40,9 @@ public class DatappEvent {
     /**
      * 目标记录数据
      */
-    public static class AimItemEvent{
-        private int status;
-        private Object data;
+    public static class AimItemEvent extends BaseEvents{
         public AimItemEvent(int status,Object data){
-            this.status = status;
-            this.data = data;
-        }
-
-        public boolean checkStatus() {
-            return status == STATUS_SUCCESS;
-        }
-
-        public Object getData() {
-            return data;
+            super(status, data);
         }
 
         public List<AimItemVO> getResult(){
@@ -81,21 +58,9 @@ public class DatappEvent {
     /**
      * 删除目标分类数据
      */
-    public static class deleteAimTypeEvent{
-        private int status;
-        private Object data;
-
+    public static class deleteAimTypeEvent extends BaseEvents{
         public deleteAimTypeEvent(int status,Object data){
-            this.status = status;
-            this.data = data;
-        }
-
-        public boolean checkStatus() {
-            return status == STATUS_SUCCESS;
-        }
-
-        public Object getData() {
-            return data;
+            super(status, data);
         }
 
         public List<AimTypeVO> getResult(){
@@ -111,21 +76,10 @@ public class DatappEvent {
     /**
      * 删除目标记录项数据
      */
-    public static class deleteAimItemEvent{
-        private int status;
-        private Object data;
+    public static class deleteAimItemEvent extends BaseEvents{
 
         public deleteAimItemEvent(int status,Object data){
-            this.status = status;
-            this.data = data;
-        }
-
-        public boolean checkStatus() {
-            return status == STATUS_SUCCESS;
-        }
-
-        public Object getData() {
-            return data;
+            super(status, data);
         }
 
         public List<AimItemVO> getResult(){
@@ -141,21 +95,10 @@ public class DatappEvent {
     /**
      * 添加目标分类数据
      */
-    public static class insertAimTypeEvent{
-        private int status;
-        private Object data;
+    public static class insertAimTypeEvent extends BaseEvents{
 
         public insertAimTypeEvent(int status,Object data){
-            this.status = status;
-            this.data = data;
-        }
-
-        public boolean checkStatus() {
-            return status == STATUS_SUCCESS;
-        }
-
-        public Object getData() {
-            return data;
+            super(status, data);
         }
 
         public AimTypeVO getResult(){
@@ -171,21 +114,9 @@ public class DatappEvent {
     /**
      * 更新分类完整状态
      */
-    public static class updateAimTypeStatusEvent{
-        private int status;
-        private Object data;
-
+    public static class updateAimTypeStatusEvent extends BaseEvents{
         public updateAimTypeStatusEvent(int status,Object data){
-            this.status = status;
-            this.data = data;
-        }
-
-        public boolean checkStatus() {
-            return status == STATUS_SUCCESS;
-        }
-
-        public Object getData() {
-            return data;
+            super(status, data);
         }
 
         public AimTypeVO getResult(){
@@ -202,21 +133,10 @@ public class DatappEvent {
     /**
      * 添加目标记录项数据
      */
-    public static class insertAimItemEvent{
-        private int status;
-        private Object data;
+    public static class insertAimItemEvent extends BaseEvents{
 
         public insertAimItemEvent(int status,Object data){
-            this.status = status;
-            this.data = data;
-        }
-
-        public boolean checkStatus() {
-            return status == STATUS_SUCCESS;
-        }
-
-        public Object getData() {
-            return data;
+            super(status, data);
         }
 
         public List<AimItemVO> getResult(){
@@ -232,21 +152,9 @@ public class DatappEvent {
     /**
      * 添加用户信息数据
      */
-    public static class insertUserInfoEvent{
-        private int status;
-        private Object data;
-
+    public static class insertUserInfoEvent extends BaseEvents{
         public insertUserInfoEvent(int status,Object data){
-            this.status = status;
-            this.data = data;
-        }
-
-        public boolean checkStatus() {
-            return status == STATUS_SUCCESS;
-        }
-
-        public Object getData() {
-            return data;
+            super(status, data);
         }
 
         public List<UserInfoVO> getResult(){
@@ -263,21 +171,9 @@ public class DatappEvent {
     /**
      * 查询用户信息
      */
-    public static class UserInfoEvent{
-        private int status;
-        private Object data;
-
+    public static class UserInfoEvent extends BaseEvents{
         public UserInfoEvent(int status,Object data){
-            this.status = status;
-            this.data = data;
-        }
-
-        public boolean checkStatus() {
-            return status == STATUS_SUCCESS;
-        }
-
-        public Object getData() {
-            return data;
+            super(status, data);
         }
 
         public List<UserInfoVO> getResult(){
@@ -293,20 +189,9 @@ public class DatappEvent {
     /**
      * 请求版本校验事件
      */
-    public static class RequestVersionCheckEvent{
-        private int status;
-        private Object data;
+    public static class RequestVersionCheckEvent extends BaseEvents{
         public RequestVersionCheckEvent(int status,Object data){
-            this.status = status;
-            this.data = data;
-        }
-
-        public boolean checkStatus() {
-            return status == STATUS_SUCCESS;
-        }
-
-        public Object getData() {
-            return data;
+            super(status, data);
         }
 
         public VersionCheckResult getResult(){
@@ -322,20 +207,9 @@ public class DatappEvent {
     /**
      * 添加反馈事件
      */
-    public static class FeedbackEvent{
-        private int status;
-        private Object data;
+    public static class FeedbackEvent extends BaseEvents{
         public FeedbackEvent(int status,Object data){
-            this.status = status;
-            this.data = data;
-        }
-
-        public boolean checkStatus() {
-            return status == STATUS_SUCCESS;
-        }
-
-        public Object getData() {
-            return data;
+            super(status, data);
         }
 
         public BaseResult getResult(){
@@ -351,21 +225,9 @@ public class DatappEvent {
     /**
      * 上传图片事件
      */
-    public static class UploadImageEvent{
-        private int status;
-        private Object data;
-
+    public static class UploadImageEvent extends BaseEvents{
         public UploadImageEvent(int status,Object data){
-            this.status = status;
-            this.data = data;
-        }
-
-        public boolean checkStatus() {
-            return status == STATUS_SUCCESS;
-        }
-
-        public Object getData() {
-            return data;
+            super(status, data);
         }
 
         public UploadImageResult getResult(){
@@ -381,20 +243,9 @@ public class DatappEvent {
     /**
      * 下载事件
      */
-    public static class DownloadApkEvent{
-        private int status;
-        private Object data;
+    public static class DownloadApkEvent extends BaseEvents{
         public DownloadApkEvent(int status,Object data){
-            this.status = status;
-            this.data = data;
-        }
-
-        public boolean checkStatus() {
-            return status == STATUS_SUCCESS;
-        }
-
-        public Object getData() {
-            return data;
+            super(status, data);
         }
 
         public String getResult(){

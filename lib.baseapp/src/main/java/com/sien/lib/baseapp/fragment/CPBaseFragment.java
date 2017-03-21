@@ -17,7 +17,7 @@ import com.sien.lib.baseapp.events.IActivityOperater;
 import com.sien.lib.baseapp.events.IPluginOrAloneChecker;
 import com.sien.lib.baseapp.presenters.BasePresenter;
 import com.sien.lib.baseapp.utils.ToastUtil;
-import com.sien.lib.datapp.utils.CPLogUtil;
+import com.sien.lib.databmob.utils.CPLogUtil;
 
 /**
  * @author sien

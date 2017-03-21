@@ -1,6 +1,6 @@
 package com.sien.aimanager.beans;
 
-import com.sien.lib.datapp.beans.CPBaseVO;
+import com.sien.lib.databmob.beans.CPBaseVO;
 
 /**
  * @author sien

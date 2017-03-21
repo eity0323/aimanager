@@ -12,12 +12,11 @@ import com.sien.aimanager.R;
 import com.sien.aimanager.config.AppConfig;
 import com.sien.lib.baseapp.activity.CPBaseActivity;
 import com.sien.lib.baseapp.presenters.BasePresenter;
-import com.sien.lib.datapp.cache.BaseRepository;
-import com.sien.lib.datapp.cache.CacheDataStorage;
-import com.sien.lib.datapp.config.DatappConfig;
-import com.sien.lib.datapp.control.CPSharedPreferenceManager;
-import com.sien.lib.datapp.control.DataCleanManager;
-import com.sien.lib.datapp.utils.CPFileUtils;
+import com.sien.lib.databmob.cache.BaseRepository;
+import com.sien.lib.databmob.config.DatappConfig;
+import com.sien.lib.databmob.control.CPSharedPreferenceManager;
+import com.sien.lib.databmob.control.DataCleanManager;
+import com.sien.lib.databmob.utils.CPFileUtils;
 
 import java.util.ArrayList;
 
@@ -137,7 +136,7 @@ public class RequestSourceActivity extends CPBaseActivity {
 
     private void cleanAppData(){
         //清除缓存数据
-        CacheDataStorage.getInstance().releaseMemory();
+//        CacheDataStorage.getInstance().releaseMemory();
 
         getSharedPreferences("cookie", Context.MODE_PRIVATE).edit().clear().commit();
         CPSharedPreferenceManager.getInstance(getApplicationContext()).clean();

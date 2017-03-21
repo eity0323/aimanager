@@ -25,4 +25,6 @@
     <color name="translucent">#5CFFFFFF</color>
     <color name="accent_high_light">#E1656F</color>
 
+    <color name="tab_text_color">#B2FFFFFF</color>
+
 </resources>

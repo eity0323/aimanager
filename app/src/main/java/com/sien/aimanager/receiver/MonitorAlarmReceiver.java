@@ -5,7 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 
 import com.sien.aimanager.control.GeneratePeroidAimUtils;
-import com.sien.lib.datapp.utils.CPLogUtil;
+import com.sien.lib.databmob.utils.CPLogUtil;
 
 /**
  * @author sien

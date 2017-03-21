@@ -7,10 +7,10 @@ import com.sien.aimanager.model.INewAimTypeViewModel;
 import com.sien.lib.baseapp.model.ICPBaseBoostViewModel;
 import com.sien.lib.baseapp.presenters.BasePresenter;
 import com.sien.lib.baseapp.presenters.BusBaseBoostPresenter;
-import com.sien.lib.datapp.beans.AimTypeVO;
-import com.sien.lib.datapp.events.DatappEvent;
-import com.sien.lib.datapp.network.action.MainDatabaseAction;
-import com.sien.lib.datapp.network.base.RequestFreshStatus;
+import com.sien.lib.databmob.beans.AimTypeVO;
+import com.sien.lib.databmob.events.DatappEvent;
+import com.sien.lib.databmob.network.action.MainDatabaseAction;
+import com.sien.lib.databmob.network.base.RequestFreshStatus;
 
 import de.greenrobot.event.Subscribe;
 
@@ -193,7 +193,11 @@ public class NewAimTypePresenter extends BusBaseBoostPresenter {
     @Override
     public void releaseMemory() {
         super.releaseMemory();
+    }
 
+    @Override
+    public void destory() {
+        super.destory();
         impl = null;
     }
 }

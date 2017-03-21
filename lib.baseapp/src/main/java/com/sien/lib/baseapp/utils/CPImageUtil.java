@@ -11,7 +11,7 @@ import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.widget.ImageView;
 
-import com.sien.lib.datapp.utils.CPFileUtils;
+import com.sien.lib.databmob.utils.CPFileUtils;
 
 import java.io.File;
 import java.io.FileNotFoundException;

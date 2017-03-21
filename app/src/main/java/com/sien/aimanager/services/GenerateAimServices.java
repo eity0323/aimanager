@@ -5,7 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 
 import com.sien.aimanager.control.GeneratePeroidAimUtils;
-import com.sien.lib.datapp.beans.AimTypeVO;
+import com.sien.lib.databmob.beans.AimTypeVO;
 
 /**
  * @author sien

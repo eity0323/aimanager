@@ -14,7 +14,7 @@ import com.sien.lib.baseapp.activity.CPBaseBoostActivity;
 import com.sien.lib.baseapp.adapter.CPBaseRecyclerAdapter;
 import com.sien.lib.baseapp.presenters.BasePresenter;
 import com.sien.lib.baseapp.widgets.recyclerview.CPDividerGridItemDecoration;
-import com.sien.lib.datapp.beans.CoverIcon;
+import com.sien.lib.databmob.beans.CoverIcon;
 
 import java.util.ArrayList;
 import java.util.List;

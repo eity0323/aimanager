@@ -19,8 +19,8 @@ import com.sien.lib.baseapp.utils.CollectionUtils;
 import com.sien.lib.baseapp.widgets.CPRefreshView;
 import com.sien.lib.component.coverflow.CoverFlow;
 import com.sien.lib.component.coverflow.TwoWayAdapterView;
-import com.sien.lib.datapp.beans.AimTypeVO;
-import com.sien.lib.datapp.network.base.RequestFreshStatus;
+import com.sien.lib.databmob.beans.AimTypeVO;
+import com.sien.lib.databmob.network.base.RequestFreshStatus;
 
 import java.util.Date;
 

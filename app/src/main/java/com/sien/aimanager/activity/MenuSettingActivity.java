@@ -12,21 +12,18 @@ import android.view.View;
 import com.sien.aimanager.R;
 import com.sien.aimanager.adapter.MenuSettingAdapter;
 import com.sien.aimanager.config.AppConfig;
-import com.sien.aimanager.control.UpdateManager;
 import com.sien.aimanager.model.IMenuSettingViewModel;
 import com.sien.aimanager.presenter.MenuSettingPresenter;
-import com.sien.lib.baseapp.BaseApplication;
 import com.sien.lib.baseapp.activity.CPBaseBoostActivity;
 import com.sien.lib.baseapp.adapter.CPBaseRecyclerAdapter;
 import com.sien.lib.baseapp.config.CPConfiguration;
 import com.sien.lib.baseapp.widgets.recyclerview.CPDividerItemDecoration;
-import com.sien.lib.datapp.config.DatappConfig;
-import com.sien.lib.datapp.control.CPSharedPreferenceManager;
-import com.sien.lib.datapp.control.DataCleanManager;
-import com.sien.lib.datapp.utils.CPDeviceUtil;
-import com.sien.lib.datapp.utils.CPFileUtils;
-import com.sien.lib.datapp.utils.CPNetworkUtil;
-import com.sien.lib.datapp.utils.CPStringUtil;
+import com.sien.lib.databmob.config.DatappConfig;
+import com.sien.lib.databmob.control.CPSharedPreferenceManager;
+import com.sien.lib.databmob.control.DataCleanManager;
+import com.sien.lib.databmob.utils.CPDeviceUtil;
+import com.sien.lib.databmob.utils.CPFileUtils;
+import com.sien.lib.databmob.utils.CPNetworkUtil;
 
 /**
  * Name: MenuSettingActivity
@@ -227,19 +224,19 @@ public class MenuSettingActivity extends CPBaseBoostActivity implements IMenuSet
     /*校验并发送升级事件*/
     private void checkAndPostAppUpgradeEvent(){
         String versionName = CPDeviceUtil.getVersionName(this);
-        if (CPStringUtil.boostCompare(presenter.getVersionCheckVO().getVersionNumber(),versionName)) {        //最新版比本地版大
-            BaseApplication.setSharePerfence(AppConfig.PRESH_CONFIG_UPGRADE_MIN_SUPPORTED_VERSION,presenter.getVersionCheckVO().getMinUpgradeVersion());
-            BaseApplication.setSharePerfence(AppConfig.PRESH_CONFIG_UPGRADE_VERSION_NAME,presenter.getVersionCheckVO().getVersionNumber());
-            BaseApplication.setSharePerfence(AppConfig.PRESH_CONFIG_UPGRADE_APK_DOWNLOAD_URL,presenter.getVersionCheckVO().getFileId());
-            BaseApplication.setSharePerfence(AppConfig.PRESH_CONFIG_UPGRADE_DESC,presenter.getVersionCheckVO().getRemark());
-            // 版本升级
-            UpdateManager updateManager = new UpdateManager(this, false);
-            updateManager.setIgnoreNextCheck(true);//忽略下次再说配置
-            updateManager.autoUpdate();
-
-        }else {
-            showToast("当前已是最新版");
-        }
+//        if (CPStringUtil.boostCompare(presenter.getVersionCheckVO().getVersionNumber(),versionName)) {        //最新版比本地版大
+//            BaseApplication.setSharePerfence(AppConfig.PRESH_CONFIG_UPGRADE_MIN_SUPPORTED_VERSION,presenter.getVersionCheckVO().getMinUpgradeVersion());
+//            BaseApplication.setSharePerfence(AppConfig.PRESH_CONFIG_UPGRADE_VERSION_NAME,presenter.getVersionCheckVO().getVersionNumber());
+//            BaseApplication.setSharePerfence(AppConfig.PRESH_CONFIG_UPGRADE_APK_DOWNLOAD_URL,presenter.getVersionCheckVO().getFileId());
+//            BaseApplication.setSharePerfence(AppConfig.PRESH_CONFIG_UPGRADE_DESC,presenter.getVersionCheckVO().getRemark());
+//            // 版本升级
+//            UpdateManager updateManager = new UpdateManager(this, false);
+//            updateManager.setIgnoreNextCheck(true);//忽略下次再说配置
+//            updateManager.autoUpdate();
+//
+//        }else {
+//            showToast("当前已是最新版");
+//        }
     }
 
     @Override

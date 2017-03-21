@@ -7,11 +7,11 @@ import com.sien.aimanager.model.IAimTypeViewModel;
 import com.sien.lib.baseapp.presenters.BasePresenter;
 import com.sien.lib.baseapp.presenters.BusBaseBoostPresenter;
 import com.sien.lib.baseapp.utils.CollectionUtils;
-import com.sien.lib.datapp.beans.AimItemVO;
-import com.sien.lib.datapp.beans.AimTypeVO;
-import com.sien.lib.datapp.events.DatappEvent;
-import com.sien.lib.datapp.network.action.MainDatabaseAction;
-import com.sien.lib.datapp.network.base.RequestFreshStatus;
+import com.sien.lib.databmob.beans.AimItemVO;
+import com.sien.lib.databmob.beans.AimTypeVO;
+import com.sien.lib.databmob.events.DatappEvent;
+import com.sien.lib.databmob.network.action.MainDatabaseAction;
+import com.sien.lib.databmob.network.base.RequestFreshStatus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -144,7 +144,11 @@ public class AimTypePresenter extends BusBaseBoostPresenter{
             datasource.clear();
         }
         datasource = null;
+    }
 
+    @Override
+    public void destory() {
+        super.destory();
         impl = null;
     }
 }

@@ -11,4 +11,10 @@
     <color name="grey_a5a5a5">#A5A5A5</color>
     <color name="grey_dde1e7">#DDE1E7</color>
     <color name="red_f4333c">#F4333C</color>
+
+    <color name="translucent">#4cffffff</color>
+    <color name="btn_translucent">#5CFFFFFF</color>
+    <color name="btn_translucent_pressed">#99FFFFFF</color>
+    <color name="disable_hint">#C7C7C7</color>
+
 </resources>

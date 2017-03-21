@@ -10,9 +10,8 @@ import com.nostra13.universalimageloader.cache.memory.impl.LRULimitedMemoryCache
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
-import com.sien.lib.datapp.cache.CacheDataStorage;
 import com.sien.lib.baseapp.config.CPConfiguration;
-import com.sien.lib.datapp.control.CPSharedPreferenceManager;
+import com.sien.lib.databmob.control.CPSharedPreferenceManager;
 
 import java.util.concurrent.Executors;
 
@@ -32,7 +31,7 @@ public class BaseApplication extends Application{
 
         initImageLoader(getApplicationContext());
 
-        CacheDataStorage.getInstance().init(this);
+//        CacheDataStorage.getInstance().init(this);
     }
 
     public void initImageLoader(Context context) {

@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+    <ImageView
+        android:id="@+id/iv_login3_blur"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="fitXY"
+        android:src="@mipmap/image_bg_pressed"
+        />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginTop="24dp">
+
+
+            <ImageButton
+                android:id="@+id/btn_login3_close"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_marginRight="5dp"
+                android:src="@mipmap/login_button_close"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"/>
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/tv_login3_tips"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="47dp"
+            style="@style/WhiteText18Appearance"
+            android:visibility="invisible"
+            android:text="@string/personal_checkcode_input"/>
+
+        <LinearLayout
+            style="@style/login_topbar_style"
+            android:orientation="horizontal"
+            android:layout_width="@dimen/width_280"
+            android:layout_marginTop="47dp">
+
+            <com.sien.lib.component.edittext.CPPwdEditText
+                android:id="@+id/login_checkcode"
+                android:layout_width="match_parent"
+                android:layout_height="54dp"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_login3_change"
+            style="@style/login_input_style"
+            android:layout_marginTop="@dimen/margin_15"
+            android:layout_width="@dimen/width_280"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:gravity="left"
+            android:orientation="horizontal">
+            <TextView
+                android:id="@+id/login_sendto"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/personal_sendto"
+                android:textColor="#BABABA"
+                style="@style/WhiteText18Appearance"
+                android:textSize="@dimen/font_siez_14"/>
+
+            <TextView
+                android:id="@+id/login_chgmobile"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_20"
+                android:text="@string/personal_change"
+                android:textSize="@dimen/font_siez_14"
+                android:textColor="@color/blue_78d2f6"/>
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/login_resend"
+            style="@style/login_button_style"
+            android:layout_marginTop="40dp"
+            android:background="@drawable/selector_btn_red"
+            android:text="@string/personal_request_again"/>
+    </LinearLayout>
+    <ImageView
+        android:id="@+id/iv_login3_logo"
+        android:layout_width="55dp"
+        android:layout_height="55dp"
+        android:layout_marginTop="32dp"
+        android:src="@mipmap/ic_launcher"
+        android:layout_gravity="center_horizontal" />
+</FrameLayout>

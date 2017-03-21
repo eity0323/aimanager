@@ -7,11 +7,11 @@ import com.sien.aimanager.R;
 import com.sien.aimanager.model.ISettingViewModel;
 import com.sien.lib.baseapp.presenters.BasePresenter;
 import com.sien.lib.baseapp.presenters.BusBasePresenter;
-import com.sien.lib.datapp.beans.PersonSetBean;
-import com.sien.lib.datapp.beans.UserInfoVO;
-import com.sien.lib.datapp.events.DatappEvent;
-import com.sien.lib.datapp.network.action.MainDatabaseAction;
-import com.sien.lib.datapp.network.base.RequestFreshStatus;
+import com.sien.lib.databmob.beans.PersonSetBean;
+import com.sien.lib.databmob.beans.UserInfoVO;
+import com.sien.lib.databmob.events.DatappEvent;
+import com.sien.lib.databmob.network.action.MainDatabaseAction;
+import com.sien.lib.databmob.network.base.RequestFreshStatus;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -5,7 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import com.sien.aimanager.R;
 import com.sien.lib.baseapp.adapter.CPBaseRecyclerAdapter;
 import com.sien.lib.baseapp.adapter.CPRecyclerHolder;
-import com.sien.lib.datapp.beans.AimItemVO;
+import com.sien.lib.databmob.beans.AimItemVO;
 
 import java.util.Collection;
 

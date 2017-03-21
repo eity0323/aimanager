@@ -4,7 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.sien.lib.baseapp.utils.ToastUtil;
-import com.sien.lib.datapp.utils.CPLogUtil;
+import com.sien.lib.databmob.utils.CPLogUtil;
 import com.sien.lib.share.AESUtil;
 import com.sien.lib.share.ShareConfig;
 import com.tencent.mm.sdk.constants.ConstantsAPI;

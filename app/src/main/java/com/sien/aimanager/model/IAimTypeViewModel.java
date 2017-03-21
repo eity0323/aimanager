@@ -1,8 +1,8 @@
 package com.sien.aimanager.model;
 
 import com.sien.lib.baseapp.model.ICPBaseBoostViewModel;
-import com.sien.lib.datapp.beans.AimTypeVO;
-import com.sien.lib.datapp.network.base.RequestFreshStatus;
+import com.sien.lib.databmob.beans.AimTypeVO;
+import com.sien.lib.databmob.network.base.RequestFreshStatus;
 
 /**
  * @author sien

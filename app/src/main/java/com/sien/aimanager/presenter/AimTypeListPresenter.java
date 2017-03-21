@@ -7,13 +7,13 @@ import com.sien.aimanager.model.IAimTypeListViewModel;
 import com.sien.lib.baseapp.model.ICPBaseBoostViewModel;
 import com.sien.lib.baseapp.presenters.BasePresenter;
 import com.sien.lib.baseapp.presenters.BusBaseBoostPresenter;
-import com.sien.lib.datapp.beans.AimTypeVO;
-import com.sien.lib.datapp.beans.VersionCheckVO;
-import com.sien.lib.datapp.events.DatappEvent;
-import com.sien.lib.datapp.network.action.MainDatabaseAction;
-import com.sien.lib.datapp.network.action.MainRequestAction;
-import com.sien.lib.datapp.network.base.RequestFreshStatus;
-import com.sien.lib.datapp.network.result.VersionCheckResult;
+import com.sien.lib.databmob.beans.AimTypeVO;
+import com.sien.lib.databmob.beans.VersionCheckVO;
+import com.sien.lib.databmob.events.DatappEvent;
+import com.sien.lib.databmob.network.action.MainDatabaseAction;
+//import com.sien.lib.databmob.network.action.MainRequestAction;
+import com.sien.lib.databmob.network.base.RequestFreshStatus;
+import com.sien.lib.databmob.network.result.VersionCheckResult;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,7 +47,7 @@ public class AimTypeListPresenter extends BusBaseBoostPresenter {
     }
 
     public void requestVersionCheck(){
-        MainRequestAction.requestVersionCheck(mcontext);
+//        MainRequestAction.requestVersionCheck(mcontext);
     }
 
     public void requestAimTypeDatas(boolean showFixType){
@@ -147,11 +147,16 @@ public class AimTypeListPresenter extends BusBaseBoostPresenter {
         super.releaseMemory();
 
         versionCheckVO = null;
-        impl = null;
 
         if (datasource != null){
             datasource.clear();
         }
         datasource = null;
+    }
+
+    @Override
+    public void destory() {
+        super.destory();
+        impl = null;
     }
 }

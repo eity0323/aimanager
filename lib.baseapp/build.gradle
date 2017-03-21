@@ -37,5 +37,6 @@ dependencies {
     compile 'pub.devrel:easypermissions:0.1.9';
 
     compile project(":lib.component")
-    compile project(":lib.datapp")
+//    compile project(":lib.datapp")
+    compile project(":lib.databmob")
 }

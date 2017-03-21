@@ -219,7 +219,7 @@ public class CountDownImageUtil {
                 return mDestination;
 
             } catch (FileNotFoundException e) {
-                // TODO Auto-generated catch block
+                // TODO Auto-generated cach block
                 e.printStackTrace();
             }
         }

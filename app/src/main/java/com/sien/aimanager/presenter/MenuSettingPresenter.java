@@ -9,14 +9,13 @@ import com.sien.aimanager.model.IMenuSettingViewModel;
 import com.sien.lib.baseapp.config.CPConfiguration;
 import com.sien.lib.baseapp.presenters.BasePresenter;
 import com.sien.lib.baseapp.presenters.BusBaseBoostPresenter;
-import com.sien.lib.datapp.beans.VersionCheckVO;
-import com.sien.lib.datapp.cache.BaseRepository;
-import com.sien.lib.datapp.config.DatappConfig;
-import com.sien.lib.datapp.events.DatappEvent;
-import com.sien.lib.datapp.network.action.MainRequestAction;
-import com.sien.lib.datapp.network.result.VersionCheckResult;
-import com.sien.lib.datapp.utils.CPDeviceUtil;
-import com.sien.lib.datapp.utils.CPFileUtils;
+import com.sien.lib.databmob.beans.VersionCheckVO;
+import com.sien.lib.databmob.cache.BaseRepository;
+import com.sien.lib.databmob.config.DatappConfig;
+import com.sien.lib.databmob.events.DatappEvent;
+import com.sien.lib.databmob.network.result.VersionCheckResult;
+import com.sien.lib.databmob.utils.CPDeviceUtil;
+import com.sien.lib.databmob.utils.CPFileUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,7 +55,7 @@ public class MenuSettingPresenter extends BusBaseBoostPresenter {
     }
 
     public void requestCheckVersion(){
-        MainRequestAction.requestVersionCheck(mcontext);
+//        MainRequestAction.requestVersionCheck(mcontext);
     }
 
     @Override
@@ -244,7 +243,12 @@ public class MenuSettingPresenter extends BusBaseBoostPresenter {
     @Override
     public void releaseMemory() {
         super.releaseMemory();
+        versionCheckVO = null;
+    }
 
+    @Override
+    public void destory() {
+        super.destory();
         impl = null;
     }
 

@@ -1,6 +1,6 @@
 package com.sien.aimanager.model;
 
-import com.sien.lib.datapp.network.base.RequestFreshStatus;
+import com.sien.lib.databmob.network.base.RequestFreshStatus;
 
 /**
  * @author sien

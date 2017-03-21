@@ -18,11 +18,13 @@ import com.sien.aimanager.R;
 import com.sien.aimanager.adapter.SettingAdapter;
 import com.sien.aimanager.model.ISettingViewModel;
 import com.sien.aimanager.presenter.SettingPresenter;
+import com.sien.lib.baseapp.BaseApplication;
 import com.sien.lib.baseapp.activity.CPBaseActivity;
 import com.sien.lib.baseapp.adapter.CPBaseRecyclerAdapter;
 import com.sien.lib.baseapp.widgets.CPRefreshView;
 import com.sien.lib.baseapp.widgets.recyclerview.CPDividerItemDecoration;
-import com.sien.lib.datapp.network.base.RequestFreshStatus;
+import com.sien.lib.databmob.config.DatappConfig;
+import com.sien.lib.databmob.network.base.RequestFreshStatus;
 import com.sien.lib.share.ShareConfig;
 import com.sien.lib.share.ShareDialog;
 import com.sien.lib.share.action.CPAppShareAction;
@@ -119,7 +121,7 @@ public class SettingActivity extends CPBaseActivity implements ISettingViewModel
         public void onClick(View v) {
             int vid = v.getId();
             if (vid == R.id.person_name){
-
+                checkAndLogin();
             }else if(vid == R.id.btn_person_edit_profile){
 
             }else if (vid == R.id.person_avatar){
@@ -127,6 +129,26 @@ public class SettingActivity extends CPBaseActivity implements ISettingViewModel
             }
         }
     };
+
+    /*校验、登录*/
+    private void checkAndLogin(){
+        if(!checkLoginStatus()){
+            startActivity(new Intent(this,LoginActivity.class));
+        }
+    }
+
+    /**
+     * 校验登录状态
+     * @return
+     */
+    private boolean checkLoginStatus(){
+        String logStatus = BaseApplication.getSharePerfence(DatappConfig.LOGIN_STATUS_KEY);
+        if (!"true".equals(logStatus)){
+            return false;
+        }
+
+        return true;
+    }
 
     /*显示分享面板*/
     private void showSharePanel(){

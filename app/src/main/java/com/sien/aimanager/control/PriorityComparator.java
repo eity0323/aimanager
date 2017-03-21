@@ -1,6 +1,6 @@
 package com.sien.aimanager.control;
 
-import com.sien.lib.datapp.beans.AimTypeVO;
+import com.sien.lib.databmob.beans.AimTypeVO;
 
 import java.util.Comparator;
 

@@ -65,6 +65,9 @@ android {
     lintOptions {
         abortOnError false
     }
+    sourceSets {
+        main.jniLibs.srcDirs = ['libs']
+    }
 }
 
 dependencies {
@@ -74,9 +77,8 @@ dependencies {
 
     compile rootProject.ext.libWheelView;
 
-    compile files("libs/libammsdk.jar");
-
     compile project(":lib.baseapp");
     compile project(":lib.share");
     compile project(":lib.photopick")
+
 }

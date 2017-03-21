@@ -26,6 +26,19 @@
     <string name="setting_introduce">个人简介</string>
     <string name="setting_unlogin">未登录</string>
 
+    <!--登录-->
+    <string name="rationale_msg_contacts">应用需要获取短信，以便读取验证码.</string>
+    <string name="personal_checkcode_avalible">验证码不匹配，请重试</string>
+    <string name="personal_checkcode_input">输入短信验证码</string>
+    <string name="personal_request_again">重新获取验证码</string>
+    <string name="personal_request_checkcode">获取验证码</string>
+    <string name="personal_login">手机验证码登录</string>
+    <string name="personal_wxlogin">微信登录</string>
+    <string name="personal_mobile_prefix">+ 86    |</string>
+    <string name="personal_change">更改</string>
+    <string name="personal_sendto">发送至</string>
+    <string name="personal_mobile_request">请输入手机号码</string>
+
     <!--首页-->
     <string name="today_aimtype">今日目标</string>
     <string name="none_aimtype_tips">你还未设定目标，去设置</string>

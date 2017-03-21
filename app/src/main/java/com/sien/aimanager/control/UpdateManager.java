@@ -3,30 +3,26 @@ package com.sien.aimanager.control;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
-import android.net.Uri;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ProgressBar;
 
-import com.sien.aimanager.config.AppConfig;
 import com.sien.aimanager.R;
+import com.sien.aimanager.config.AppConfig;
 import com.sien.lib.baseapp.BaseApplication;
 import com.sien.lib.baseapp.control.CPActivityManager;
-import com.sien.lib.datapp.utils.CPStringUtil;
-import com.sien.lib.datapp.cache.memory.LruCacheManager;
-import com.sien.lib.datapp.control.BaseOkHttpFileCallBack;
-import com.sien.lib.datapp.control.CPSharedPreferenceManager;
-import com.sien.lib.datapp.utils.CPFileUtils;
+import com.sien.lib.databmob.cache.memory.LruCacheManager;
+import com.sien.lib.databmob.control.CPSharedPreferenceManager;
+import com.sien.lib.databmob.utils.CPFileUtils;
+import com.sien.lib.databmob.utils.CPStringUtil;
 
-import java.io.File;
 import java.io.PrintWriter;
 
-import retrofit2.Call;
+//import com.sien.lib.databmob.control.BaseOkHttpFileCallBack;
 
 /**
  * [版本更新管理]
@@ -54,7 +50,7 @@ public class UpdateManager {
 	private AlertDialog versionDialog;//当前最新版本提示框
 	private ProgressBar mProgress;//下载进度条
 
-	private BaseOkHttpFileCallBack fileCallBack;
+//	private BaseOkHttpFileCallBack fileCallBack;
 
 	/**
 	 * @param context
@@ -66,54 +62,54 @@ public class UpdateManager {
 		String rootPath = CPFileUtils.getAppCacheRootDirectory(context) + "/download/";
 		String fileNameWithPatch = context.getPackageName().replaceAll("\\.","_");
 
-		fileCallBack = new BaseOkHttpFileCallBack(rootPath, fileNameWithPatch) {
-			@Override
-			public void onProgress(float progress, long total) {
-				try {
-					if(mProgress != null){
-						mProgress.setProgress((int) progress);
-					}
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-
-			@Override
-			public void onFail(Call call, Exception e) {
-				if (downloadDialog != null) {
-					downloadDialog.dismiss();
-				}
-			}
-
-			@Override
-			public void onSuccess(File response) {
-				if (downloadDialog != null) {
-					downloadDialog.dismiss();
-				}
-
-				if (!response.exists()) {
-					return;
-				}
-				//安装并打开应用
-//				// 判断root权限
-//				if (isRoot()) {
-//					// 有root权限，静默安装
-//					return apkInstall(path);
-//				}else {
-					Intent i = new Intent(Intent.ACTION_VIEW);
-					i.setDataAndType(Uri.parse("file://" + response.toString()), "application/vnd.android.package-archive");
-					mContext.startActivity(i);
-
-//				Intent intent = new Intent();
-//				intent.setAction("android.intent.action.VIEW");
-//				intent.addCategory("android.intent.category.DEFAULT");
-//				intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//				intent.setDataAndType(Uri.fromFile(response),
-//						"application/vnd.android.package-archive");
-//				mContext.startActivity(intent);
+//		fileCallBack = new BaseOkHttpFileCallBack(rootPath, fileNameWithPatch) {
+//			@Override
+//			public void onProgress(float progress, long total) {
+//				try {
+//					if(mProgress != null){
+//						mProgress.setProgress((int) progress);
+//					}
+//				} catch (Exception e) {
+//					e.printStackTrace();
 //				}
-			}
-		};
+//			}
+//
+//			@Override
+//			public void onFail(Call call, Exception e) {
+//				if (downloadDialog != null) {
+//					downloadDialog.dismiss();
+//				}
+//			}
+//
+//			@Override
+//			public void onSuccess(File response) {
+//				if (downloadDialog != null) {
+//					downloadDialog.dismiss();
+//				}
+//
+//				if (!response.exists()) {
+//					return;
+//				}
+//				//安装并打开应用
+////				// 判断root权限
+////				if (isRoot()) {
+////					// 有root权限，静默安装
+////					return apkInstall(path);
+////				}else {
+//					Intent i = new Intent(Intent.ACTION_VIEW);
+//					i.setDataAndType(Uri.parse("file://" + response.toString()), "application/vnd.android.package-archive");
+//					mContext.startActivity(i);
+//
+////				Intent intent = new Intent();
+////				intent.setAction("android.intent.action.VIEW");
+////				intent.addCategory("android.intent.category.DEFAULT");
+////				intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+////				intent.setDataAndType(Uri.fromFile(response),
+////						"application/vnd.android.package-archive");
+////				mContext.startActivity(intent);
+////				}
+//			}
+//		};
 	}
 
 	/**
@@ -203,7 +199,7 @@ public class UpdateManager {
 				downloadDialog.show();
 			}
 
-			DownloadUtils.getInstance().ApkDownload(apkUrl,mContext,fileCallBack);
+//			DownloadUtils.getInstance().ApkDownload(apkUrl,mContext,fileCallBack);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -211,7 +207,7 @@ public class UpdateManager {
 
 	private void cancelDownload(){
 		//TODO 取消请求
-		DownloadUtils.getInstance().cancelDownload();
+//		DownloadUtils.getInstance().cancelDownload();
 	}
 
 	public void setIgnoreNextCheck(boolean ignoreNextCheck) {
