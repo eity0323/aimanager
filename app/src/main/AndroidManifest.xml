@@ -107,6 +107,10 @@
             android:screenOrientation="portrait"
             android:theme="@style/BaseActivityTheme" />
 
+        <activity android:name=".activity.UserInfoActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/BaseActivityTheme" />
+
         <!--监听网络状态变化-->
         <receiver android:name=".receiver.ConnectionChangeReceiver" android:label="NetworkConnection">
             <intent-filter>
@@ -122,7 +126,8 @@
 
         <receiver android:name=".receiver.MonitorAlarmReceiver" android:label="MonitorAlarm">
             <intent-filter>
-                <action android:name="com.sien.aimanager" />
+                <action android:name="com.sien.aimanager.check" />
+                <action android:name="com.sien.aimanager.remind" />
             </intent-filter>
         </receiver>
 

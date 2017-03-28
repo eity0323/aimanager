@@ -114,8 +114,18 @@
 
     <!-- 设置手势锁 -->
     <string name="create_gesture_activity">CreateGestureActivity</string>
-
     <string name="create_gesture_reset">重新设置</string>
 
-
+    <!--个人主页-->
+    <string name="personal_introduce">个人简介</string>
+    <string name="personal_avatar">头像</string>
+    <string name="personal_nickname">昵称</string>
+    <string name="personal_birth">生日</string>
+    <string name="personal_birth_tips">(有惊喜哦)</string>
+    <string name="personal_gender">性别</string>
+    <string name="personal_bind_phone">绑定手机号</string>
+    <string name="personal_logout">退出登录</string>
+    <string name="personal_account_info">帐号信息</string>
+    <string name="logout_confirm">确认退出登录？</string>
+    <string name="serve_error">服务器开小差了，请稍后重试</string>
 </resources>

@@ -2,15 +2,17 @@ package com.sien.aimanager.presenter;
 
 import android.content.Context;
 import android.os.Message;
+import android.text.TextUtils;
 
 import com.sien.aimanager.R;
+import com.sien.aimanager.control.BmobUtil;
 import com.sien.aimanager.model.ISettingViewModel;
 import com.sien.lib.baseapp.presenters.BasePresenter;
 import com.sien.lib.baseapp.presenters.BusBasePresenter;
+import com.sien.lib.baseapp.utils.CollectionUtils;
 import com.sien.lib.databmob.beans.PersonSetBean;
-import com.sien.lib.databmob.beans.UserInfoVO;
-import com.sien.lib.databmob.events.DatappEvent;
-import com.sien.lib.databmob.network.action.MainDatabaseAction;
+import com.sien.lib.databmob.beans.UserResult;
+import com.sien.lib.databmob.events.PersonalEvents;
 import com.sien.lib.databmob.network.base.RequestFreshStatus;
 
 import java.util.ArrayList;
@@ -28,7 +30,7 @@ public class SettingPresenter extends BusBasePresenter {
 
     private ISettingViewModel impl;
 
-    private UserInfoVO userInfoVO;
+    private UserResult userInfoVO;
 
     public SettingPresenter(Context context){
         mcontext = context;
@@ -42,15 +44,17 @@ public class SettingPresenter extends BusBasePresenter {
 
     }
 
-    public UserInfoVO getUserInfoVO() {
+    public UserResult getUserInfoVO() {
         return userInfoVO;
     }
 
     /**
      * 请求用户详情
      */
-    public void requestUserInfo(){
-        MainDatabaseAction.requestUserInfoDatas(mcontext);
+    public void requestUserInfo(String userName){
+        if (!TextUtils.isEmpty(userName)) {
+            BmobUtil.requestUserInfo(userName);
+        }
     }
 
     public List<PersonSetBean> getSettingDatas(){
@@ -64,9 +68,29 @@ public class SettingPresenter extends BusBasePresenter {
     }
 
     @Subscribe
-    public void UserInfoEventReceiver(DatappEvent.UserInfoEvent event){
+    public void UserInfoEventReceiver(PersonalEvents.UserInfoEvent event){
         if (event != null){
             postMessage2UI(event.getResult(),MSG_UPDATE_REQUESTUSERINFO);
+        }
+    }
+
+    @Subscribe
+    public void LoginEventReceiver(PersonalEvents.LoginEvent event) {
+        if (event != null){
+            if (event.checkStatus()){
+                UserResult user = (UserResult)event.getData();
+
+                if (user != null) {
+                    userInfoVO = user;
+
+                    //登录
+                    impl.refreshUserInfo(RequestFreshStatus.REFRESH_SUCCESS);
+                }else {
+                    impl.refreshUserInfo(RequestFreshStatus.REFRESH_NODATA);
+                }
+            }else {
+                impl.refreshUserInfo(RequestFreshStatus.REFRESH_ERROR);
+            }
         }
     }
 
@@ -85,8 +109,8 @@ public class SettingPresenter extends BusBasePresenter {
 
         if (msg.what == MSG_UPDATE_REQUESTUSERINFO){
             if (msg.obj != null){
-                List<UserInfoVO> result = (List<UserInfoVO>)msg.obj;
-                if (result != null && result.size() > 0){
+                List<UserResult> result = (List<UserResult>)msg.obj;
+                if (CollectionUtils.IsNullOrEmpty(result)){
                     userInfoVO = result.get(0);
                     impl.refreshUserInfo(RequestFreshStatus.REFRESH_SUCCESS);
                     return;

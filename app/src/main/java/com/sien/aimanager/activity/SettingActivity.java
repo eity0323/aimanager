@@ -7,6 +7,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
@@ -21,15 +22,20 @@ import com.sien.aimanager.presenter.SettingPresenter;
 import com.sien.lib.baseapp.BaseApplication;
 import com.sien.lib.baseapp.activity.CPBaseActivity;
 import com.sien.lib.baseapp.adapter.CPBaseRecyclerAdapter;
+import com.sien.lib.baseapp.utils.CPPatternUtil;
 import com.sien.lib.baseapp.widgets.CPRefreshView;
 import com.sien.lib.baseapp.widgets.recyclerview.CPDividerItemDecoration;
+import com.sien.lib.component.imageview.CircleImageView;
 import com.sien.lib.databmob.config.DatappConfig;
 import com.sien.lib.databmob.network.base.RequestFreshStatus;
+import com.sien.lib.databmob.utils.CPStringUtil;
 import com.sien.lib.share.ShareConfig;
 import com.sien.lib.share.ShareDialog;
 import com.sien.lib.share.action.CPAppShareAction;
 import com.sien.lib.share.action.CPAppShareBuilder;
-import com.sien.lib.component.imageview.CircleImageView;
+
+import cn.qqtheme.framework.picker.TimePicker;
+
 /**
  * @author sien
  * @date 2017/2/9
@@ -50,6 +56,8 @@ public class SettingActivity extends CPBaseActivity implements ISettingViewModel
 
     private SettingAdapter adapter;
 
+    private TimePicker pvTime;
+    private String remindTime = "";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -108,12 +116,20 @@ public class SettingActivity extends CPBaseActivity implements ISettingViewModel
 //                    go2FeedbackActivity();
 //                }else if (position == 2){
                     go2AboutActivity();
+                }else if (position == 2){
+                    settingRemindTime();
                 }
             }
         });
         recyclerView.setAdapter(adapter);
 
-        presenter.requestUserInfo();
+        if (CPPatternUtil.isMobileNumber(DatappConfig.userAccount)){
+            nameTV.setText(CPStringUtil.serectMobileNumber(DatappConfig.userAccount));
+        }else {
+            nameTV.setText(DatappConfig.userAccount);
+        }
+
+        presenter.requestUserInfo(DatappConfig.userAccount);
     }
 
     private View.OnClickListener clickListener = new View.OnClickListener() {
@@ -130,10 +146,27 @@ public class SettingActivity extends CPBaseActivity implements ISettingViewModel
         }
     };
 
+    /*设置提醒时间*/
+    private void settingRemindTime(){
+        if (!TextUtils.isEmpty(remindTime)) {
+            String ay[] = remindTime.split(":");
+            if (ay.length > 1){
+                onTimePicker(Integer.valueOf(ay[0]),Integer.valueOf(ay[1]));
+                return;
+            }if (ay.length > 0){
+                onTimePicker(Integer.valueOf(ay[0]),0);
+                return;
+            }
+        }
+        onTimePicker(8,0);
+    }
+
     /*校验、登录*/
     private void checkAndLogin(){
         if(!checkLoginStatus()){
             startActivity(new Intent(this,LoginActivity.class));
+        }else {
+            startActivity(new Intent(this,UserInfoActivity.class));
         }
     }
 
@@ -157,6 +190,25 @@ public class SettingActivity extends CPBaseActivity implements ISettingViewModel
         shareDialog.show();
     }
 
+    /*初始化日期选择*/
+    public void onTimePicker(int hour,int minute) {
+        if (pvTime == null) {
+            pvTime = new TimePicker(this,TimePicker.HOUR_24);
+            pvTime.setOnTimePickListener(new TimePicker.OnTimePickListener() {
+                @Override
+                public void onTimePicked(String hour, String minute) {
+                    remindTime = hour+ ":" + minute;
+
+                    BaseApplication.setSharePerfence(DatappConfig.REMIND_TIME_KEY,remindTime);
+                }
+            });
+            pvTime.show();
+        }else{
+            pvTime.setSelectedItem(hour,minute);
+            pvTime.show();
+        }
+    }
+
     /*跳转至关于页面*/
     private void go2AboutActivity(){
         startActivity(new Intent(this,AboutActivity.class));
@@ -171,7 +223,7 @@ public class SettingActivity extends CPBaseActivity implements ISettingViewModel
         @Override
         public void onRefresh() {
             if (presenter != null) {
-                presenter.requestUserInfo();
+                presenter.requestUserInfo(DatappConfig.userAccount);
             }
         }
     };
@@ -183,7 +235,13 @@ public class SettingActivity extends CPBaseActivity implements ISettingViewModel
 
     @Override
     public void refreshUserInfo(RequestFreshStatus status) {
-
+        if (status != RequestFreshStatus.REFRESH_ERROR){
+            if (CPPatternUtil.isMobileNumber(DatappConfig.userAccount)){
+                nameTV.setText(CPStringUtil.serectMobileNumber(DatappConfig.userAccount));
+            }else {
+                nameTV.setText(DatappConfig.userAccount);
+            }
+        }
     }
 
     @Override

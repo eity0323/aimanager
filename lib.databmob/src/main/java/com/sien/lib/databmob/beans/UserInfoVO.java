@@ -3,7 +3,7 @@ package com.sien.lib.databmob.beans;
 import org.greenrobot.greendao.annotation.*;
 
 /**
- * 用户实体
+ * 用户实体  deprecated
  */
 @Entity
 public class UserInfoVO extends CPBaseVO{

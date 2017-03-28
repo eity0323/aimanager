@@ -29,4 +29,14 @@
         <item>2级</item>
         <item>1级</item>
     </string-array>
+
+    <string-array name="choose_image_source">
+        <item>"拍照"</item>
+        <item>"从手机相册选择"</item>
+    </string-array>
+
+    <string-array name="gender_source">
+        <item>男神</item>
+        <item>女神</item>
+    </string-array>
 </resources>

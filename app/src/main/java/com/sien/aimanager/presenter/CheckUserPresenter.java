@@ -4,7 +4,7 @@ import android.os.Message;
 import android.text.TextUtils;
 
 import com.sien.aimanager.activity.LoginActivity;
-import com.sien.aimanager.beans.UserResult;
+import com.sien.lib.databmob.beans.UserResult;
 import com.sien.aimanager.control.BmobUtil;
 import com.sien.aimanager.model.ICheckUserViewModel;
 import com.sien.lib.baseapp.BaseApplication;
@@ -38,7 +38,7 @@ public class CheckUserPresenter extends BusBasePresenter {
     }
 
     public void requestLogin(String mobile,String checkCode){
-        BmobUtil.login(mobile,checkCode);
+        BmobUtil.signOrLogin(mobile,checkCode);
     }
 
     public void requestCheckCode(String mobile){
@@ -70,7 +70,7 @@ public class CheckUserPresenter extends BusBasePresenter {
                     //登录
                     impl.refreshLogin(RequestFreshStatus.REFRESH_SUCCESS);
                 }else {
-                    impl.refreshLogin(RequestFreshStatus.REFRESH_ERROR);
+                    impl.refreshLogin(RequestFreshStatus.REFRESH_NODATA);
                 }
             }else {
                 String msg = event.getData().toString();

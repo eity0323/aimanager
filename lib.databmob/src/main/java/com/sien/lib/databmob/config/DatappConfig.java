@@ -19,12 +19,14 @@ public class DatappConfig {
     public static final String LOGIN_USER_KEY = "loginuser_key";//用户名
     public static final String LOGIN_USERID_KEY = "loginuserid_key";//用户id
     public static final String LOGIN_STATUS_KEY = "loginstatus_key";//登录状态
+    public static final String REMIND_TIME_KEY = "remindtime_key";//提醒时间
 
     public static String userAccount = "customer";      //默认用户，游客身份，用来区分用户缓存数据
     public static String userAccountId = "";      //默认用户，游客身份，用来区分用户缓存数据
     public static int enviromentType = ENV_OFFICAL;               //网络环境：1开发环境，2测试环境，3正式环境
 
     public static boolean IS_DEV = true;        //开发模式
+    public static boolean IS_RELEASE = false;   //是否是发布版
 
     public static String DATABASENAME = "datapp_aimanager_db";//数据库名称
 
@@ -53,5 +55,21 @@ public class DatappConfig {
         enviromentType = ENV_TEST;
         APP_BASE_URL = "https://api.bmob.cn/1/classes/";//接口api地址
         APP_BASE_CUSTOM_IMAGE_URL = "http://shoelives.oss-cn-shenzhen.aliyuncs.com/";//定制商品图片地址
+    }
+
+    /**
+     * 设置发布版
+     */
+    public static void setReleaseVersion(){
+        IS_RELEASE = true;
+        IS_DEV = false;
+    }
+
+    /**
+     * 设置开发版
+     */
+    public static void setDebugVersion(){
+        IS_RELEASE = false;
+        IS_DEV = true;
     }
 }

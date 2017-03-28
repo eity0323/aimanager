@@ -4,14 +4,18 @@ import android.content.Context;
 import android.os.Bundle;
 import android.os.Message;
 
+import com.sien.lib.databmob.beans.UserResult;
 import com.sien.aimanager.model.ILoginViewModel;
+import com.sien.lib.baseapp.BaseApplication;
 import com.sien.lib.baseapp.beans.APPOperateEventBundle;
 import com.sien.lib.baseapp.events.BaseAppEvents;
 import com.sien.lib.baseapp.presenters.BasePresenter;
 import com.sien.lib.baseapp.presenters.BusBasePresenter;
+import com.sien.lib.databmob.config.DatappConfig;
 import com.sien.lib.databmob.events.PersonalEvents;
 import com.sien.lib.databmob.network.base.RequestFreshStatus;
 import com.sien.lib.databmob.network.result.LoginResult;
+import com.sien.lib.databmob.utils.CPLogUtil;
 
 import de.greenrobot.event.Subscribe;
 
@@ -56,12 +60,30 @@ public class LoginPresenter extends BusBasePresenter {
 
     @Subscribe
     public void LoginEventReceiver(PersonalEvents.LoginEvent event) {
-        if (event != null) {
-            if (updateMessageHander != null) {
-                Message msg = new Message();
-                msg.what = MSG_UPDATE_LOGIN;
-                msg.obj = event.getResult();
-                updateMessageHander.sendMessage(msg);
+        if (event != null){
+            if (event.checkStatus()){
+                UserResult user = (UserResult)event.getData();
+
+                if (user != null) {
+                    BaseApplication.setSharePerfence(DatappConfig.LOGIN_STATUS_KEY, "true");
+
+                    //保存用户类型
+                    BaseApplication.setSharePerfence(DatappConfig.LOGIN_USER_KEY, user.getUsername());
+                    BaseApplication.setSharePerfence(DatappConfig.LOGIN_USERID_KEY, user.getObjectId());
+
+                    //保存用户帐号
+                    DatappConfig.userAccount = user.getUsername();
+                    DatappConfig.userAccountId = user.getObjectId();
+
+                    //登录
+                    impl.refreshLogin(RequestFreshStatus.REFRESH_SUCCESS);
+                }else {
+                    impl.refreshLogin(RequestFreshStatus.REFRESH_NODATA);
+                }
+            }else {
+                String msg = event.getData().toString();
+                CPLogUtil.logError("登录错误：" + msg);
+                impl.refreshLogin(RequestFreshStatus.REFRESH_ERROR);
             }
         }
     }
@@ -116,19 +138,6 @@ public class LoginPresenter extends BusBasePresenter {
                 }
             }
             impl.refreshFragmentChange(RequestFreshStatus.REFRESH_ERROR,-1);
-        }else if (msg.what == MSG_UPDATE_LOGIN){//应用登录
-//            if (msg.obj != null){
-//                LoginResult result = (LoginResult) msg.obj;
-//                if (result != null && result.checkRequestSuccess()) {
-//                    if (result.getData() != null && result.getData().size() > 0) {
-//                        loginResponse = result.getData().get(0);
-//                    }
-//                    impl.refreshLogin(RequestFreshStatus.REFRESH_SUCCESS);
-//                    return;
-//                }
-//            }
-//
-//            impl.refreshLogin(RequestFreshStatus.REFRESH_ERROR);
         }else if (msg.what == SDK_WELOGIN_FLAG){//微信登录状态
             if (msg.obj != null){
                 Bundle bundle = (Bundle) msg.obj;

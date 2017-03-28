@@ -1,9 +1,15 @@
 package com.sien.aimanager.activity;
 
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.TaskStackBuilder;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -14,12 +20,15 @@ import com.sien.aimanager.R;
 import com.sien.aimanager.adapter.AimBeanAdapter;
 import com.sien.aimanager.model.IMainAimObjectViewModel;
 import com.sien.aimanager.presenter.MainAimObjectPresenter;
+import com.sien.lib.baseapp.BaseApplication;
 import com.sien.lib.baseapp.activity.CPBaseBoostActivity;
 import com.sien.lib.baseapp.utils.CollectionUtils;
 import com.sien.lib.baseapp.widgets.CPRefreshView;
 import com.sien.lib.component.coverflow.CoverFlow;
 import com.sien.lib.component.coverflow.TwoWayAdapterView;
 import com.sien.lib.databmob.beans.AimTypeVO;
+import com.sien.lib.databmob.config.DatappConfig;
+import com.sien.lib.databmob.control.CPSharedPreferenceManager;
 import com.sien.lib.databmob.network.base.RequestFreshStatus;
 
 import java.util.Date;
@@ -123,10 +132,79 @@ public class MainAimObjectActivity extends CPBaseBoostActivity implements IMainA
         findView(R.id.aimobject_more).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                go2AimTypeListActivity(false);
+//                go2AimTypeListActivity(false);
+
+                remindOperation(MainAimObjectActivity.this);
             }
         });
+
+        initialShareData();
+
     }
+
+    public final int mId = 32715;
+    private void remindOperation(Context context){
+        NotificationCompat.Builder mBuilder =
+                new NotificationCompat.Builder(context)
+                        .setSmallIcon(R.drawable.icon_share)
+                        .setContentTitle("目标管理")
+                        .setContentText("记得完成今天的任务");
+        Intent resultIntent = new Intent(context, MainAimObjectActivity.class);
+
+        TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
+        stackBuilder.addParentStack(MainAimObjectActivity.class);
+        stackBuilder.addNextIntent(resultIntent);
+        PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
+        mBuilder.setContentIntent(resultPendingIntent);
+        NotificationManager mNotificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+        mNotificationManager.notify(mId, mBuilder.build());
+    }
+
+    /*初始化缓存数据*/
+    private void initialShareData(){
+        //读取缓存数据
+        String userName = CPSharedPreferenceManager.getInstance(this).getData(DatappConfig.LOGIN_USER_KEY);
+        if (!TextUtils.isEmpty(userName)){
+            DatappConfig.userAccount = userName;
+        }
+
+        String userId= CPSharedPreferenceManager.getInstance(this).getData(DatappConfig.LOGIN_USERID_KEY);
+        if (!TextUtils.isEmpty(userId)){
+            DatappConfig.userAccountId = userId;
+        }
+
+        //默认数据请求方式
+//        String requestModel = CPSharedPreferenceManager.getInstance(this).getData(DatappConfig.REQUEST_MODEL_KEY);
+//        if (!TextUtils.isEmpty(requestModel)){
+//            if (String.valueOf(BaseRepository.REQUEST_ONLEY_CACHE).equals(requestModel)) {
+//                DatappConfig.DEFAULT_REQUEST_MODEL = BaseRepository.REQUEST_ONLEY_CACHE;
+//            }else if (String.valueOf(BaseRepository.REQUEST_ONLEY_NETWORK).equals(requestModel)) {
+//                DatappConfig.DEFAULT_REQUEST_MODEL = BaseRepository.REQUEST_ONLEY_NETWORK;
+//            }else if (String.valueOf(BaseRepository.REQUEST_BOTH).equals(requestModel)) {
+//                DatappConfig.DEFAULT_REQUEST_MODEL = BaseRepository.REQUEST_BOTH;
+//            }else {
+//                DatappConfig.DEFAULT_REQUEST_MODEL = BaseRepository.REQUEST_AUTO;
+//            }
+//        }
+
+        //网络环境（发布版本，屏蔽网络环境切换入口）
+        if (!DatappConfig.IS_RELEASE) {
+            String environmentModel = BaseApplication.getSharePerfence(DatappConfig.ENVIRONMENT_KEY);
+            if (!TextUtils.isEmpty(environmentModel)) {
+                if (String.valueOf(DatappConfig.ENV_DEVELOP).equals(environmentModel)) {
+                    //开发环境
+                    DatappConfig.setDevelopEnvironment();
+                } else if (String.valueOf(DatappConfig.ENV_TEST).equals(environmentModel)) {
+                    //测试环境
+                    DatappConfig.setTestEnvironment();
+                } else if (String.valueOf(DatappConfig.ENV_OFFICAL).equals(environmentModel)) {
+                    //正式环境
+                    DatappConfig.setOfficalEnvironment();
+                }
+            }
+        }
+    }
+
 
     @Override
     public void initial() {

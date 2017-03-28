@@ -169,7 +169,7 @@ public class DatappEvent {
 
 
     /**
-     * 查询用户信息
+     * 查询用户信息  deprecated
      */
     public static class UserInfoEvent extends BaseEvents{
         public UserInfoEvent(int status,Object data){

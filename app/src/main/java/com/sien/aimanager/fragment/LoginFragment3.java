@@ -284,8 +284,6 @@ public class LoginFragment3 implements ICheckUserViewModel {
     public void refreshLogin(RequestFreshStatus status) {
         //登录成功,保存登录状态，关闭登录页
         if (!RequestFreshStatus.REFRESH_ERROR.equals(status)) {
-//            context.showToast("登录成功");
-
             //停止倒计时
             stopTimeCount();
 

@@ -127,4 +127,9 @@
         <item name="android:textColor">@android:color/white</item>
         <item name="android:textSize">@dimen/font_siez_16</item>
     </style>
+
+    <!--dialog-->
+    <style name="DialogTheme" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="colorAccent">@color/indigo_light</item>
+    </style>
 </resources>

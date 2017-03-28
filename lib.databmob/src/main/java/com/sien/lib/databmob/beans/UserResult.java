@@ -1,4 +1,4 @@
-package com.sien.aimanager.beans;
+package com.sien.lib.databmob.beans;
 
 import java.util.List;
 
